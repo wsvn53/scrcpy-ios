@@ -1,0 +1,21 @@
+//
+//  PrefixHeader.pch
+//  Scrcpy
+//
+//  Created by Ethan on 2021/7/7.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#include <OpenGLES/gltypes.h>
+#include <OpenGLES/ES3/gl.h>
+
+typedef GLfloat GLdouble;
+typedef double GLclampd;
+
+#include <SDL2/SDL_opengl_glext.h>
+
+#define main    scrcpy_main
+
+#endif /* PrefixHeader_pch */

@@ -15,7 +15,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setupViews];
 }
 
+- (void)setupViews {
+    self.title = @"Scrcpy";
+    self.view.backgroundColor = UIColor.whiteColor;
+}
 
 @end

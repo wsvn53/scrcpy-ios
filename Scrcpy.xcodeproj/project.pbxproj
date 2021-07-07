@@ -7,10 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AAA2219526959AA000307990 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA2219426959AA000307990 /* AppDelegate.m */; };
-		AAA2219826959AA000307990 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA2219726959AA000307990 /* SceneDelegate.m */; };
 		AAA2219B26959AA000307990 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA2219A26959AA000307990 /* ViewController.m */; };
-		AAA2219E26959AA000307990 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAA2219C26959AA000307990 /* Main.storyboard */; };
 		AAA221A026959AA200307990 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAA2219F26959AA200307990 /* Assets.xcassets */; };
 		AAA221A326959AA200307990 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAA221A126959AA200307990 /* LaunchScreen.storyboard */; };
 		AAA221A626959AA200307990 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA221A526959AA200307990 /* main.m */; };
@@ -18,13 +15,8 @@
 
 /* Begin PBXFileReference section */
 		AAA2219026959AA000307990 /* Scrcpy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scrcpy.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AAA2219326959AA000307990 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		AAA2219426959AA000307990 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		AAA2219626959AA000307990 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
-		AAA2219726959AA000307990 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
 		AAA2219926959AA000307990 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		AAA2219A26959AA000307990 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		AAA2219D26959AA000307990 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AAA2219F26959AA200307990 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AAA221A226959AA200307990 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AAA221A426959AA200307990 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -61,13 +53,8 @@
 		AAA2219226959AA000307990 /* Scrcpy */ = {
 			isa = PBXGroup;
 			children = (
-				AAA2219326959AA000307990 /* AppDelegate.h */,
-				AAA2219426959AA000307990 /* AppDelegate.m */,
-				AAA2219626959AA000307990 /* SceneDelegate.h */,
-				AAA2219726959AA000307990 /* SceneDelegate.m */,
 				AAA2219926959AA000307990 /* ViewController.h */,
 				AAA2219A26959AA000307990 /* ViewController.m */,
-				AAA2219C26959AA000307990 /* Main.storyboard */,
 				AAA2219F26959AA200307990 /* Assets.xcassets */,
 				AAA221A126959AA200307990 /* LaunchScreen.storyboard */,
 				AAA221A426959AA200307990 /* Info.plist */,
@@ -135,7 +122,6 @@
 			files = (
 				AAA221A326959AA200307990 /* LaunchScreen.storyboard in Resources */,
 				AAA221A026959AA200307990 /* Assets.xcassets in Resources */,
-				AAA2219E26959AA000307990 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,23 +133,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				AAA2219B26959AA000307990 /* ViewController.m in Sources */,
-				AAA2219526959AA000307990 /* AppDelegate.m in Sources */,
 				AAA221A626959AA200307990 /* main.m in Sources */,
-				AAA2219826959AA000307990 /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		AAA2219C26959AA000307990 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AAA2219D26959AA000307990 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		AAA221A126959AA200307990 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -297,17 +273,21 @@
 				DEVELOPMENT_TEAM = K8Q74NT2BG;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Scrcpy/Info.plist;
+				INFOPLIST_KEY_CFBundleExecutable = Scrcpy;
+				INFOPLIST_KEY_CFBundleName = Scrcpy;
+				INFOPLIST_KEY_CFBundleVersion = 20210707;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = me.wsen.Scrcpy;
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = me.wsen.scrcpy.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -324,17 +304,21 @@
 				DEVELOPMENT_TEAM = K8Q74NT2BG;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Scrcpy/Info.plist;
+				INFOPLIST_KEY_CFBundleExecutable = Scrcpy;
+				INFOPLIST_KEY_CFBundleName = Scrcpy;
+				INFOPLIST_KEY_CFBundleVersion = 20210707;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = me.wsen.Scrcpy;
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = me.wsen.scrcpy.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";

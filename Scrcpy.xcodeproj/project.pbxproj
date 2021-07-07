@@ -40,12 +40,23 @@
 		AAA222852695B3F400307990 /* device_msg.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA222672695B3F400307990 /* device_msg.c */; };
 		AAA222862695B3F400307990 /* input_manager.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA222682695B3F400307990 /* input_manager.c */; };
 		AAA222872695B3F400307990 /* stream.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA2226B2695B3F400307990 /* stream.c */; };
-		AAA2228A2695B4EF00307990 /* liblibscrcpy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA2221C2695B3A600307990 /* liblibscrcpy.a */; };
 		AAA2228D2695B62300307990 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAA2228B2695B62300307990 /* Main.storyboard */; };
+		AAA222A4269606FD00307990 /* fix.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA222A2269606FD00307990 /* fix.c */; };
+		AAA222A6269609BE00307990 /* libfix.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA22299269606AE00307990 /* libfix.a */; };
+		AAA222A7269609BE00307990 /* libscrcpy-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA2221C2695B3A600307990 /* libscrcpy-ios.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		AAA2221A2695B3A600307990 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AAA22297269606AE00307990 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "include/$(PRODUCT_NAME)";
@@ -65,7 +76,7 @@
 		AAA221A426959AA200307990 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AAA221A526959AA200307990 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AAA221AD2695A3B000307990 /* scrcpy-server */ = {isa = PBXFileReference; lastKnownFileType = file; path = "scrcpy-server"; sourceTree = "<group>"; };
-		AAA2221C2695B3A600307990 /* liblibscrcpy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibscrcpy.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AAA2221C2695B3A600307990 /* libscrcpy-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libscrcpy-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAA222262695B3F400307990 /* file_handler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_handler.h; sourceTree = "<group>"; };
 		AAA222272695B3F400307990 /* control_msg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = control_msg.c; sourceTree = "<group>"; };
 		AAA222282695B3F400307990 /* coords.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coords.h; sourceTree = "<group>"; };
@@ -133,6 +144,9 @@
 		AAA2226B2695B3F400307990 /* stream.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stream.c; sourceTree = "<group>"; };
 		AAA222882695B42100307990 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		AAA2228C2695B62300307990 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		AAA22299269606AE00307990 /* libfix.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libfix.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AAA222A2269606FD00307990 /* fix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fix.c; sourceTree = "<group>"; };
+		AAA222A3269606FD00307990 /* fix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fix.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,11 +154,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AAA2228A2695B4EF00307990 /* liblibscrcpy.a in Frameworks */,
+				AAA222A6269609BE00307990 /* libfix.a in Frameworks */,
+				AAA222A7269609BE00307990 /* libscrcpy-ios.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		AAA222192695B3A600307990 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AAA22296269606AE00307990 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -159,7 +181,8 @@
 			children = (
 				AAA221AC2695A3B000307990 /* scrcpy-server */,
 				AAA2219226959AA000307990 /* Scrcpy */,
-				AAA2221D2695B3A600307990 /* libscrcpy */,
+				AAA2221D2695B3A600307990 /* scrcpy-ios */,
+				AAA2229A269606AE00307990 /* fix */,
 				AAA2219126959AA000307990 /* Products */,
 				AAA222892695B4EF00307990 /* Frameworks */,
 			);
@@ -169,7 +192,8 @@
 			isa = PBXGroup;
 			children = (
 				AAA2219026959AA000307990 /* Scrcpy.app */,
-				AAA2221C2695B3A600307990 /* liblibscrcpy.a */,
+				AAA2221C2695B3A600307990 /* libscrcpy-ios.a */,
+				AAA22299269606AE00307990 /* libfix.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -196,13 +220,13 @@
 			path = "scrcpy-server";
 			sourceTree = "<group>";
 		};
-		AAA2221D2695B3A600307990 /* libscrcpy */ = {
+		AAA2221D2695B3A600307990 /* scrcpy-ios */ = {
 			isa = PBXGroup;
 			children = (
 				AAA222882695B42100307990 /* PrefixHeader.pch */,
 				AAA222252695B3F400307990 /* src */,
 			);
-			path = libscrcpy;
+			path = "scrcpy-ios";
 			sourceTree = "<group>";
 		};
 		AAA222252695B3F400307990 /* src */ = {
@@ -325,6 +349,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		AAA2229A269606AE00307990 /* fix */ = {
+			isa = PBXGroup;
+			children = (
+				AAA222A3269606FD00307990 /* fix.h */,
+				AAA222A2269606FD00307990 /* fix.c */,
+			);
+			path = fix;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -345,9 +378,9 @@
 			productReference = AAA2219026959AA000307990 /* Scrcpy.app */;
 			productType = "com.apple.product-type.application";
 		};
-		AAA2221B2695B3A600307990 /* libscrcpy */ = {
+		AAA2221B2695B3A600307990 /* scrcpy-ios */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AAA222222695B3A600307990 /* Build configuration list for PBXNativeTarget "libscrcpy" */;
+			buildConfigurationList = AAA222222695B3A600307990 /* Build configuration list for PBXNativeTarget "scrcpy-ios" */;
 			buildPhases = (
 				AAA222182695B3A600307990 /* Sources */,
 				AAA222192695B3A600307990 /* Frameworks */,
@@ -357,9 +390,26 @@
 			);
 			dependencies = (
 			);
-			name = libscrcpy;
+			name = "scrcpy-ios";
 			productName = libscrcpy;
-			productReference = AAA2221C2695B3A600307990 /* liblibscrcpy.a */;
+			productReference = AAA2221C2695B3A600307990 /* libscrcpy-ios.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		AAA22298269606AE00307990 /* fix */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AAA2229F269606AE00307990 /* Build configuration list for PBXNativeTarget "fix" */;
+			buildPhases = (
+				AAA22295269606AE00307990 /* Sources */,
+				AAA22296269606AE00307990 /* Frameworks */,
+				AAA22297269606AE00307990 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = fix;
+			productName = libfix;
+			productReference = AAA22299269606AE00307990 /* libfix.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -375,6 +425,9 @@
 						CreatedOnToolsVersion = 13.0;
 					};
 					AAA2221B2695B3A600307990 = {
+						CreatedOnToolsVersion = 13.0;
+					};
+					AAA22298269606AE00307990 = {
 						CreatedOnToolsVersion = 13.0;
 					};
 				};
@@ -393,7 +446,8 @@
 			projectRoot = "";
 			targets = (
 				AAA2218F26959AA000307990 /* Scrcpy */,
-				AAA2221B2695B3A600307990 /* libscrcpy */,
+				AAA2221B2695B3A600307990 /* scrcpy-ios */,
+				AAA22298269606AE00307990 /* fix */,
 			);
 		};
 /* End PBXProject section */
@@ -454,6 +508,14 @@
 				AAA2227C2695B3F400307990 /* server.c in Sources */,
 				AAA222752695B3F400307990 /* net.c in Sources */,
 				AAA2227D2695B3F400307990 /* tiny_xpm.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AAA22295269606AE00307990 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AAA222A4269606FD00307990 /* fix.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -718,12 +780,13 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SRCROOT)/libscrcpy/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "$(SRCROOT)/scrcpy-ios/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/scrcpy-src/x/app",
 					"$(SRCROOT)/Libs/include",
 					"$(SRCROOT)/scrcpy-src/app/src",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -736,12 +799,37 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SRCROOT)/libscrcpy/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "$(SRCROOT)/scrcpy-ios/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/scrcpy-src/x/app",
 					"$(SRCROOT)/Libs/include",
 					"$(SRCROOT)/scrcpy-src/app/src",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		AAA222A0269606AE00307990 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AAA222A1269606AE00307990 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -770,11 +858,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AAA222222695B3A600307990 /* Build configuration list for PBXNativeTarget "libscrcpy" */ = {
+		AAA222222695B3A600307990 /* Build configuration list for PBXNativeTarget "scrcpy-ios" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AAA222232695B3A600307990 /* Debug */,
 				AAA222242695B3A600307990 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AAA2229F269606AE00307990 /* Build configuration list for PBXNativeTarget "fix" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AAA222A0269606AE00307990 /* Debug */,
+				AAA222A1269606AE00307990 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

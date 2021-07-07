@@ -11,6 +11,7 @@
 		AAA221A026959AA200307990 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAA2219F26959AA200307990 /* Assets.xcassets */; };
 		AAA221A326959AA200307990 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAA221A126959AA200307990 /* LaunchScreen.storyboard */; };
 		AAA221A626959AA200307990 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA221A526959AA200307990 /* main.m */; };
+		AAA221AE2695A3B000307990 /* scrcpy-server in Resources */ = {isa = PBXBuildFile; fileRef = AAA221AD2695A3B000307990 /* scrcpy-server */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		AAA221A226959AA200307990 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AAA221A426959AA200307990 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AAA221A526959AA200307990 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		AAA221AD2695A3B000307990 /* scrcpy-server */ = {isa = PBXFileReference; lastKnownFileType = file; path = "scrcpy-server"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +39,7 @@
 		AAA2218726959AA000307990 = {
 			isa = PBXGroup;
 			children = (
+				AAA221AC2695A3B000307990 /* scrcpy-server */,
 				AAA2219226959AA000307990 /* Scrcpy */,
 				AAA2219126959AA000307990 /* Products */,
 			);
@@ -61,6 +64,14 @@
 				AAA221A526959AA200307990 /* main.m */,
 			);
 			path = Scrcpy;
+			sourceTree = "<group>";
+		};
+		AAA221AC2695A3B000307990 /* scrcpy-server */ = {
+			isa = PBXGroup;
+			children = (
+				AAA221AD2695A3B000307990 /* scrcpy-server */,
+			);
+			path = "scrcpy-server";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -120,6 +131,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAA221AE2695A3B000307990 /* scrcpy-server in Resources */,
 				AAA221A326959AA200307990 /* LaunchScreen.storyboard in Resources */,
 				AAA221A026959AA200307990 /* Assets.xcassets in Resources */,
 			);

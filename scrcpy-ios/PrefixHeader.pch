@@ -19,5 +19,7 @@ typedef double GLclampd;
 #define main    scrcpy_main
 
 asm(".weak_definition _is_regular_file");
+asm(".weak_definition _process_execute");
+asm(".weak_definition _process_check_success");
 
 #endif /* PrefixHeader_pch */

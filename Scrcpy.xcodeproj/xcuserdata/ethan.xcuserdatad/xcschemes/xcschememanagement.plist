@@ -7,7 +7,7 @@
 		<key>Scrcpy.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>2</integer>
 		</dict>
 		<key>libfix.xcscheme_^#shared#^_</key>
 		<dict>
@@ -15,6 +15,16 @@
 			<integer>2</integer>
 		</dict>
 		<key>libscrcpy.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>scrcpy-fix.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
+		<key>scrcpy-ios.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>

@@ -17,9 +17,11 @@ typedef double GLclampd;
 #include <SDL2/SDL_opengl_glext.h>
 
 #define main    scrcpy_main
+#define SDL_CreateRenderer  SDL_CreateRenderer_fix
 
 asm(".weak_definition _is_regular_file");
 asm(".weak_definition _process_execute");
 asm(".weak_definition _process_check_success");
+asm(".weak_definition _process_wait");
 
 #endif /* PrefixHeader_pch */

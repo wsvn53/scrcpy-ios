@@ -41,9 +41,11 @@
 		AAA222862695B3F400307990 /* input_manager.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA222682695B3F400307990 /* input_manager.c */; };
 		AAA222872695B3F400307990 /* stream.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA2226B2695B3F400307990 /* stream.c */; };
 		AAA2228D2695B62300307990 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAA2228B2695B62300307990 /* Main.storyboard */; };
-		AAA222A4269606FD00307990 /* fix.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA222A2269606FD00307990 /* fix.c */; };
+		AAA222A4269606FD00307990 /* fix.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA222A2269606FD00307990 /* fix.m */; };
 		AAA222A6269609BE00307990 /* libscrcpy-fix.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA22299269606AE00307990 /* libscrcpy-fix.a */; };
 		AAA222A7269609BE00307990 /* libscrcpy-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA2221C2695B3A600307990 /* libscrcpy-ios.a */; };
+		AAA222AA2696995400307990 /* ssh.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA222A92696995400307990 /* ssh.m */; };
+		AAA222AD26969C8800307990 /* utils.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA222AC26969C8800307990 /* utils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -145,8 +147,12 @@
 		AAA222882695B42100307990 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		AAA2228C2695B62300307990 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AAA22299269606AE00307990 /* libscrcpy-fix.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libscrcpy-fix.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		AAA222A2269606FD00307990 /* fix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fix.c; sourceTree = "<group>"; };
+		AAA222A2269606FD00307990 /* fix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fix.m; sourceTree = "<group>"; };
 		AAA222A3269606FD00307990 /* fix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fix.h; sourceTree = "<group>"; };
+		AAA222A82696995400307990 /* ssh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ssh.h; sourceTree = "<group>"; };
+		AAA222A92696995400307990 /* ssh.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ssh.m; sourceTree = "<group>"; };
+		AAA222AB26969C8800307990 /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
+		AAA222AC26969C8800307990 /* utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = utils.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -353,7 +359,11 @@
 			isa = PBXGroup;
 			children = (
 				AAA222A3269606FD00307990 /* fix.h */,
-				AAA222A2269606FD00307990 /* fix.c */,
+				AAA222A2269606FD00307990 /* fix.m */,
+				AAA222A82696995400307990 /* ssh.h */,
+				AAA222A92696995400307990 /* ssh.m */,
+				AAA222AB26969C8800307990 /* utils.h */,
+				AAA222AC26969C8800307990 /* utils.m */,
 			);
 			path = "scrcpy-fix";
 			sourceTree = "<group>";
@@ -515,7 +525,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AAA222A4269606FD00307990 /* fix.c in Sources */,
+				AAA222AD26969C8800307990 /* utils.m in Sources */,
+				AAA222AA2696995400307990 /* ssh.m in Sources */,
+				AAA222A4269606FD00307990 /* fix.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -661,6 +673,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K8Q74NT2BG;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/ssh";
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/scrcpy-src/x/app",
@@ -706,6 +719,8 @@
 					AVFoundation,
 					"-framework",
 					AudioToolbox,
+					"-framework",
+					Gossh,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.wsen.scrcpy.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -722,6 +737,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K8Q74NT2BG;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/ssh";
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/scrcpy-src/x/app",
@@ -767,6 +783,8 @@
 					AVFoundation,
 					"-framework",
 					AudioToolbox,
+					"-framework",
+					Gossh,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.wsen.scrcpy.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -779,6 +797,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/ssh";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/scrcpy-ios/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
@@ -798,6 +817,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/ssh";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/scrcpy-ios/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
@@ -817,6 +837,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/ssh";
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/scrcpy-src/x/app",
 					"$(SRCROOT)/Libs/include",
@@ -834,6 +855,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/ssh";
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/scrcpy-src/x/app",
 					"$(SRCROOT)/Libs/include",

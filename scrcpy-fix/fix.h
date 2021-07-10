@@ -10,4 +10,6 @@
 
 #include <stdio.h>
 
+#define   kSDLDidCreateRendererNotification   @"kSDLDidCreateRendererNotification"
+
 #endif /* fix_h */

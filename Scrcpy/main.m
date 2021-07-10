@@ -8,14 +8,17 @@
 #import <UIKit/UIKit.h>
 #import "config.h"
 #import <SDL2/SDL_main.h>
-#import "ViewController.h"
+#import "ScrcpyViewController.h"
 
 int main(int argc, char * argv[]) {
     NSLog(@"Hello scrcpy v%s", SCRCPY_VERSION);
     
     static UIWindow *window = nil;
     window = [[UIWindow alloc] init];
-    window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[ViewController new]];
+    
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    ScrcpyViewController *scrcpyViewController = [sb instantiateViewControllerWithIdentifier:@"ScrcpyViewController"];
+    window.rootViewController = [[UINavigationController alloc] initWithRootViewController:scrcpyViewController];
     [window makeKeyAndVisible];
     
     return 0;

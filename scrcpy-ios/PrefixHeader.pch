@@ -23,5 +23,6 @@ asm(".weak_definition _is_regular_file");
 asm(".weak_definition _process_execute");
 asm(".weak_definition _process_check_success");
 asm(".weak_definition _process_wait");
+asm(".weak_definition _sc_thread_join");
 
 #endif /* PrefixHeader_pch */

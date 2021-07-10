@@ -16,7 +16,7 @@ scrcpy-init: libsdl ffmpeg
 	# generate config.h
 	cd scrcpy-src && meson x --buildtype release --strip -Db_lto=true
 	# fix build issues
-	# 1. remove windows platform code
+	# -> remove windows platform code
 	rm -v scrcpy-src/app/src/sys/win/process.c
 
 .PHONY: scrcpy-server

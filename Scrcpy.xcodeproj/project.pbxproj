@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AA7766832698A5AB0025990D /* ScrcpyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7766822698A5AB0025990D /* ScrcpyViewController.m */; };
+		AA8C04C7269C8FE0001D9A4F /* NSError+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8C04C6269C8FE0001D9A4F /* NSError+Alert.m */; };
 		AAA221A026959AA200307990 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAA2219F26959AA200307990 /* Assets.xcassets */; };
 		AAA221A326959AA200307990 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAA221A126959AA200307990 /* LaunchScreen.storyboard */; };
 		AAA221A626959AA200307990 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA221A526959AA200307990 /* main.m */; };
@@ -72,6 +73,8 @@
 /* Begin PBXFileReference section */
 		AA7766812698A5AB0025990D /* ScrcpyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrcpyViewController.h; sourceTree = "<group>"; };
 		AA7766822698A5AB0025990D /* ScrcpyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrcpyViewController.m; sourceTree = "<group>"; };
+		AA8C04C5269C8FE0001D9A4F /* NSError+Alert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSError+Alert.h"; sourceTree = "<group>"; };
+		AA8C04C6269C8FE0001D9A4F /* NSError+Alert.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSError+Alert.m"; sourceTree = "<group>"; };
 		AAA2219026959AA000307990 /* Scrcpy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scrcpy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAA2219F26959AA200307990 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AAA221A226959AA200307990 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -209,6 +212,8 @@
 			children = (
 				AA7766812698A5AB0025990D /* ScrcpyViewController.h */,
 				AA7766822698A5AB0025990D /* ScrcpyViewController.m */,
+				AA8C04C5269C8FE0001D9A4F /* NSError+Alert.h */,
+				AA8C04C6269C8FE0001D9A4F /* NSError+Alert.m */,
 				AAA2219F26959AA200307990 /* Assets.xcassets */,
 				AAA2228B2695B62300307990 /* Main.storyboard */,
 				AAA221A126959AA200307990 /* LaunchScreen.storyboard */,
@@ -483,6 +488,7 @@
 			files = (
 				AAA221A626959AA200307990 /* main.m in Sources */,
 				AA7766832698A5AB0025990D /* ScrcpyViewController.m in Sources */,
+				AA8C04C7269C8FE0001D9A4F /* NSError+Alert.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,6 +7,49 @@
 
 #import "ssh.h"
 #import <Gossh/Gossh.h>
+#import "NSError+Alert.h"
+
+@implementation SSHParams
+
++(SSHParams *)sharedParams {
+    static SSHParams *sshParams = nil;
+    if (sshParams == nil) {
+        sshParams = [[SSHParams alloc] init];
+        [sshParams loadDefaults];
+    }
+    return sshParams;
+}
+
++(void)setParamsWithServer:(NSString *)server
+                      port:(NSString *)port
+                      user:(NSString *)user
+                  password:(NSString *)password {
+    [self sharedParams].sshServer = server;
+    [self sharedParams].sshPort   = port;
+    [self sharedParams].sshUser   = user;
+    [self sharedParams].sshPassword = password;
+    
+    [[self sharedParams] saveDefaults];
+}
+
+- (void)saveDefaults {
+    [[NSUserDefaults standardUserDefaults] setValue:self.sshServer forKey:@"ssh_server"];
+    [[NSUserDefaults standardUserDefaults] setValue:self.sshPort forKey:@"ssh_port"];
+    [[NSUserDefaults standardUserDefaults] setValue:self.sshUser forKey:@"ssh_user"];
+    [[NSUserDefaults standardUserDefaults] setValue:self.sshPassword forKey:@"ssh_password"];
+}
+
+- (void)loadDefaults {
+    self.sshServer = [[NSUserDefaults standardUserDefaults] valueForKey:@"ssh_server"];
+    self.sshPort = [[NSUserDefaults standardUserDefaults] valueForKey:@"ssh_port"];
+    if (self.sshPort == nil || self.sshPort.length == 0) {
+        self.sshPort = @"22";
+    }
+    self.sshUser = [[NSUserDefaults standardUserDefaults] valueForKey:@"ssh_user"];
+    self.sshPassword = [[NSUserDefaults standardUserDefaults] valueForKey:@"ssh_password"];
+}
+
+@end
 
 GosshShell *sshShell(void) {
     static GosshShell *shell = nil;
@@ -15,10 +58,17 @@ GosshShell *sshShell(void) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         shell = [[GosshShell alloc] init];
+        
         NSError *error;
-        [shell connect:@"wsen.me" port:@"2022" user:@"root" password:@"root" error:&error];
+        SSHParams *sshParams = [SSHParams sharedParams];
+        [shell connect:sshParams.sshServer
+                  port:sshParams.sshPort
+                  user:sshParams.sshUser
+              password:sshParams.sshPassword
+                 error:&error];
         if (error != nil) {
             NSLog(@"Error: %@", error);
+            [error showAlert];
         }
     });
 
@@ -54,8 +104,10 @@ enum process_result ssh_exec(const char *const argv[])
             }
             if (error != nil) {
                 NSLog(@"Error:\n%@", error);
+                [error showAlert];
             }
         }];
+        
         return PROCESS_SUCCESS;
     }
     
@@ -67,6 +119,7 @@ enum process_result ssh_exec(const char *const argv[])
     }
     if (error != nil) {
         NSLog(@"Error:\n%@", error);
+        [error showAlert];
         return PROCESS_ERROR_GENERIC;
     }
     return PROCESS_SUCCESS;

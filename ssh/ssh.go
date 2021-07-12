@@ -1,6 +1,7 @@
 package gossh
 
 import (
+	"errors"
 	"fmt"
 	"golang.org/x/crypto/ssh"
 	"io"
@@ -33,6 +34,10 @@ func (s *Shell) Connect(host, port, user, password string) (err error) {
 }
 
 func (s *Shell) Execute(command string) (output string, err error) {
+	if s.sshClient == nil {
+		return "", errors.New("ssh is not connected")
+	}
+
 	sess, err := s.sshClient.NewSession()
 	if err != nil {
 		return  "", err
@@ -42,6 +47,10 @@ func (s *Shell) Execute(command string) (output string, err error) {
 }
 
 func (s *Shell) Forward(localAddr, remoteAddr string) error {
+	if s.sshClient == nil {
+		return errors.New("ssh is not connected")
+	}
+
 	// listen local connection
 	local, err := net.Listen("tcp", localAddr)
 	if err != nil {
@@ -55,17 +64,26 @@ func (s *Shell) Forward(localAddr, remoteAddr string) error {
 	}
 
 	// forward local port to remote port
-	go s.forward(local, remote)
+	go func() {
+		err = s.forward(local, remote)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}()
 
 	return err
 }
 
-func (s Shell) forward(local net.Listener, remote net.Conn) {
+func (s Shell) forward(local net.Listener, remote net.Conn) error {
+	if s.sshClient == nil {
+		return errors.New("ssh is not connected")
+	}
+
 	for {
 		client, err := local.Accept()
 		if err != nil {
 			fmt.Println("Listen:", err)
-			return
+			return err
 		}
 		go s.handleConnection(client, remote)
 	}
@@ -95,6 +113,10 @@ func (s *Shell) handleConnection(client, remote net.Conn) {
 }
 
 func (s *Shell) Reverse(remoteAddr, localAddr string) error {
+	if s.sshClient == nil {
+		return errors.New("ssh is not connected")
+	}
+
 	listen, err := s.sshClient.Listen("tcp", remoteAddr)
 	if err != nil {
 		return err

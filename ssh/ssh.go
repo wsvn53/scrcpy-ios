@@ -1,12 +1,15 @@
 package gossh
 
 import (
+	"bufio"
 	"errors"
 	"fmt"
 	"golang.org/x/crypto/ssh"
 	"io"
 	"log"
 	"net"
+	"os"
+	"path/filepath"
 	"time"
 )
 
@@ -33,6 +36,10 @@ func (s *Shell) Connect(host, port, user, password string) (err error) {
 	return err
 }
 
+func (s *Shell) Connected() bool {
+	return s.sshClient != nil
+}
+
 func (s *Shell) Execute(command string) (output string, err error) {
 	if s.sshClient == nil {
 		return "", errors.New("ssh is not connected")
@@ -42,7 +49,7 @@ func (s *Shell) Execute(command string) (output string, err error) {
 	if err != nil {
 		return  "", err
 	}
-	out, err := sess.CombinedOutput(command)
+	out, err := sess.CombinedOutput("PATH=$PATH:/usr/local/bin:/usr/local/sbin " + command)
 	return  string(out), err
 }
 
@@ -144,4 +151,18 @@ func (s *Shell) reverse(remote net.Listener, localAddr string) {
 
 		go s.handleConnection(conn, local)
 	}
+}
+
+func (s *Shell) UploadFile(src string, dst string) error {
+	uploadFile, _ := os.Open(src)
+	dstDir := filepath.Dir(dst)
+	uploadCmd := fmt.Sprintf(`[ -d "%s" ] || mkdir -pv "%s"; cat > "%s"`,
+		dstDir, dstDir, dst)
+
+	sess, err := s.sshClient.NewSession()
+	if err != nil { return err }
+	sess.Stdin = bufio.NewReader(uploadFile)
+	err = sess.Run(uploadCmd)
+
+	return err
 }

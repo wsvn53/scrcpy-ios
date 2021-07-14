@@ -37,6 +37,11 @@ int scrcpy_main(int argc, char *argv[]);
                                                name:kSDLDidCreateRendererNotification object:nil];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+//    [self autoStartScrcpy];
+}
+
 - (void)setupViews {
     self.overrideUserInterfaceStyle = UIUserInterfaceStyleLight;
     
@@ -104,29 +109,63 @@ int scrcpy_main(int argc, char *argv[]);
                               port:port
                               user:user
                           password:password];
-    
-    // Disable all textfields
-    self.sshServer.enabled = NO;
-    self.sshPort.enabled = NO;
-    self.sshUser.enabled = NO;
-    self.sshPassword.enabled = NO;
-    self.adbSerial.enabled = NO;
+    [self performSelector:@selector(scrcpyMain) withObject:nil afterDelay:0];
+}
 
-    // Show indicator animation
-    self.connectButton.enabled = NO;
-    [self.indicatorView startAnimating];
-    CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.1, NO);
+- (void)autoStartScrcpy {
+    // Check SSH parameters
+    NSString *server = self.sshServer.text;
+    NSString *port   = self.sshPort.text;
+    NSString *user   = self.sshUser.text;
+    NSString *password = self.sshPassword.text;
     
-    // Because after SDL proxied didFinishLauch, PumpEvent will set to FASLE
-    // So we need to set to TRUE in order to handle UI events
-    SDL_iPhoneSetEventPump(SDL_TRUE);
+    if (server.length == 0 || port.length == 0 ||
+        user.length == 0 || password.length == 0) {
+        NSLog(@"IGNORE AutoStart scrcpy!");
+        return;
+    }
+    
+    [SSHParams setParamsWithServer:server
+                              port:port
+                              user:user
+                          password:password];
     [self performSelector:@selector(scrcpyMain) withObject:nil afterDelay:0];
 }
 
 - (void)scrcpyMain {
-    char *scrcpy_argv[4] = { "scrcpy", "-V", "debug", "-f" };
-    scrcpy_main(4, scrcpy_argv);
+    // Disable all textfields
+    [self toggleControlsEnabled:NO];
+
+    // Show indicator animation
+    [self.indicatorView startAnimating];
+    
+    CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.1, NO);
+    SDL_iPhoneSetEventPump(SDL_TRUE);
+
+    // Because after SDL proxied didFinishLauch, PumpEvent will set to FASLE
+    // So we need to set to TRUE in order to handle UI events
+    if (self.adbSerial.text == nil || self.adbSerial.text.length == 0) {
+        char *scrcpy_argv[4] = { "scrcpy", "-V", "debug", "-f" };
+        scrcpy_main(4, scrcpy_argv);
+    } else {
+        char *adb_serial = (char *)self.adbSerial.text.UTF8String;
+        char *scrcpy_argv[6] = { "scrcpy", "-V", "debug", "-f", "-s", adb_serial };
+        scrcpy_main(6, scrcpy_argv);
+    }
+    
+    [self toggleControlsEnabled:YES];
+    [self.indicatorView stopAnimating];
+    
     NSLog(@"Scrcpy STOPPED.");
+}
+
+- (void)toggleControlsEnabled:(BOOL)enabled {
+    self.sshServer.enabled = enabled;
+    self.sshPort.enabled = enabled;
+    self.sshUser.enabled = enabled;
+    self.sshPassword.enabled = enabled;
+    self.adbSerial.enabled = enabled;
+    self.connectButton.enabled = enabled;
 }
 
 - (void)resetViews {

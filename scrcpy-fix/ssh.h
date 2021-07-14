@@ -18,6 +18,8 @@ bool ssh_reverse(uint16_t port);
 @property (nonatomic, copy)     NSString    *sshUser;
 @property (nonatomic, copy)     NSString    *sshPassword;
 
+@property (nonatomic, copy)     NSString    *scrcpyServer;
+
 +(SSHParams *)sharedParams;
 +(void)setParamsWithServer:(NSString *)server
                       port:(NSString *)port

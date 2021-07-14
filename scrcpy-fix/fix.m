@@ -13,6 +13,7 @@
 #import <SDL2/SDL.h>
 #import "utils.h"
 #import "util/thread.h"
+#import "ExecStatus.h"
 
 // control wait-server thread exit
 static bool bScrcpyServerIsStopping = false;
@@ -35,7 +36,7 @@ process_execute(const char *const argv[], pid_t *pid) {
 bool
 process_check_success(process_t proc, const char *name, bool close) {
     printf("=> process_check_success: %s\n", name);
-    return true;
+    return [[ExecStatus sharedStatus] checkSuccess:name];
 }
 
 // handle process_wait to forbidden scrcpy exit

@@ -8,8 +8,8 @@ cd $BUILD_DIR;
 curl -O https://www.libsdl.org/release/SDL2-2.0.14.tar.gz;
 tar xzvf SDL*.tar.gz;
 
-xcodebuild clean build BUILD_DIR=$BUILD_DIR/build ARCHS="arm64" CONFIGURATION=Release -project SDL2-*/Xcode/SDL/SDL.xcodeproj -scheme "Static Library-iOS" -sdk iphoneos;
-xcodebuild clean build BUILD_DIR=$BUILD_DIR/build ARCHS="x86_64" CONFIGURATION=Release -project SDL2-*/Xcode/SDL/SDL.xcodeproj -scheme "Static Library-iOS" -sdk iphonesimulator;
+xcodebuild clean build OTHER_CFLAGS="-fembed-bitcode" BUILD_DIR=$BUILD_DIR/build ARCHS="arm64" CONFIGURATION=Release -project SDL2-*/Xcode/SDL/SDL.xcodeproj -scheme "Static Library-iOS" -sdk iphoneos;
+xcodebuild clean build OTHER_CFLAGS="-fembed-bitcode" BUILD_DIR=$BUILD_DIR/build ARCHS="x86_64" CONFIGURATION=Release -project SDL2-*/Xcode/SDL/SDL.xcodeproj -scheme "Static Library-iOS" -sdk iphonesimulator;
 
 lipo -create build/*/libSDL2.a -output build/libSDL2.a;
 file build/libSDL2.a;

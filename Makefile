@@ -12,7 +12,10 @@ ffmpeg:
 	cd Libs && cp -av FFmpeg-iOS/lib/* lib
 	cd Libs && rm -rf FFmpeg-iOS README.md ffmpeg-*
 
-scrcpy-init: libsdl ffmpeg
+libssh:
+	make -C ssh
+
+scrcpy-init: libsdl ffmpeg libssh
 	# generate config.h
 	cd scrcpy-src && meson x --buildtype release --strip -Db_lto=true
 	# fix build issues

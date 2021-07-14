@@ -11,16 +11,16 @@
 @implementation NSError (Alert)
 
 - (void)showAlert {
-    [self showAlertMain];
+    if ([[NSThread currentThread] isMainThread]) {
+        [self showAlertMain];
+    } else {
+        [self performSelectorOnMainThread:@selector(showAlertMain)
+                               withObject:nil
+                            waitUntilDone:YES];
+    }
 }
 
 - (void)showAlertMain {
-    static BOOL presenting = NO;
-    if (presenting == YES) {
-        return;
-    }
-    presenting = YES;
-
     NSString *errorMsg = self.userInfo[NSLocalizedDescriptionKey];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Scrcpy"
                                                                    message:errorMsg
@@ -29,9 +29,7 @@
     UIApplication *app = UIApplication.sharedApplication;
     for (UIWindow *window in app.windows) {
         if (window.isKeyWindow) {
-            [window.rootViewController presentViewController:alert animated:YES completion:^{
-                presenting = NO;
-            }];
+            [window.rootViewController presentViewController:alert animated:YES completion:nil];
         }
     }
 }

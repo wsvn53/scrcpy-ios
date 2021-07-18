@@ -8,8 +8,9 @@ import (
 
 func TestShell_Execute(t *testing.T) {
 	shell := &Shell{ }
-	fmt.Println(shell.Connect("wsen.me", "2022", "root", "root"))
+	fmt.Println(shell.Connect("mbp.wsen.me", "22", "ethan", "aauu8800"))
 	fmt.Println(shell.Execute(`pgrep -f "scrcpy[-]server" && kill $(pgrep -f "scrcpy[-]server")`))
+	fmt.Println(shell.Execute(`export; which cat`))
 }
 
 func TestShell_Forward(t *testing.T) {

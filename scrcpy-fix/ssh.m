@@ -56,7 +56,7 @@ process_t adb_reverse_remove(const char *serial, const char *device_socket_name)
     if (_scrcpyServer.length > 0) {
         return _scrcpyServer;
     }
-    _scrcpyServer = @"/usr/local/scrcpy/scrcpy-server";
+    _scrcpyServer = @"/usr/local/share/scrcpy/scrcpy-server";
     return _scrcpyServer;
 }
 

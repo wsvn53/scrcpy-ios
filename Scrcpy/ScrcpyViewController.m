@@ -9,6 +9,7 @@
 #import <SDL2/SDL.h>
 #import "ssh.h"
 #import "NSError+Alert.h"
+#import "utils.h"
 
 #define   kSDLDidCreateRendererNotification   @"kSDLDidCreateRendererNotification"
 int scrcpy_main(int argc, char *argv[]);
@@ -59,6 +60,12 @@ int scrcpy_main(int argc, char *argv[]);
     
     // IndicatorView
     [self.indicatorView stopAnimating];
+    
+    // Custom Connect Button
+    [self.connectButton setBackgroundImage:UIColorAsImage(UIColor.systemGray4Color, self.connectButton.bounds.size)
+                                  forState:(UIControlStateDisabled)];
+    [self.connectButton setBackgroundImage:UIColorAsImage(self.connectButton.backgroundColor, self.connectButton.bounds.size)
+                                  forState:(UIControlStateNormal)];
 }
 
 - (void)loadForm {

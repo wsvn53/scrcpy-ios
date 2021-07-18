@@ -8,8 +8,19 @@ cd $BUILD_DIR;
 curl -O https://www.libsdl.org/release/SDL2-2.0.14.tar.gz;
 tar xzvf SDL*.tar.gz;
 
-xcodebuild clean build OTHER_CFLAGS="-fembed-bitcode" BUILD_DIR=$BUILD_DIR/build ARCHS="arm64" CONFIGURATION=Release -project SDL2-*/Xcode/SDL/SDL.xcodeproj -scheme "Static Library-iOS" -sdk iphoneos;
-xcodebuild clean build OTHER_CFLAGS="-fembed-bitcode" BUILD_DIR=$BUILD_DIR/build ARCHS="x86_64" CONFIGURATION=Release -project SDL2-*/Xcode/SDL/SDL.xcodeproj -scheme "Static Library-iOS" -sdk iphonesimulator;
+sed -i '' "s#0.000002#0.0015#g" SDL*/src/video/uikit/SDL_uikitevents.m;
+grep "CFTimeInterval seconds" SDL*/src/video/uikit/SDL_uikitevents.m;
+
+xcodebuild clean build OTHER_CFLAGS="-fembed-bitcode" \
+	BUILD_DIR=$BUILD_DIR/build \
+	ARCHS="arm64" \
+	CONFIGURATION=Release \
+	-project SDL2-*/Xcode/SDL/SDL.xcodeproj -scheme "Static Library-iOS" -sdk iphoneos;
+xcodebuild clean build OTHER_CFLAGS="-fembed-bitcode" \
+	BUILD_DIR=$BUILD_DIR/build \
+	ARCHS="x86_64" \
+	CONFIGURATION=Release \
+	-project SDL2-*/Xcode/SDL/SDL.xcodeproj -scheme "Static Library-iOS" -sdk iphonesimulator;
 
 lipo -create build/*/libSDL2.a -output build/libSDL2.a;
 file build/libSDL2.a;

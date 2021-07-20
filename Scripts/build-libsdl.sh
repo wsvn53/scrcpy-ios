@@ -8,7 +8,7 @@ cd $BUILD_DIR;
 curl -O https://www.libsdl.org/release/SDL2-2.0.14.tar.gz;
 tar xzvf SDL*.tar.gz;
 
-sed -i '' "s#0.000002#0.0015#g" SDL*/src/video/uikit/SDL_uikitevents.m;
+# sed -i '' "s#0.000002#0.005#g" SDL*/src/video/uikit/SDL_uikitevents.m;
 grep "CFTimeInterval seconds" SDL*/src/video/uikit/SDL_uikitevents.m;
 
 xcodebuild clean build OTHER_CFLAGS="-fembed-bitcode" \

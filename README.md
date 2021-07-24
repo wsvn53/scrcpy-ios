@@ -4,9 +4,9 @@
 
 Scrcpy-iOS.app is a remote control tool for Android Phones based on [https://github.com/Genymobile/scrcpy].
 
-screenshot
+![screenshot](https://github.com/wsvn53/scrcpy-ios/blob/main/screenshots/screenshots.jpg?raw=true)
 
-###Usage
+### Usage
 
 #### 1. Setup a ssh server
 

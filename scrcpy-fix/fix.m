@@ -36,6 +36,7 @@ process_execute(const char *const argv[], pid_t *pid) {
 bool
 process_check_success(process_t proc, const char *name, bool close) {
     printf("=> process_check_success: %s\n", name);
+    if (proc < 0) return false;
     return [[ExecStatus sharedStatus] checkSuccess:name];
 }
 
@@ -43,7 +44,6 @@ process_check_success(process_t proc, const char *name, bool close) {
 exit_code_t
 process_wait(pid_t pid, bool close) {
     // use sleep to fake wait status
-    // TODO: add cancel signal or control flag
     while (bScrcpyServerIsStopping == false) {
         sleep(2);
     }

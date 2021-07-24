@@ -45,9 +45,7 @@ process_t adb_reverse_remove(const char *serial, const char *device_socket_name)
 - (void)loadDefaults {
     self.sshServer = [[NSUserDefaults standardUserDefaults] valueForKey:@"ssh_server"];
     self.sshPort = [[NSUserDefaults standardUserDefaults] valueForKey:@"ssh_port"];
-    if (self.sshPort == nil || self.sshPort.length == 0) {
-        self.sshPort = @"22";
-    }
+    self.sshPort = (self.sshPort == nil || self.sshPort.length == 0) ? @"22" : self.sshPort;
     self.sshUser = [[NSUserDefaults standardUserDefaults] valueForKey:@"ssh_user"];
     self.sshPassword = [[NSUserDefaults standardUserDefaults] valueForKey:@"ssh_password"];
 }
@@ -87,6 +85,7 @@ GosshShell *sshShell(void) {
     if (error != nil) {
         NSLog(@"Error: %@", error);
         [error showAlert];
+        return nil;
     }
     return shell;
 }
@@ -96,7 +95,7 @@ bool ssh_upload_scrcpyserver(void) {
     NSError *error = nil;
     NSString *scrcpyDst = [SSHParams sharedParams].scrcpyServer;
     BOOL success = [sshShell() uploadFile:scrcpyServer dst:scrcpyDst error:&error];
-    if (success == NO && error != nil) {
+    if (success == NO || error != nil) {
         [error showAlert];
         return false;
     }

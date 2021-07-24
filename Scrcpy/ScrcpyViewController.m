@@ -14,6 +14,11 @@
 #define   kSDLDidCreateRendererNotification   @"kSDLDidCreateRendererNotification"
 int scrcpy_main(int argc, char *argv[]);
 
+#define   CheckParam(var, name)    if (var == nil || var.length == 0) { \
+    [self showAlert:[name stringByAppendingString:@" is required!"]];    \
+    return;     \
+}
+
 @interface ScrcpyViewController ()
 
 @property (weak, nonatomic) IBOutlet UIButton *connectButton;
@@ -51,10 +56,7 @@ int scrcpy_main(int argc, char *argv[]);
     [navBarAppearance configureWithOpaqueBackground];
     navBarAppearance.titleTextAttributes = @{NSForegroundColorAttributeName: UIColor.whiteColor};
     navBarAppearance.largeTitleTextAttributes = @{NSForegroundColorAttributeName: UIColor.whiteColor};
-    navBarAppearance.backgroundColor = [UIColor colorWithRed:0x33/255.f
-                                                       green:0x99/255.f
-                                                        blue:0x33/255.f
-                                                       alpha:1.0f];;
+    navBarAppearance.backgroundColor = [UIColor colorWithRed:0x33/255.f green:0x99/255.f blue:0x33/255.f alpha:1.0f];
     self.navigationController.navigationBar.standardAppearance = navBarAppearance;
     self.navigationController.navigationBar.scrollEdgeAppearance = navBarAppearance;
     
@@ -62,10 +64,8 @@ int scrcpy_main(int argc, char *argv[]);
     [self.indicatorView stopAnimating];
     
     // Custom Connect Button
-    [self.connectButton setBackgroundImage:UIColorAsImage(UIColor.systemGray4Color, self.connectButton.bounds.size)
-                                  forState:(UIControlStateDisabled)];
-    [self.connectButton setBackgroundImage:UIColorAsImage(self.connectButton.backgroundColor, self.connectButton.bounds.size)
-                                  forState:(UIControlStateNormal)];
+    [self.connectButton setBackgroundImage:UIColorAsImage(UIColor.systemGray4Color, self.connectButton.bounds.size) forState:(UIControlStateDisabled)];
+    [self.connectButton setBackgroundImage:UIColorAsImage(self.connectButton.backgroundColor, self.connectButton.bounds.size) forState:(UIControlStateNormal)];
 }
 
 - (void)loadForm {
@@ -86,36 +86,19 @@ int scrcpy_main(int argc, char *argv[]);
 }
 
 - (IBAction)startScrcpy:(id)sender {
-    // Check SSH parameters
     NSString *server = self.sshServer.text;
     NSString *port   = self.sshPort.text;
     NSString *user   = self.sshUser.text;
     NSString *password = self.sshPassword.text;
     
-    if (server == nil || server.length == 0) {
-        [self showAlert:@"SSH Server is required!"];
-        return;
-    }
+    // Check & Save SSH connnection parameters
+    CheckParam(server,  @"ssh server");
+    CheckParam(port,    @"ssh port");
+    CheckParam(user,    @"ssh user");
+    CheckParam(password,    @"password");
+    [SSHParams setParamsWithServer:server port:port user:user password:password];
     
-    if (port == nil || port.length == 0) {
-        [self showAlert:@"SSH Port is required!"];
-        return;
-    }
-
-    if (user == nil || user.length == 0) {
-        [self showAlert:@"SSH User is required!"];
-        return;
-    }
-    
-    if (password == nil || password.length == 0) {
-        [self showAlert:@"SSH Password is required!"];
-        return;
-    }
-
-    [SSHParams setParamsWithServer:server
-                              port:port
-                              user:user
-                          password:password];
+    // Start scrcpy by detach from current stack
     [self performSelector:@selector(scrcpyMain) withObject:nil afterDelay:0];
 }
 
@@ -132,10 +115,9 @@ int scrcpy_main(int argc, char *argv[]);
         return;
     }
     
-    [SSHParams setParamsWithServer:server
-                              port:port
-                              user:user
-                          password:password];
+    [SSHParams setParamsWithServer:server port:port user:user password:password];
+    
+    // Start scrcpy by detach from current stack
     [self performSelector:@selector(scrcpyMain) withObject:nil afterDelay:0];
 }
 

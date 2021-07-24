@@ -43,11 +43,6 @@ int scrcpy_main(int argc, char *argv[]);
                                                name:kSDLDidCreateRendererNotification object:nil];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-//    [self autoStartScrcpy];
-}
-
 - (void)setupViews {
     self.overrideUserInterfaceStyle = UIUserInterfaceStyleLight;
     
@@ -66,6 +61,12 @@ int scrcpy_main(int argc, char *argv[]);
     // Custom Connect Button
     [self.connectButton setBackgroundImage:UIColorAsImage(UIColor.systemGray4Color, self.connectButton.bounds.size) forState:(UIControlStateDisabled)];
     [self.connectButton setBackgroundImage:UIColorAsImage(self.connectButton.backgroundColor, self.connectButton.bounds.size) forState:(UIControlStateNormal)];
+    
+    // Text Editing Delegate
+    self.sshServer.delegate = (id<UITextFieldDelegate>)self;
+    self.sshPort.delegate = (id<UITextFieldDelegate>)self;
+    self.sshUser.delegate = (id<UITextFieldDelegate>)self;
+    self.sshPassword.delegate = (id<UITextFieldDelegate>)self;
 }
 
 - (void)loadForm {
@@ -121,6 +122,22 @@ int scrcpy_main(int argc, char *argv[]);
     [self performSelector:@selector(scrcpyMain) withObject:nil afterDelay:0];
 }
 
+- (void)toggleControlsEnabled:(BOOL)enabled {
+    self.sshServer.enabled = enabled;
+    self.sshPort.enabled = enabled;
+    self.sshUser.enabled = enabled;
+    self.sshPassword.enabled = enabled;
+    self.adbSerial.enabled = enabled;
+    self.connectButton.enabled = enabled;
+}
+
+- (void)resetViews {
+    self.connectButton.enabled = YES;
+    [self.indicatorView stopAnimating];
+}
+
+#pragma mark - Scrcpy
+
 - (void)scrcpyMain {
     // Disable all textfields
     [self toggleControlsEnabled:NO];
@@ -148,18 +165,11 @@ int scrcpy_main(int argc, char *argv[]);
     NSLog(@"Scrcpy STOPPED.");
 }
 
-- (void)toggleControlsEnabled:(BOOL)enabled {
-    self.sshServer.enabled = enabled;
-    self.sshPort.enabled = enabled;
-    self.sshUser.enabled = enabled;
-    self.sshPassword.enabled = enabled;
-    self.adbSerial.enabled = enabled;
-    self.connectButton.enabled = enabled;
-}
+#pragma mark - UITextFieldDelegate
 
-- (void)resetViews {
-    self.connectButton.enabled = YES;
-    [self.indicatorView stopAnimating];
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
 }
 
 @end

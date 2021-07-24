@@ -29,7 +29,7 @@
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="SSH Server Address" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Yd6-Ke-zfT">
                                                     <rect key="frame" x="114" y="5" width="240" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL" returnKeyType="next"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL" returnKeyType="continue"/>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Server:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9SS-WA-QTY">
                                                     <rect key="frame" x="20" y="11" width="55" height="21"/>
@@ -59,7 +59,7 @@
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="22" placeholder="SSH Server Port" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sA7-eX-USo">
                                                     <rect key="frame" x="96" y="5" width="258" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" returnKeyType="next"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" returnKeyType="continue"/>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Port:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gP3-gZ-YAc">
                                                     <rect key="frame" x="20" y="11" width="37" height="21"/>
@@ -89,7 +89,7 @@
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="SSH User" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l41-O2-aAr">
                                                     <rect key="frame" x="100" y="5" width="254" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet" returnKeyType="next"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet" returnKeyType="continue"/>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yQd-SR-JUJ">
                                                     <rect key="frame" x="20" y="11" width="41" height="21"/>
@@ -119,7 +119,7 @@
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="SSH Password" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8lV-eW-UQ7">
                                                     <rect key="frame" x="137" y="5" width="217" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="continue" secureTextEntry="YES"/>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BT4-L9-az2">
                                                     <rect key="frame" x="20" y="11" width="78" height="21"/>

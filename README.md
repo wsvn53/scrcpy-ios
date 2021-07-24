@@ -61,7 +61,7 @@ Notice, the `libssh` is a framework written by golang, so you need to install go
 
 Use Xcode to open Scrcpy.xcodeproj, choose target to Build and Run directly.
 
-### Resgin
+### Re-Codesgin
 
 If you dont want to build with Xcode, you can download Scrcpy.ipa from https://github.com/wsvn53/scrcpy-ios/releases, and re-codesign it. 
 

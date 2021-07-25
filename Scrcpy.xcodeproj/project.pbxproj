@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AA2D5590269DAAE1009901C9 /* ExecStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2D558F269DAAE1009901C9 /* ExecStatus.m */; };
+		AA5D7F0D26ADB9350091288D /* SDL_uikitviewcontroller+HomeIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5D7F0C26ADB9350091288D /* SDL_uikitviewcontroller+HomeIndicator.m */; };
 		AA7766832698A5AB0025990D /* ScrcpyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7766822698A5AB0025990D /* ScrcpyViewController.m */; };
 		AA8C04C7269C8FE0001D9A4F /* NSError+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8C04C6269C8FE0001D9A4F /* NSError+Alert.m */; };
 		AAA221A026959AA200307990 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAA2219F26959AA200307990 /* Assets.xcassets */; };
@@ -74,6 +75,8 @@
 /* Begin PBXFileReference section */
 		AA2D558E269DAAE1009901C9 /* ExecStatus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExecStatus.h; sourceTree = "<group>"; };
 		AA2D558F269DAAE1009901C9 /* ExecStatus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExecStatus.m; sourceTree = "<group>"; };
+		AA5D7F0B26ADB9350091288D /* SDL_uikitviewcontroller+HomeIndicator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SDL_uikitviewcontroller+HomeIndicator.h"; sourceTree = "<group>"; };
+		AA5D7F0C26ADB9350091288D /* SDL_uikitviewcontroller+HomeIndicator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SDL_uikitviewcontroller+HomeIndicator.m"; sourceTree = "<group>"; };
 		AA7766812698A5AB0025990D /* ScrcpyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrcpyViewController.h; sourceTree = "<group>"; };
 		AA7766822698A5AB0025990D /* ScrcpyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrcpyViewController.m; sourceTree = "<group>"; };
 		AA8C04C5269C8FE0001D9A4F /* NSError+Alert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSError+Alert.h"; sourceTree = "<group>"; };
@@ -215,6 +218,8 @@
 			children = (
 				AA7766812698A5AB0025990D /* ScrcpyViewController.h */,
 				AA7766822698A5AB0025990D /* ScrcpyViewController.m */,
+				AA5D7F0B26ADB9350091288D /* SDL_uikitviewcontroller+HomeIndicator.h */,
+				AA5D7F0C26ADB9350091288D /* SDL_uikitviewcontroller+HomeIndicator.m */,
 				AA8C04C5269C8FE0001D9A4F /* NSError+Alert.h */,
 				AA8C04C6269C8FE0001D9A4F /* NSError+Alert.m */,
 				AAA2219F26959AA200307990 /* Assets.xcassets */,
@@ -493,6 +498,7 @@
 			files = (
 				AAA221A626959AA200307990 /* main.m in Sources */,
 				AA7766832698A5AB0025990D /* ScrcpyViewController.m in Sources */,
+				AA5D7F0D26ADB9350091288D /* SDL_uikitviewcontroller+HomeIndicator.m in Sources */,
 				AA8C04C7269C8FE0001D9A4F /* NSError+Alert.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -709,7 +715,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/Libs/lib";
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				OTHER_LDFLAGS = (
 					"-lSDL2",
 					"-lavformat",
@@ -775,7 +781,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/Libs/lib";
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-lSDL2",

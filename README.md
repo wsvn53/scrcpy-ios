@@ -41,6 +41,19 @@ Some parameters is required:
 
 And then click `Connect`. If you encounter errors, please check the ssh settings or adb and Android phone settings.
 
+### 4. About FULL SCREEN gesture
+
+From version v1.2, Scrcpy.app now support full-screen indicator gesture:
+
+* Swipe **Once** will trigger Android navigation gesture
+* Swipe **Twice** will go back to iOS home screen
+
+##### Note:
+
+After your first swipe, iOS home indicator will become **BLACK**, if you swipe again quickly, it will go back to iOS home screen.
+
+If you want to continue trigger Android navigation gesture, you need to wait the indicator become **GRAY**.
+
 ### AppStore
 
 AppStore version is under reviewing. Before aproved you can follow the BUILD instructions to run on your iPhone devices.

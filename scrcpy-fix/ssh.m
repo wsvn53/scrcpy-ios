@@ -8,7 +8,7 @@
 #import "ssh.h"
 #import <Gossh/Gossh.h>
 #import "NSError+Alert.h"
-#import "ExecStatus.h"
+#import "config.h"
 
 process_t adb_reverse_remove(const char *serial, const char *device_socket_name);
 
@@ -26,11 +26,14 @@ process_t adb_reverse_remove(const char *serial, const char *device_socket_name)
 +(void)setParamsWithServer:(NSString *)server
                       port:(NSString *)port
                       user:(NSString *)user
-                  password:(NSString *)password {
+                  password:(NSString *)password
+                  serial:(NSString *)serial
+{
     [self sharedParams].sshServer = server;
     [self sharedParams].sshPort   = port;
     [self sharedParams].sshUser   = user;
     [self sharedParams].sshPassword = password;
+    [self sharedParams].adbSerial = serial;
     
     [[self sharedParams] saveDefaults];
 }
@@ -40,6 +43,7 @@ process_t adb_reverse_remove(const char *serial, const char *device_socket_name)
     [[NSUserDefaults standardUserDefaults] setValue:self.sshPort forKey:@"ssh_port"];
     [[NSUserDefaults standardUserDefaults] setValue:self.sshUser forKey:@"ssh_user"];
     [[NSUserDefaults standardUserDefaults] setValue:self.sshPassword forKey:@"ssh_password"];
+    [[NSUserDefaults standardUserDefaults] setValue:self.adbSerial forKey:@"adb_serial"];
 }
 
 - (void)loadDefaults {
@@ -48,13 +52,15 @@ process_t adb_reverse_remove(const char *serial, const char *device_socket_name)
     self.sshPort = (self.sshPort == nil || self.sshPort.length == 0) ? @"22" : self.sshPort;
     self.sshUser = [[NSUserDefaults standardUserDefaults] valueForKey:@"ssh_user"];
     self.sshPassword = [[NSUserDefaults standardUserDefaults] valueForKey:@"ssh_password"];
+    self.adbSerial = [[NSUserDefaults standardUserDefaults] valueForKey:@"adb_serial"];
 }
 
 - (NSString *)scrcpyServer {
     if (_scrcpyServer.length > 0) {
         return _scrcpyServer;
     }
-    _scrcpyServer = @"/usr/local/share/scrcpy/scrcpy-server";
+    NSString *prefixDir = [NSString stringWithUTF8String:PREFIX];
+    _scrcpyServer = [prefixDir stringByAppendingString:@"/share/scrcpy/scrcpy-server"];
     return _scrcpyServer;
 }
 
@@ -72,16 +78,9 @@ GosshShell *sshShell(void) {
         return shell;
     }
     
-    // reset error status
-    [[ExecStatus sharedStatus] resetStatus];
-    
     NSError *error;
     SSHParams *sshParams = [SSHParams sharedParams];
-    [shell connect:sshParams.sshServer
-              port:sshParams.sshPort
-              user:sshParams.sshUser
-          password:sshParams.sshPassword
-             error:&error];
+    [shell connect:sshParams.sshServer port:sshParams.sshPort user:sshParams.sshUser password:sshParams.sshPassword error:&error];
     if (error != nil) {
         NSLog(@"Error: %@", error);
         [error showAlert];
@@ -90,30 +89,40 @@ GosshShell *sshShell(void) {
     return shell;
 }
 
+NSError *errorAppendDesc(NSError *error, NSString *desc) {
+    NSString *newDesc = error.userInfo ? error.userInfo[NSLocalizedDescriptionKey] : @"";
+    newDesc = [newDesc stringByAppendingFormat:@"\n\n%@", desc];
+    return [NSError errorWithDomain:error.domain?:@"Scrcpy" code:error.code userInfo:@{
+        NSLocalizedDescriptionKey : newDesc,
+    }];
+}
+
 bool ssh_upload_scrcpyserver(void) {
     NSString *scrcpyServer = [[NSBundle mainBundle] pathForResource:@"scrcpy-server" ofType:@""];
     NSError *error = nil;
     NSString *scrcpyDst = [SSHParams sharedParams].scrcpyServer;
     BOOL success = [sshShell() uploadFile:scrcpyServer dst:scrcpyDst error:&error];
     if (success == NO || error != nil) {
-        [error showAlert];
+        NSError *newErr = errorAppendDesc(error, @"Please check the PERMISSION of remote scrcpy-server path.");
+        [newErr showAlert];
         return false;
     }
-    NSLog(@"Upload scrcpy-server: %@", scrcpyDst);
+    NSLog(@"Uploaded: %@", scrcpyDst);
     return true;
 }
 
 enum process_result ssh_exec_command(NSString *command) {
     NSLog(@"Exec:\n%@", command);
-    NSError *error;
-    NSString *output = [sshShell() execute:command error:&error];
-    if (output != nil && output.length > 0) {
-        NSLog(@"Output:\n%@", output);
+    GosshShellStatus *status = [sshShell() execute:command];
+    if (status.output.length > 0) {
+        NSLog(@"Output:\n%@", status.output);
     }
-    if (error != nil) {
-        NSLog(@"Error:\n%@", error);
-        [error showAlert];
-        [[ExecStatus sharedStatus] setError:error forCommand:command];
+    if (status.err != nil) {
+        NSLog(@"Error:\n%@", status.err);
+        NSError *newErr = errorAppendDesc(status.err, status.command);
+        newErr = errorAppendDesc(newErr, status.output);
+        [[ExecStatus sharedStatus] setError:newErr forCommand:command];
+        [newErr showAlert];
         return PROCESS_ERROR_GENERIC;
     }
     return PROCESS_SUCCESS;
@@ -167,7 +176,8 @@ bool ssh_reverse(uint16_t port)
     NSError *error = nil;
     
     // force exit other clients first
-    NSString *killedPids = [sshShell() execute:@"pgrep -f \"scrcpy[-]server\" && kill `pgrep -f \"scrcpy[-]server\"`" error:&error];
+    GosshShellStatus *status = [sshShell() execute:@"pgrep -f \"scrcpy[-]server\" && kill `pgrep -f \"scrcpy[-]server\"`"];
+    NSString *killedPids = status.output;
     
     // if command returns error, there's no other clients
     // otherwise, we need wait a moment

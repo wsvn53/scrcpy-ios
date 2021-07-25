@@ -21,6 +21,12 @@ type Shell struct {
 	sshClient 	*ssh.Client
 }
 
+type ShellStatus struct {
+	Err 	error
+	Output  string
+	Command string
+}
+
 func (s *Shell) Connect(host, port, user, password string) (err error) {
 	sshConfig := &ssh.ClientConfig{
 		Timeout: 		time.Second * 60,
@@ -40,17 +46,27 @@ func (s *Shell) Connected() bool {
 	return s.sshClient != nil
 }
 
-func (s *Shell) Execute(command string) (output string, err error) {
+func (s *Shell) Execute(command string) *ShellStatus {
 	if s.sshClient == nil {
-		return "", errors.New("ssh is not connected")
+		return &ShellStatus {
+			Err: errors.New("ssh is not connected"),
+			Command: command,
+		}
 	}
 
 	sess, err := s.sshClient.NewSession()
 	if err != nil {
-		return  "", err
+		return &ShellStatus{
+			Err:     err,
+			Command: command,
+		}
 	}
-	out, err := sess.CombinedOutput("PATH=$PATH:/usr/local/bin:/usr/local/sbin " + command)
-	return  string(out), err
+	out, err := sess.CombinedOutput("PATH=$PATH:/usr/local/bin:/usr/local/sbin:/opt/homebrew/bin " + command)
+	return &ShellStatus{
+		Err:     err,
+		Output:  string(out),
+		Command: command,
+	}
 }
 
 func (s *Shell) Forward(localAddr, remoteAddr string) error {

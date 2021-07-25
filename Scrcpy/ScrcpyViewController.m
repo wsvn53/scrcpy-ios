@@ -67,6 +67,7 @@ int scrcpy_main(int argc, char *argv[]);
     self.sshPort.delegate = (id<UITextFieldDelegate>)self;
     self.sshUser.delegate = (id<UITextFieldDelegate>)self;
     self.sshPassword.delegate = (id<UITextFieldDelegate>)self;
+    self.adbSerial.delegate = (id<UITextFieldDelegate>)self;
 }
 
 - (void)loadForm {
@@ -75,6 +76,7 @@ int scrcpy_main(int argc, char *argv[]);
     self.sshPort.text = [SSHParams sharedParams].sshPort;
     self.sshUser.text = [SSHParams sharedParams].sshUser;
     self.sshPassword.text = [SSHParams sharedParams].sshPassword;
+    self.adbSerial.text = [SSHParams sharedParams].adbSerial;
 }
 
 #pragma mark - Actions
@@ -91,32 +93,17 @@ int scrcpy_main(int argc, char *argv[]);
     NSString *port   = self.sshPort.text;
     NSString *user   = self.sshUser.text;
     NSString *password = self.sshPassword.text;
+    NSString *serial = self.adbSerial.text;
     
     // Check & Save SSH connnection parameters
     CheckParam(server,  @"ssh server");
     CheckParam(port,    @"ssh port");
     CheckParam(user,    @"ssh user");
     CheckParam(password,    @"password");
-    [SSHParams setParamsWithServer:server port:port user:user password:password];
+    [SSHParams setParamsWithServer:server port:port user:user password:password serial:serial];
     
-    // Start scrcpy by detach from current stack
-    [self performSelector:@selector(scrcpyMain) withObject:nil afterDelay:0];
-}
-
-- (void)autoStartScrcpy {
-    // Check SSH parameters
-    NSString *server = self.sshServer.text;
-    NSString *port   = self.sshPort.text;
-    NSString *user   = self.sshUser.text;
-    NSString *password = self.sshPassword.text;
-    
-    if (server.length == 0 || port.length == 0 ||
-        user.length == 0 || password.length == 0) {
-        NSLog(@"IGNORE AutoStart scrcpy!");
-        return;
-    }
-    
-    [SSHParams setParamsWithServer:server port:port user:user password:password];
+    // reset error status
+    [[ExecStatus sharedStatus] resetStatus];
     
     // Start scrcpy by detach from current stack
     [self performSelector:@selector(scrcpyMain) withObject:nil afterDelay:0];

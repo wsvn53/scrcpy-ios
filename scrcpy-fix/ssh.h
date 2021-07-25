@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import <util/process.h>
+#import "ExecStatus.h"
 
 enum process_result ssh_exec(const char *const argv[]);
 bool ssh_forward(const char *local_addr, const char *remote_addr);
@@ -18,11 +19,13 @@ bool ssh_reverse(uint16_t port);
 @property (nonatomic, copy)     NSString    *sshUser;
 @property (nonatomic, copy)     NSString    *sshPassword;
 
+@property (nonatomic, copy)     NSString    *adbSerial;
 @property (nonatomic, copy)     NSString    *scrcpyServer;
 
 +(SSHParams *)sharedParams;
 +(void)setParamsWithServer:(NSString *)server
                       port:(NSString *)port
                       user:(NSString *)user
-                  password:(NSString *)password;
+                  password:(NSString *)password
+                  serial:(NSString *)serial;
 @end

@@ -24,7 +24,7 @@ scrcpy-init:
 	cd scrcpy-src && meson x --buildtype release --strip -Db_lto=true
 	# fix build issues
 	# -> remove windows platform code
-	rm -v scrcpy-src/app/src/sys/win/process.c
+	rm -v scrcpy-src/app/src/sys/win/process.c || echo "=> ALREADY REMOVED"
 	# -> change PREFIX to /tmp
 	grep "undef PREFIX" ./scrcpy-src/x/app/config.h || echo "#undef PREFIX" >> ./scrcpy-src/x/app/config.h
 	grep "/tmp" ./scrcpy-src/x/app/config.h || echo "#define PREFIX \"/tmp\"" >> ./scrcpy-src/x/app/config.h

@@ -12,12 +12,12 @@
 
 process_t adb_reverse_remove(const char *serial, const char *device_socket_name);
 
-@implementation SSHParams
+@implementation ScrcpyParams
 
-+(SSHParams *)sharedParams {
-    static SSHParams *sshParams = nil;
++(ScrcpyParams *)sharedParams {
+    static ScrcpyParams *sshParams = nil;
     if (sshParams == nil) {
-        sshParams = [[SSHParams alloc] init];
+        sshParams = [[ScrcpyParams alloc] init];
         [sshParams loadDefaults];
     }
     return sshParams;
@@ -64,6 +64,24 @@ process_t adb_reverse_remove(const char *serial, const char *device_socket_name)
     return _scrcpyServer;
 }
 
+- (NSString *)coreVersion {
+    if (_coreVersion.length > 0) {
+        return _coreVersion;
+    }
+    _coreVersion = [NSString stringWithUTF8String:SCRCPY_VERSION];
+    return _coreVersion;
+}
+
+- (NSString *)appVersion {
+    if (_appVersion.length > 0) {
+        return _appVersion;
+    }
+    NSString *shortVersion = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    NSString *buildVersion = [NSBundle.mainBundle objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
+    _appVersion = [NSString stringWithFormat:@"v%@+%@", shortVersion, buildVersion];
+    return _appVersion;
+}
+
 @end
 
 GosshShell *sshShell(void) {
@@ -79,7 +97,7 @@ GosshShell *sshShell(void) {
     }
     
     NSError *error;
-    SSHParams *sshParams = [SSHParams sharedParams];
+    ScrcpyParams *sshParams = [ScrcpyParams sharedParams];
     [shell connect:sshParams.sshServer port:sshParams.sshPort user:sshParams.sshUser password:sshParams.sshPassword error:&error];
     if (error != nil) {
         NSLog(@"Error: %@", error);
@@ -100,7 +118,7 @@ NSError *errorAppendDesc(NSError *error, NSString *desc) {
 bool ssh_upload_scrcpyserver(void) {
     NSString *scrcpyServer = [[NSBundle mainBundle] pathForResource:@"scrcpy-server" ofType:@""];
     NSError *error = nil;
-    NSString *scrcpyDst = [SSHParams sharedParams].scrcpyServer;
+    NSString *scrcpyDst = [ScrcpyParams sharedParams].scrcpyServer;
     BOOL success = [sshShell() uploadFile:scrcpyServer dst:scrcpyDst error:&error];
     if (success == NO || error != nil) {
         NSError *newErr = errorAppendDesc(error, @"Please check the PERMISSION of remote scrcpy-server path.");

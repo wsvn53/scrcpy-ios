@@ -30,6 +30,8 @@ int scrcpy_main(int argc, char *argv[]);
 @property (weak, nonatomic) IBOutlet UITextField *sshPassword;
 @property (weak, nonatomic) IBOutlet UITextField *adbSerial;
 @property (weak, nonatomic) IBOutlet UILabel *scrcpyServer;
+@property (weak, nonatomic) IBOutlet UILabel *coreVersion;
+@property (weak, nonatomic) IBOutlet UILabel *appVersion;
 
 @end
 
@@ -73,12 +75,14 @@ int scrcpy_main(int argc, char *argv[]);
 
 - (void)loadForm {
     // Load form UserDefaults
-    self.sshServer.text = [SSHParams sharedParams].sshServer;
-    self.sshPort.text = [SSHParams sharedParams].sshPort;
-    self.sshUser.text = [SSHParams sharedParams].sshUser;
-    self.sshPassword.text = [SSHParams sharedParams].sshPassword;
-    self.adbSerial.text = [SSHParams sharedParams].adbSerial;
-    self.scrcpyServer.text = [SSHParams sharedParams].scrcpyServer;
+    self.sshServer.text = ScrcpyParams.sharedParams.sshServer;
+    self.sshPort.text = ScrcpyParams.sharedParams.sshPort;
+    self.sshUser.text = ScrcpyParams.sharedParams.sshUser;
+    self.sshPassword.text = ScrcpyParams.sharedParams.sshPassword;
+    self.adbSerial.text = ScrcpyParams.sharedParams.adbSerial;
+    self.scrcpyServer.text = ScrcpyParams.sharedParams.scrcpyServer;
+    self.coreVersion.text = ScrcpyParams.sharedParams.coreVersion;
+    self.appVersion.text = ScrcpyParams.sharedParams.appVersion;
 }
 
 #pragma mark - Actions
@@ -102,7 +106,7 @@ int scrcpy_main(int argc, char *argv[]);
     CheckParam(port,    @"ssh port");
     CheckParam(user,    @"ssh user");
     CheckParam(password,    @"password");
-    [SSHParams setParamsWithServer:server port:port user:user password:password serial:serial];
+    [ScrcpyParams setParamsWithServer:server port:port user:user password:password serial:serial];
     
     // reset error status
     [[ExecStatus sharedStatus] resetStatus];
@@ -166,7 +170,7 @@ int scrcpy_main(int argc, char *argv[]);
     NSURLSession *session = [NSURLSession sessionWithConfiguration:sessConfiguration];
     static NSURLSessionStreamTask *streamTask = nil;
     streamTask = [session streamTaskWithHostName:host port:port];
-    [streamTask readDataOfMinLength:1 maxLength:1 timeout:30.f completionHandler:^(NSData * _Nullable_result data, BOOL atEOF, NSError * _Nullable error) {
+    [streamTask readDataOfMinLength:1 maxLength:1 timeout:30.f completionHandler:^(NSData *data, BOOL atEOF, NSError *error) {
         NSLog(@"Data: %@", data);
         NSLog(@"Error: %@", error);
         

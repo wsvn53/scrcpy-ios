@@ -17,7 +17,9 @@ ffmpeg:
 libssh:
 	make -C ssh
 
-scrcpy-init: libsdl ffmpeg libssh
+scrcpy-init:
+	# checkout scrcpy sources
+	git submodule update --init --recursive
 	# generate config.h
 	cd scrcpy-src && meson x --buildtype release --strip -Db_lto=true
 	# fix build issues

@@ -29,6 +29,7 @@ int scrcpy_main(int argc, char *argv[]);
 @property (weak, nonatomic) IBOutlet UITextField *sshUser;
 @property (weak, nonatomic) IBOutlet UITextField *sshPassword;
 @property (weak, nonatomic) IBOutlet UITextField *adbSerial;
+@property (weak, nonatomic) IBOutlet UILabel *scrcpyServer;
 
 @end
 
@@ -77,6 +78,7 @@ int scrcpy_main(int argc, char *argv[]);
     self.sshUser.text = [SSHParams sharedParams].sshUser;
     self.sshPassword.text = [SSHParams sharedParams].sshPassword;
     self.adbSerial.text = [SSHParams sharedParams].adbSerial;
+    self.scrcpyServer.text = [SSHParams sharedParams].scrcpyServer;
 }
 
 #pragma mark - Actions
@@ -105,8 +107,18 @@ int scrcpy_main(int argc, char *argv[]);
     // reset error status
     [[ExecStatus sharedStatus] resetStatus];
     
+    // Disable all textfields
+    [self toggleControlsEnabled:NO];
+
+    // Show indicator animation
+    [self.indicatorView startAnimating];
+    
     // Start scrcpy by detach from current stack
-    [self performSelector:@selector(scrcpyMain) withObject:nil afterDelay:0];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [self preConnectWithLocalNetwork:server port:[port integerValue] completion:^{
+            [self performSelectorOnMainThread:@selector(scrcpyMain) withObject:nil waitUntilDone:NO];
+        }];
+    });
 }
 
 - (void)toggleControlsEnabled:(BOOL)enabled {
@@ -126,12 +138,6 @@ int scrcpy_main(int argc, char *argv[]);
 #pragma mark - Scrcpy
 
 - (void)scrcpyMain {
-    // Disable all textfields
-    [self toggleControlsEnabled:NO];
-
-    // Show indicator animation
-    [self.indicatorView startAnimating];
-    
     CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.1, NO);
     SDL_iPhoneSetEventPump(SDL_TRUE);
 
@@ -150,6 +156,30 @@ int scrcpy_main(int argc, char *argv[]);
     [self.indicatorView stopAnimating];
     
     NSLog(@"Scrcpy STOPPED.");
+}
+
+#pragma mark - Utils
+
+- (void)preConnectWithLocalNetwork:(NSString *)host port:(NSInteger)port completion:(void(^)(void))completion {
+    NSURLSessionConfiguration *sessConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    sessConfiguration.waitsForConnectivity = YES;
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:sessConfiguration];
+    static NSURLSessionStreamTask *streamTask = nil;
+    streamTask = [session streamTaskWithHostName:host port:port];
+    [streamTask readDataOfMinLength:1 maxLength:1 timeout:30.f completionHandler:^(NSData * _Nullable_result data, BOOL atEOF, NSError * _Nullable error) {
+        NSLog(@"Data: %@", data);
+        NSLog(@"Error: %@", error);
+        
+        // No errors, user allowed Local Network permission
+        if (error == nil) {
+            completion();
+            return;
+        }
+        
+        // Otherwise, show error message
+        [error showAlert];
+    }];
+    [streamTask resume];
 }
 
 #pragma mark - UITextFieldDelegate

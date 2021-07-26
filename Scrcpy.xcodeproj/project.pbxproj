@@ -12,7 +12,6 @@
 		AA7766832698A5AB0025990D /* ScrcpyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7766822698A5AB0025990D /* ScrcpyViewController.m */; };
 		AA8C04C7269C8FE0001D9A4F /* NSError+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8C04C6269C8FE0001D9A4F /* NSError+Alert.m */; };
 		AAA221A026959AA200307990 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAA2219F26959AA200307990 /* Assets.xcassets */; };
-		AAA221A326959AA200307990 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAA221A126959AA200307990 /* LaunchScreen.storyboard */; };
 		AAA221A626959AA200307990 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA221A526959AA200307990 /* main.m */; };
 		AAA221AE2695A3B000307990 /* scrcpy-server in Resources */ = {isa = PBXBuildFile; fileRef = AAA221AD2695A3B000307990 /* scrcpy-server */; };
 		AAA2226C2695B3F400307990 /* control_msg.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA222272695B3F400307990 /* control_msg.c */; };
@@ -49,6 +48,7 @@
 		AAA222A7269609BE00307990 /* libscrcpy-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA2221C2695B3A600307990 /* libscrcpy-ios.a */; };
 		AAA222AA2696995400307990 /* ssh.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA222A92696995400307990 /* ssh.m */; };
 		AAA222AD26969C8800307990 /* utils.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA222AC26969C8800307990 /* utils.m */; };
+		AAB5E5C326AE9201000396BE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAB5E5C226AE9201000396BE /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -83,7 +83,6 @@
 		AA8C04C6269C8FE0001D9A4F /* NSError+Alert.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSError+Alert.m"; sourceTree = "<group>"; };
 		AAA2219026959AA000307990 /* Scrcpy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scrcpy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAA2219F26959AA200307990 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		AAA221A226959AA200307990 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AAA221A426959AA200307990 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AAA221A526959AA200307990 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AAA221AD2695A3B000307990 /* scrcpy-server */ = {isa = PBXFileReference; lastKnownFileType = file; path = "scrcpy-server"; sourceTree = "<group>"; };
@@ -162,6 +161,7 @@
 		AAA222A92696995400307990 /* ssh.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ssh.m; sourceTree = "<group>"; };
 		AAA222AB26969C8800307990 /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
 		AAA222AC26969C8800307990 /* utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = utils.m; sourceTree = "<group>"; };
+		AAB5E5C226AE9201000396BE /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,7 +224,7 @@
 				AA8C04C6269C8FE0001D9A4F /* NSError+Alert.m */,
 				AAA2219F26959AA200307990 /* Assets.xcassets */,
 				AAA2228B2695B62300307990 /* Main.storyboard */,
-				AAA221A126959AA200307990 /* LaunchScreen.storyboard */,
+				AAB5E5C226AE9201000396BE /* LaunchScreen.storyboard */,
 				AAA221A426959AA200307990 /* Info.plist */,
 				AAA221A526959AA200307990 /* main.m */,
 			);
@@ -483,7 +483,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AAA221AE2695A3B000307990 /* scrcpy-server in Resources */,
-				AAA221A326959AA200307990 /* LaunchScreen.storyboard in Resources */,
+				AAB5E5C326AE9201000396BE /* LaunchScreen.storyboard in Resources */,
 				AAA221A026959AA200307990 /* Assets.xcassets in Resources */,
 				AAA2228D2695B62300307990 /* Main.storyboard in Resources */,
 			);
@@ -552,14 +552,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		AAA221A126959AA200307990 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AAA221A226959AA200307990 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
 		AAA2228B2695B62300307990 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -689,7 +681,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2021072501;
+				CURRENT_PROJECT_VERSION = 2021072601;
 				DEVELOPMENT_TEAM = K8Q74NT2BG;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/ssh";
@@ -715,7 +707,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/Libs/lib";
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				OTHER_LDFLAGS = (
 					"-lSDL2",
 					"-lavformat",
@@ -755,7 +747,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2021072501;
+				CURRENT_PROJECT_VERSION = 2021072601;
 				DEVELOPMENT_TEAM = K8Q74NT2BG;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/ssh";
@@ -781,7 +773,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/Libs/lib";
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-lSDL2",

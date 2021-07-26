@@ -182,3 +182,9 @@ func (s *Shell) UploadFile(src string, dst string) error {
 
 	return err
 }
+
+func (s *Shell) Close() error {
+	err := s.sshClient.Close()
+	s.sshClient = nil
+	return err
+}

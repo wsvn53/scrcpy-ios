@@ -9,6 +9,8 @@
 #import <Gossh/Gossh.h>
 #import "NSError+Alert.h"
 #import "config.h"
+#import "fix.h"
+#import <SDL2/SDL.h>
 
 process_t adb_reverse_remove(const char *serial, const char *device_socket_name);
 
@@ -129,6 +131,15 @@ bool ssh_upload_scrcpyserver(void) {
     return true;
 }
 
+void ssh_close(void) {
+    NSError *error = nil;
+    [sshShell() close:&error];
+    
+    if (error != nil) {
+        [error showAlert];
+    }
+}
+
 enum process_result ssh_exec_command(NSString *command) {
     NSLog(@"Exec:\n%@", command);
     GosshShellStatus *status = [sshShell() execute:command];
@@ -141,6 +152,7 @@ enum process_result ssh_exec_command(NSString *command) {
         newErr = errorAppendDesc(newErr, status.output);
         [[ExecStatus sharedStatus] setError:newErr forCommand:command];
         [newErr showAlert];
+        
         return PROCESS_ERROR_GENERIC;
     }
     return PROCESS_SUCCESS;
@@ -180,7 +192,11 @@ enum process_result ssh_exec(const char *const argv[])
             ssh_exec_command(command);
             
             // force exit in order to allow other connect
-            dispatch_sync(dispatch_get_main_queue(), ^{ exit(0); });
+            ssh_close();
+            process_wait_stop();
+            
+            // force exit
+            dispatch_async(dispatch_get_main_queue(), ^{ SDL_Quit(); });
         }];
         
         return PROCESS_SUCCESS;
@@ -220,6 +236,11 @@ bool ssh_reverse(uint16_t port)
     
     if (error != nil) {
         NSLog(@"Error: %@", error);
+        [error showAlert];
+        
+        ssh_close();
+        process_wait_stop();
+        
         return false;
     }
 

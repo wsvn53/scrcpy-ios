@@ -35,9 +35,17 @@ process_execute(const char *const argv[], pid_t *pid) {
 // handle process_check_success to always true
 bool
 process_check_success(process_t proc, const char *name, bool close) {
-    printf("=> process_check_success: %s\n", name);
+    printf("> process_check_success: %s\n", name);
     if (proc < 0) return false;
     return [[ExecStatus sharedStatus] checkSuccess:name];
+}
+
+void process_wait_reset(void) {
+    bScrcpyServerIsStopping = false;
+}
+
+void process_wait_stop(void) {
+    bScrcpyServerIsStopping = true;
 }
 
 // handle process_wait to forbidden scrcpy exit

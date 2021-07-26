@@ -10,6 +10,7 @@
 #import "ssh.h"
 #import "NSError+Alert.h"
 #import "utils.h"
+#import "fix.h"
 
 #define   kSDLDidCreateRendererNotification   @"kSDLDidCreateRendererNotification"
 int scrcpy_main(int argc, char *argv[]);
@@ -108,8 +109,9 @@ int scrcpy_main(int argc, char *argv[]);
     CheckParam(password,    @"password");
     [ScrcpyParams setParamsWithServer:server port:port user:user password:password serial:serial];
     
-    // reset error status
+    // reset error status & process_wait
     [[ExecStatus sharedStatus] resetStatus];
+    process_wait_reset();
     
     // Disable all textfields
     [self toggleControlsEnabled:NO];
@@ -135,7 +137,7 @@ int scrcpy_main(int argc, char *argv[]);
 }
 
 - (void)resetViews {
-    self.connectButton.enabled = YES;
+    [self toggleControlsEnabled:YES];
     [self.indicatorView stopAnimating];
 }
 

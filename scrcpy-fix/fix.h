@@ -16,4 +16,7 @@
 void process_wait_reset(void);
 void process_wait_stop(void);
 
+void reset_PeepEvents (void);
+void stop_PeepEvents (void);
+
 #endif /* fix_h */

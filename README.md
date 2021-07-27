@@ -41,7 +41,7 @@ Some parameters is required:
 
 And then click `Connect`. If you encounter errors, please check the ssh settings or adb and Android phone settings.
 
-### 4. About FULL SCREEN gesture
+### 4. About FULL-SCREEN gesture
 
 From version v1.2, Scrcpy.app now support full-screen indicator gesture:
 

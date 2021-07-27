@@ -8,17 +8,12 @@
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
 
-#include <OpenGLES/gltypes.h>
-#include <OpenGLES/ES3/gl.h>
-
-typedef GLfloat GLdouble;
-typedef double GLclampd;
-
-#include <SDL2/SDL_opengl_glext.h>
+#include "opengl_fix.h"
 #include <assert.h>
 
 #define main    scrcpy_main
 #define SDL_CreateRenderer  SDL_CreateRenderer_fix
+#define SDL_WaitEvent  SDL_WaitEvent_fix
 
 // Define NDEBUG will define assert -> (void)0, see assert.h
 // This will prevent to_fixed_point_16 crashed

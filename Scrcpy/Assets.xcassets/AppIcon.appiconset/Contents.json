@@ -1,116 +1,116 @@
 {
   "images" : [
-	{
-      "size" : "20x20",
-      "idiom": "iphone",
-	  "filename" : "Scrcpy-20@2x.png",
-      "scale": "2x"
-    },
-	{
-      "size" : "20x20",
-      "idiom": "iphone",
-	  "filename" : "Scrcpy-20@3x.png",
-      "scale": "3x"
-    },
-	{
-      "size" : "20x20",
-      "idiom": "ipad",
-	  "filename" : "Scrcpy-20.png",
-      "scale": "1x"
-    },
     {
-      "size" : "20x20",
-      "idiom": "ipad",
-	  "filename" : "Scrcpy-20@2x.png",
-      "scale": "2x"
-    },
-    {
-      "size" : "29x29",
+      "filename" : "AppIcon-20@2x.png",
       "idiom" : "iphone",
-      "filename" : "Scrcpy-29@2x.png",
-      "scale" : "2x"
+      "scale" : "2x",
+      "size" : "20x20"
     },
     {
-      "size" : "29x29",
+      "filename" : "AppIcon-20@3x.png",
       "idiom" : "iphone",
-      "filename" : "Scrcpy-29@3x.png",
-      "scale" : "3x"
+      "scale" : "3x",
+      "size" : "20x20"
     },
     {
-      "size" : "40x40",
+      "filename" : "AppIcon-29@2x.png",
       "idiom" : "iphone",
-      "filename" : "Scrcpy-40@2x.png",
-      "scale" : "2x"
+      "scale" : "2x",
+      "size" : "29x29"
     },
     {
-      "size" : "40x40",
+      "filename" : "AppIcon-29@3x.png",
       "idiom" : "iphone",
-      "filename" : "Scrcpy-40@3x.png",
-      "scale" : "3x"
+      "scale" : "3x",
+      "size" : "29x29"
     },
     {
-      "size" : "60x60",
+      "filename" : "AppIcon-40@2x.png",
       "idiom" : "iphone",
-      "filename" : "Scrcpy-60@2x.png",
-      "scale" : "2x"
+      "scale" : "2x",
+      "size" : "40x40"
     },
     {
-      "size" : "60x60",
+      "filename" : "AppIcon-40@3x.png",
       "idiom" : "iphone",
-      "filename" : "Scrcpy-60@3x.png",
-      "scale" : "3x"
+      "scale" : "3x",
+      "size" : "40x40"
     },
     {
-      "size" : "29x29",
+      "filename" : "AppIcon-60@2x.png",
+      "idiom" : "iphone",
+      "scale" : "2x",
+      "size" : "60x60"
+    },
+    {
+      "filename" : "AppIcon-60@3x.png",
+      "idiom" : "iphone",
+      "scale" : "3x",
+      "size" : "60x60"
+    },
+    {
+      "filename" : "AppIcon-20.png",
       "idiom" : "ipad",
-      "filename" : "Scrcpy-29.png",
-      "scale" : "1x"
+      "scale" : "1x",
+      "size" : "20x20"
     },
     {
-      "size" : "29x29",
+      "filename" : "AppIcon-20@2x.png",
       "idiom" : "ipad",
-      "filename" : "Scrcpy-29@2x.png",
-      "scale" : "2x"
+      "scale" : "2x",
+      "size" : "20x20"
     },
     {
-      "size" : "40x40",
+      "filename" : "AppIcon-29.png",
       "idiom" : "ipad",
-      "filename" : "Scrcpy-40.png",
-      "scale" : "1x"
+      "scale" : "1x",
+      "size" : "29x29"
     },
     {
-      "size" : "40x40",
+      "filename" : "AppIcon-29@2x.png",
       "idiom" : "ipad",
-      "filename" : "Scrcpy-40@2x.png",
-      "scale" : "2x"
+      "scale" : "2x",
+      "size" : "29x29"
     },
     {
-      "size" : "76x76",
+      "filename" : "AppIcon-40.png",
       "idiom" : "ipad",
-      "filename" : "Scrcpy-76.png",
-      "scale" : "1x"
+      "scale" : "1x",
+      "size" : "40x40"
     },
     {
-      "size" : "76x76",
+      "filename" : "AppIcon-40@2x.png",
       "idiom" : "ipad",
-      "filename" : "Scrcpy-76@2x.png",
-      "scale" : "2x"
+      "scale" : "2x",
+      "size" : "40x40"
     },
     {
-      "size" : "83.5x83.5",
+      "filename" : "AppIcon-76.png",
       "idiom" : "ipad",
-      "filename" : "Scrcpy-83.5@2x.png",
-      "scale" : "2x"
+      "scale" : "1x",
+      "size" : "76x76"
     },
     {
-      "size" : "1024x1024",
+      "filename" : "AppIcon-76@2x.png",
+      "idiom" : "ipad",
+      "scale" : "2x",
+      "size" : "76x76"
+    },
+    {
+      "filename" : "AppIcon-83.5@2x.png",
+      "idiom" : "ipad",
+      "scale" : "2x",
+      "size" : "83.5x83.5"
+    },
+    {
+      "filename" : "AppIcon-1024.png",
       "idiom" : "ios-marketing",
-      "filename" : "Scrcpy-1024.png",
-      "scale" : "1x"
+      "scale" : "1x",
+      "size" : "1024x1024"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

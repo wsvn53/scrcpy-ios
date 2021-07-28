@@ -120,11 +120,16 @@ int scrcpy_main(int argc, char *argv[]);
     [self.indicatorView startAnimating];
     
     // Start scrcpy by detach from current stack
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        [self preConnectWithLocalNetwork:server port:[port integerValue] completion:^{
-            [self performSelectorOnMainThread:@selector(scrcpyMain) withObject:nil waitUntilDone:NO];
-        }];
-    });
+    if ([self checkLocalNetworkPrompted:server]) {
+        [self performSelectorOnMainThread:@selector(scrcpyMain) withObject:nil waitUntilDone:NO];
+    } else {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            [self preConnectWithLocalNetwork:server port:[port integerValue] completion:^{
+                [self markLocalNetworkPrompted:server];
+                [self performSelectorOnMainThread:@selector(scrcpyMain) withObject:nil waitUntilDone:NO];
+            }];
+        });
+    }
 }
 
 - (void)toggleControlsEnabled:(BOOL)enabled {
@@ -144,7 +149,6 @@ int scrcpy_main(int argc, char *argv[]);
 #pragma mark - Scrcpy
 
 - (void)scrcpyMain {
-    CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.1, NO);
     SDL_iPhoneSetEventPump(SDL_TRUE);
 
     // Because after SDL proxied didFinishLauch, PumpEvent will set to FASLE
@@ -186,6 +190,16 @@ int scrcpy_main(int argc, char *argv[]);
         [error showAlert];
     }];
     [streamTask resume];
+}
+
+#define PromptedKey(host)   [@"P_" stringByAppendingString:host]
+
+-(BOOL)checkLocalNetworkPrompted:(NSString *)host {
+    return [NSUserDefaults.standardUserDefaults boolForKey:PromptedKey(host)];
+}
+
+-(void)markLocalNetworkPrompted:(NSString *)host {
+    [NSUserDefaults.standardUserDefaults setBool:YES forKey:PromptedKey(host)];
 }
 
 #pragma mark - UITextFieldDelegate

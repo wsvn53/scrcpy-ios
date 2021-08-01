@@ -172,13 +172,12 @@ void stop_PeepEvents (void) {
 }
 
 void handle_PeepEvents(void) {
-    SDL_Event event;
     while (bScrcpyPeepEventStopControl == false) {
+        SDL_Event event;
         int ret = SDL_PeepEvents(&event, 1, SDL_GETEVENT, SDL_FIRSTEVENT, SDL_LASTEVENT);
         switch (ret) {
-            case -1: {
+            case -1:
                 return;
-            }
             case 0: {
                 SDL_Delay(1);
                 break;
@@ -195,12 +194,14 @@ void start_PeepEvents (void) {
     static NSThread *peepThread = nil;
     if (peepThread != nil) return;
     
-    [NSThread detachNewThreadWithBlock:^{
-        peepThread = [NSThread currentThread];
+    peepThread = [[NSThread alloc] initWithBlock:^{
         bScrcpyPeepEventStopControl = false;
         handle_PeepEvents();
         peepThread = nil;
     }];
+    peepThread.qualityOfService = NSQualityOfServiceUserInteractive;
+    peepThread.name = @"PeepEvents";
+    [peepThread start];
 }
 
 // handle SDL_WaitEvent

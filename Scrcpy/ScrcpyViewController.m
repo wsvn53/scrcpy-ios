@@ -149,6 +149,8 @@ int scrcpy_main(int argc, char *argv[]);
 #pragma mark - Scrcpy
 
 - (void)scrcpyMain {
+    // Here in case there is no opportunity to perform UI animations and other changes
+    CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.1, NO);
     SDL_iPhoneSetEventPump(SDL_TRUE);
 
     // Because after SDL proxied didFinishLauch, PumpEvent will set to FASLE

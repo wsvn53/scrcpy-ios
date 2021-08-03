@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		AA2D5590269DAAE1009901C9 /* ExecStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2D558F269DAAE1009901C9 /* ExecStatus.m */; };
-		AA5D7F0D26ADB9350091288D /* SDL_uikitviewcontroller+HomeIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5D7F0C26ADB9350091288D /* SDL_uikitviewcontroller+HomeIndicator.m */; };
 		AA5D7F1A26B060990091288D /* screen.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA222432695B3F400307990 /* screen.c */; };
 		AA5D7F1B26B060FA0091288D /* input_manager.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA222682695B3F400307990 /* input_manager.c */; };
+		AA6FFDA526B985D7001ACD22 /* SDL_uikitviewcontroller+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6FFDA426B985D7001ACD22 /* SDL_uikitviewcontroller+Extend.m */; };
 		AA7766832698A5AB0025990D /* ScrcpyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7766822698A5AB0025990D /* ScrcpyViewController.m */; };
 		AA8C04C7269C8FE0001D9A4F /* NSError+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8C04C6269C8FE0001D9A4F /* NSError+Alert.m */; };
 		AAA221A026959AA200307990 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAA2219F26959AA200307990 /* Assets.xcassets */; };
@@ -75,9 +75,9 @@
 /* Begin PBXFileReference section */
 		AA2D558E269DAAE1009901C9 /* ExecStatus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExecStatus.h; sourceTree = "<group>"; };
 		AA2D558F269DAAE1009901C9 /* ExecStatus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExecStatus.m; sourceTree = "<group>"; };
-		AA5D7F0B26ADB9350091288D /* SDL_uikitviewcontroller+HomeIndicator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SDL_uikitviewcontroller+HomeIndicator.h"; sourceTree = "<group>"; };
-		AA5D7F0C26ADB9350091288D /* SDL_uikitviewcontroller+HomeIndicator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SDL_uikitviewcontroller+HomeIndicator.m"; sourceTree = "<group>"; };
 		AA5D7F1426B055DC0091288D /* opengl_fix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = opengl_fix.h; sourceTree = "<group>"; };
+		AA6FFDA326B985D6001ACD22 /* SDL_uikitviewcontroller+Extend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SDL_uikitviewcontroller+Extend.h"; sourceTree = "<group>"; };
+		AA6FFDA426B985D7001ACD22 /* SDL_uikitviewcontroller+Extend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SDL_uikitviewcontroller+Extend.m"; sourceTree = "<group>"; };
 		AA7766812698A5AB0025990D /* ScrcpyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrcpyViewController.h; sourceTree = "<group>"; };
 		AA7766822698A5AB0025990D /* ScrcpyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrcpyViewController.m; sourceTree = "<group>"; };
 		AA8C04C5269C8FE0001D9A4F /* NSError+Alert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSError+Alert.h"; sourceTree = "<group>"; };
@@ -219,8 +219,8 @@
 			children = (
 				AA7766812698A5AB0025990D /* ScrcpyViewController.h */,
 				AA7766822698A5AB0025990D /* ScrcpyViewController.m */,
-				AA5D7F0B26ADB9350091288D /* SDL_uikitviewcontroller+HomeIndicator.h */,
-				AA5D7F0C26ADB9350091288D /* SDL_uikitviewcontroller+HomeIndicator.m */,
+				AA6FFDA326B985D6001ACD22 /* SDL_uikitviewcontroller+Extend.h */,
+				AA6FFDA426B985D7001ACD22 /* SDL_uikitviewcontroller+Extend.m */,
 				AA8C04C5269C8FE0001D9A4F /* NSError+Alert.h */,
 				AA8C04C6269C8FE0001D9A4F /* NSError+Alert.m */,
 				AAA2219F26959AA200307990 /* Assets.xcassets */,
@@ -500,7 +500,7 @@
 			files = (
 				AAA221A626959AA200307990 /* main.m in Sources */,
 				AA7766832698A5AB0025990D /* ScrcpyViewController.m in Sources */,
-				AA5D7F0D26ADB9350091288D /* SDL_uikitviewcontroller+HomeIndicator.m in Sources */,
+				AA6FFDA526B985D7001ACD22 /* SDL_uikitviewcontroller+Extend.m in Sources */,
 				AA8C04C7269C8FE0001D9A4F /* NSError+Alert.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -683,7 +683,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2021080101;
+				CURRENT_PROJECT_VERSION = 2021080301;
 				DEVELOPMENT_TEAM = K8Q74NT2BG;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/ssh";
@@ -709,11 +709,12 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/Libs/lib";
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.4;
 				OTHER_LDFLAGS = (
 					"-lSDL2",
 					"-lavformat",
 					"-lavutil",
+					"-lswscale",
 					"-lavcodec",
 					"-lswresample",
 					"-liconv",
@@ -749,7 +750,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2021080101;
+				CURRENT_PROJECT_VERSION = 2021080301;
 				DEVELOPMENT_TEAM = K8Q74NT2BG;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/ssh";
@@ -775,12 +776,13 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/Libs/lib";
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.4;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-lSDL2",
 					"-lavformat",
 					"-lavutil",
+					"-lswscale",
 					"-lavcodec",
 					"-lswresample",
 					"-liconv",

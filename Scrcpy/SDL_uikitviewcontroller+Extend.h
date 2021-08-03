@@ -1,5 +1,5 @@
 //
-//  SDL_uikitviewcontroller+HomeIndicator.h
+//  SDL_uikitviewcontroller+Extend.h
 //  HomeIndicator
 //
 //  Created by Ethan on 2021/7/25.
@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SDL_uikitviewcontroller : UIViewController
 @end
 
-@interface SDL_uikitviewcontroller (HomeIndicator)
+@interface SDL_uikitviewcontroller (Extend)
 
 @end
 

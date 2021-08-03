@@ -14,6 +14,11 @@
 #define main    scrcpy_main
 #define SDL_CreateRenderer  SDL_CreateRenderer_fix
 #define SDL_WaitEvent  SDL_WaitEvent_fix
+#define SDL_RenderPresent  SDL_RenderPresent_fix
+
+// Re-Define some function for harware decode
+#define av_frame_move_ref  av_frame_move_ref_fix
+#define avcodec_alloc_context3  avcodec_alloc_context3_fix
 
 // Define NDEBUG will define assert -> (void)0, see assert.h
 // This will prevent to_fixed_point_16 crashed

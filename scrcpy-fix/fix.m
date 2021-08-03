@@ -11,6 +11,7 @@
 #import <util/net.h>
 #import "ssh.h"
 #import <SDL2/SDL.h>
+#import <SDL2/SDL_render.h>
 #import "utils.h"
 #import "util/thread.h"
 #import "ExecStatus.h"
@@ -20,10 +21,17 @@
 #import "screen.h"
 #import "input_manager.h"
 
+@import CoreMedia;
+@import CoreVideo;
+@import VideoToolbox;
+@import AVFoundation;
+
 // control wait-server thread exit
 static bool bScrcpyServerStopControl = false;
 // control peepEvent thread
 static bool bScrcpyPeepEventStopControl = false;
+// control use Hardware decoder first
+static bool bScrcpyUseHardwareDecoder = true;
 
 // handle is_regular_file to ignore check local scrcpy-server exists
 bool
@@ -215,4 +223,92 @@ int SDL_WaitEvent_fix(SDL_Event * event) {
     start_PeepEvents();
     
     return ret;
+}
+
+AVCodecContext *avcodec_alloc_context3_fix(const AVCodec *codec) {
+    AVCodecContext *context = avcodec_alloc_context3(codec);
+    
+    if (bScrcpyUseHardwareDecoder == false) {
+        NSLog(@"[INFO] Using Software Decoding.");
+        return context;
+    }
+    
+    AVBufferRef *codec_buf;
+    const char *codecName = av_hwdevice_get_type_name(AV_HWDEVICE_TYPE_VIDEOTOOLBOX);
+    enum AVHWDeviceType type = av_hwdevice_find_type_by_name(codecName);
+    int err = av_hwdevice_ctx_create(&codec_buf, type, NULL, NULL, 0);
+    if (err < 0) {
+        printf("[ERROR] Init Hardware Decoder FAILED, Fallback to Software Decoder.\n");
+        bScrcpyUseHardwareDecoder = false;
+        return context;
+    }
+    context->hw_device_ctx = av_buffer_ref(codec_buf);
+    
+    return context;
+}
+
+
+// handle SDL_RenderPresent to do nothing when we are using hardware decoding
+void SDL_RenderPresent_fix(SDL_Renderer * renderer) {
+    if (bScrcpyUseHardwareDecoder) {
+        // do nothing
+        return;
+    }
+    SDL_RenderPresent(renderer);
+}
+
+UIWindow *fix_get_keyWindow(void) {
+    for (UIWindow *window in UIApplication.sharedApplication.windows) {
+        if (window.isKeyWindow) {
+            return window;
+        }
+    }
+    return nil;
+}
+
+static void render_frame_opengl(AVFrame *frame) {
+    CVPixelBufferRef pixelBuffer = (CVPixelBufferRef)frame->data[3];
+    
+    CMSampleTimingInfo timing = {kCMTimeInvalid, kCMTimeInvalid, kCMTimeInvalid};
+    CMVideoFormatDescriptionRef videoInfo = NULL;
+    OSStatus result = CMVideoFormatDescriptionCreateForImageBuffer(NULL, pixelBuffer, &videoInfo);
+
+    CMSampleBufferRef sampleBuffer = NULL;
+    result = CMSampleBufferCreateForImageBuffer(kCFAllocatorDefault,pixelBuffer, true, NULL, NULL, videoInfo, &timing, &sampleBuffer);
+
+    CFRelease(pixelBuffer);
+    CFRelease(videoInfo);
+
+    CFArrayRef attachments = CMSampleBufferGetSampleAttachmentsArray(sampleBuffer, YES);
+    CFMutableDictionaryRef dict = (CFMutableDictionaryRef)CFArrayGetValueAtIndex(attachments, 0);
+    CFDictionarySetValue(dict, kCMSampleAttachmentKey_DisplayImmediately, kCFBooleanTrue);
+    
+    static AVSampleBufferDisplayLayer *displayLayer = nil;
+    if (displayLayer == nil || displayLayer.superlayer == nil) {
+        displayLayer = [AVSampleBufferDisplayLayer layer];
+        displayLayer.videoGravity = AVLayerVideoGravityResizeAspect;
+        UIWindow *keyWindow = fix_get_keyWindow();
+        keyWindow.rootViewController.view.backgroundColor = UIColor.blackColor;
+        displayLayer.frame = keyWindow.rootViewController.view.bounds;
+        [keyWindow.rootViewController.view.layer addSublayer:displayLayer];
+        NSLog(@"[INFO] Using Hardware Decoding.");
+    }
+    
+    // after become forground from background, may render fail
+    if (displayLayer.status == AVQueuedSampleBufferRenderingStatusFailed) {
+        [displayLayer flush];
+    }
+    
+    // render sampleBuffer now
+    [displayLayer enqueueSampleBuffer:sampleBuffer];
+}
+
+void av_frame_move_ref_fix(AVFrame *dst, AVFrame *src) {
+    if (bScrcpyUseHardwareDecoder) {
+        // use opengl layer to render
+        render_frame_opengl(src);
+    }
+    
+    // call ffmpeg av_frame_move_ref
+    av_frame_move_ref(dst, src);
 }

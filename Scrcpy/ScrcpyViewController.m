@@ -156,12 +156,12 @@ int scrcpy_main(int argc, char *argv[]);
     // Because after SDL proxied didFinishLauch, PumpEvent will set to FASLE
     // So we need to set to TRUE in order to handle UI events
     if (self.adbSerial.text == nil || self.adbSerial.text.length == 0) {
-        char *scrcpy_argv[4] = { "scrcpy", "-V", "debug", "-f" };
-        scrcpy_main(4, scrcpy_argv);
+        char *scrcpy_argv[6] = { "scrcpy", "-V", "debug", "-f", "--max-fps", "60" };
+        scrcpy_main(6, scrcpy_argv);
     } else {
         char *adb_serial = (char *)self.adbSerial.text.UTF8String;
-        char *scrcpy_argv[6] = { "scrcpy", "-V", "debug", "-f", "-s", adb_serial };
-        scrcpy_main(6, scrcpy_argv);
+        char *scrcpy_argv[8] = { "scrcpy", "-V", "debug", "-f", "--max-fps", "60", "-s", adb_serial };
+        scrcpy_main(8, scrcpy_argv);
     }
     
     [self toggleControlsEnabled:YES];

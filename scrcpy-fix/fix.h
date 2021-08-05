@@ -19,4 +19,7 @@ void process_wait_stop(void);
 void reset_PeepEvents (void);
 void stop_PeepEvents (void);
 
+// remvoe all render layers
+void fix_remove_opengl_layers(void);
+
 #endif /* fix_h */

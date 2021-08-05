@@ -225,6 +225,19 @@ int SDL_WaitEvent_fix(SDL_Event * event) {
     return ret;
 }
 
+static void fix_create_hwctx(AVCodecContext *context) {
+    AVBufferRef *codec_buf;
+    const char *codecName = av_hwdevice_get_type_name(AV_HWDEVICE_TYPE_VIDEOTOOLBOX);
+    enum AVHWDeviceType type = av_hwdevice_find_type_by_name(codecName);
+    int err = av_hwdevice_ctx_create(&codec_buf, type, NULL, NULL, 0);
+    if (err < 0) {
+        printf("[ERROR] Init Hardware Decoder FAILED, Fallback to Software Decoder.\n");
+        bScrcpyUseHardwareDecoder = false;
+        return;
+    }
+    context->hw_device_ctx = av_buffer_ref(codec_buf);
+}
+
 AVCodecContext *avcodec_alloc_context3_fix(const AVCodec *codec) {
     AVCodecContext *context = avcodec_alloc_context3(codec);
     
@@ -233,17 +246,7 @@ AVCodecContext *avcodec_alloc_context3_fix(const AVCodec *codec) {
         return context;
     }
     
-    AVBufferRef *codec_buf;
-    const char *codecName = av_hwdevice_get_type_name(AV_HWDEVICE_TYPE_VIDEOTOOLBOX);
-    enum AVHWDeviceType type = av_hwdevice_find_type_by_name(codecName);
-    int err = av_hwdevice_ctx_create(&codec_buf, type, NULL, NULL, 0);
-    if (err < 0) {
-        printf("[ERROR] Init Hardware Decoder FAILED, Fallback to Software Decoder.\n");
-        bScrcpyUseHardwareDecoder = false;
-        return context;
-    }
-    context->hw_device_ctx = av_buffer_ref(codec_buf);
-    
+    fix_create_hwctx(context);
     return context;
 }
 
@@ -264,6 +267,15 @@ UIWindow *fix_get_keyWindow(void) {
         }
     }
     return nil;
+}
+
+void fix_remove_opengl_layers(void) {
+    UIWindow *keyWindow = fix_get_keyWindow();
+    for (CALayer *layer in keyWindow.rootViewController.view.layer.sublayers) {
+        if ([layer isKindOfClass:AVSampleBufferDisplayLayer.class]) {
+            [layer removeFromSuperlayer];
+        }
+    }
 }
 
 static void render_frame_opengl(AVFrame *frame) {
@@ -288,9 +300,10 @@ static void render_frame_opengl(AVFrame *frame) {
         displayLayer = [AVSampleBufferDisplayLayer layer];
         displayLayer.videoGravity = AVLayerVideoGravityResizeAspect;
         UIWindow *keyWindow = fix_get_keyWindow();
-        keyWindow.rootViewController.view.backgroundColor = UIColor.blackColor;
         displayLayer.frame = keyWindow.rootViewController.view.bounds;
         [keyWindow.rootViewController.view.layer addSublayer:displayLayer];
+        // sometimes failed to set background color, so we append to next runloop
+        displayLayer.backgroundColor = UIColor.blackColor.CGColor;
         NSLog(@"[INFO] Using Hardware Decoding.");
     }
     
@@ -301,6 +314,8 @@ static void render_frame_opengl(AVFrame *frame) {
     
     // render sampleBuffer now
     [displayLayer enqueueSampleBuffer:sampleBuffer];
+    
+    av_log_set_level(AV_LOG_ERROR);
 }
 
 void av_frame_move_ref_fix(AVFrame *dst, AVFrame *src) {
@@ -311,4 +326,32 @@ void av_frame_move_ref_fix(AVFrame *dst, AVFrame *src) {
     
     // call ffmpeg av_frame_move_ref
     av_frame_move_ref(dst, src);
+}
+
+// temporary save the pointer of AVPacket for check if this is a I frame
+static AVPacket *latest_avpkt = nil;
+// used to save the pointer of AVPacket which is I frame
+static AVPacket *latest_avpkt_i = nil;
+
+int avcodec_send_packet_fix(AVCodecContext *avctx, const AVPacket *avpkt) {
+    int ret = avcodec_send_packet(avctx, avpkt);
+    if (ret < 0 && ret != AVERROR(EAGAIN) && bScrcpyUseHardwareDecoder && latest_avpkt_i != NULL) {
+        // the error maybe caused by return to foreground from background
+        // and VideoToolbox session recreated, but lost I frame
+        // try to use the latest I frame packet to decode first
+        ret = avcodec_send_packet(avctx, latest_avpkt_i);
+        return ret;
+    }
+    latest_avpkt = (AVPacket *)avpkt;
+    return ret;
+}
+
+int avcodec_receive_frame_fix(AVCodecContext *avctx, AVFrame *frame) {
+    int ret = avcodec_receive_frame(avctx, frame);
+    if (ret == 0 && frame->pict_type == AV_PICTURE_TYPE_I && latest_avpkt != NULL) {
+        // save the successful decoded avpkt which is I frame packet for later use
+        latest_avpkt_i = av_packet_clone(latest_avpkt);
+        NSLog(@"[FIX] Saved I frame packet: %p", latest_avpkt);
+    }
+    return ret;
 }

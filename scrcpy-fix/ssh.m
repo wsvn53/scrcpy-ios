@@ -109,6 +109,27 @@ GosshShell *sshShell(void) {
     return shell;
 }
 
+void ssh_close(void) {
+    NSError *error = nil;
+    [sshShell() close:&error];
+    
+    if (error != nil) {
+        [error showAlert];
+    }
+}
+
+void scrcpy_shutdown(void) {
+    // force exit in order to allow other connect
+    ssh_close();
+    process_wait_stop();
+
+    // quit SQL & remove render layers
+    dispatch_async(dispatch_get_main_queue(), ^{
+        fix_remove_opengl_layers();
+        SDL_Quit();
+    });
+}
+
 NSError *errorAppendDesc(NSError *error, NSString *desc) {
     NSString *newDesc = error.userInfo ? error.userInfo[NSLocalizedDescriptionKey] : @"";
     newDesc = [newDesc stringByAppendingFormat:@"\n\n%@", desc];
@@ -129,15 +150,6 @@ bool ssh_upload_scrcpyserver(void) {
     }
     NSLog(@"Uploaded: %@", scrcpyDst);
     return true;
-}
-
-void ssh_close(void) {
-    NSError *error = nil;
-    [sshShell() close:&error];
-    
-    if (error != nil) {
-        [error showAlert];
-    }
 }
 
 enum process_result ssh_exec_command(NSString *command) {
@@ -168,7 +180,9 @@ enum process_result ssh_exec(const char *const argv[])
     }
     
     // upload scrcpy-server before adb push
+    static NSString *adb_push_command = nil;
     if ([command containsString:@"push"]) {
+        adb_push_command = [command copy];
         bool result = ssh_upload_scrcpyserver();
         if (result == false) {
             return PROCESS_ERROR_MISSING_BINARY;
@@ -190,13 +204,7 @@ enum process_result ssh_exec(const char *const argv[])
         
         [NSThread detachNewThreadWithBlock:^{
             ssh_exec_command(command);
-            
-            // force exit in order to allow other connect
-            ssh_close();
-            process_wait_stop();
-            
-            // force exit
-            dispatch_async(dispatch_get_main_queue(), ^{ SDL_Quit(); });
+            scrcpy_shutdown();
         }];
         
         return PROCESS_SUCCESS;
@@ -237,10 +245,7 @@ bool ssh_reverse(uint16_t port)
     if (error != nil) {
         NSLog(@"Error: %@", error);
         [error showAlert];
-        
-        ssh_close();
-        process_wait_stop();
-        
+        scrcpy_shutdown();
         return false;
     }
 

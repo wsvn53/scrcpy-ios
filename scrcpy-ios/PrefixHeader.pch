@@ -19,6 +19,8 @@
 // Re-Define some function for harware decode
 #define av_frame_move_ref  av_frame_move_ref_fix
 #define avcodec_alloc_context3  avcodec_alloc_context3_fix
+#define avcodec_send_packet  avcodec_send_packet_fix
+#define avcodec_receive_frame  avcodec_receive_frame_fix
 
 // Define NDEBUG will define assert -> (void)0, see assert.h
 // This will prevent to_fixed_point_16 crashed

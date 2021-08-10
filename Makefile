@@ -27,6 +27,6 @@ scrcpy-init:
 	rm -v scrcpy-src/app/src/sys/win/process.c || echo "=> ALREADY REMOVED"
 	# -> change PREFIX to /tmp
 	grep "undef PREFIX" ./scrcpy-src/x/app/config.h || echo "#undef PREFIX" >> ./scrcpy-src/x/app/config.h
-	grep "/tmp" ./scrcpy-src/x/app/config.h || echo "#define PREFIX \"/tmp\"" >> ./scrcpy-src/x/app/config.h
+	grep "/tmp" ./scrcpy-src/x/app/config.h || echo "#define PREFIX \"\$TMPDIR\"" >> ./scrcpy-src/x/app/config.h
 
 .PHONY: scrcpy-server

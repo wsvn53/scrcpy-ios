@@ -45,6 +45,15 @@
     [self.execErrors setValue:err forKey:command];
 }
 
+- (void)resetErrorForCommand:(NSString *)command {
+    NSArray *allKeys = self.execErrors.allKeys;
+    for (NSString *key in allKeys) {
+        if ([key hasPrefix:command]) {
+            [self.execErrors removeObjectForKey:key];
+        }
+    }
+}
+
 - (void)resetStatus {
     self.execErrors = [[NSMutableDictionary alloc] init];
 }

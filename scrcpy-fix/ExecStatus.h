@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)checkSuccess:(const char *)command;
 - (void)setError:(NSError *)err forCommand:(NSString *)command;
 - (void)resetStatus;
+- (void)resetErrorForCommand:(NSString *)command;
 
 @end
 

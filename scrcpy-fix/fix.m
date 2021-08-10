@@ -21,6 +21,9 @@
 #import "screen.h"
 #import "input_manager.h"
 
+// fix net forward
+#import <arpa/inet.h>
+
 @import CoreMedia;
 @import CoreVideo;
 @import VideoToolbox;
@@ -36,7 +39,7 @@ static bool bScrcpyUseHardwareDecoder = true;
 // handle is_regular_file to ignore check local scrcpy-server exists
 bool
 is_regular_file(const char *path) {
-    printf("=> is_regular_file: %s\n", path);
+    NSLog(@"> is_regular_file: %s\n", path);
     return true;
 }
 
@@ -50,9 +53,11 @@ process_execute(const char *const argv[], pid_t *pid) {
 // handle process_check_success to always true
 bool
 process_check_success(process_t proc, const char *name, bool close) {
-    printf("> process_check_success: %s\n", name);
+    NSLog(@"> process_check_success: %s\n", name);
     if (proc < 0) return false;
-    return [[ExecStatus sharedStatus] checkSuccess:name];
+    bool ret = [[ExecStatus sharedStatus] checkSuccess:name];
+    [[ExecStatus sharedStatus] resetErrorForCommand:[NSString stringWithUTF8String:name]];
+    return ret;
 }
 
 void process_wait_reset(void) {
@@ -187,7 +192,8 @@ void handle_PeepEvents(void) {
             case -1:
                 return;
             case 0: {
-                SDL_Delay(1);
+//                SDL_Delay(1);
+                usleep(1000);
                 break;
             }
             default: {
@@ -231,7 +237,7 @@ static void fix_create_hwctx(AVCodecContext *context) {
     enum AVHWDeviceType type = av_hwdevice_find_type_by_name(codecName);
     int err = av_hwdevice_ctx_create(&codec_buf, type, NULL, NULL, 0);
     if (err < 0) {
-        printf("[ERROR] Init Hardware Decoder FAILED, Fallback to Software Decoder.\n");
+        NSLog(@"[ERROR] Init Hardware Decoder FAILED, Fallback to Software Decoder.");
         bScrcpyUseHardwareDecoder = false;
         return;
     }
@@ -325,6 +331,8 @@ void av_frame_move_ref_fix(AVFrame *dst, AVFrame *src) {
     }
     
     // call ffmpeg av_frame_move_ref
+//    AVFrame *dst_fake = av_frame_alloc();
+//    av_frame_move_ref(dst_fake, src);
     av_frame_move_ref(dst, src);
 }
 
@@ -354,4 +362,9 @@ int avcodec_receive_frame_fix(AVCodecContext *avctx, AVFrame *frame) {
         NSLog(@"[FIX] Saved I frame packet: %p", latest_avpkt);
     }
     return ret;
+}
+
+// fix foward connection
+socket_t net_connect_fix(uint32_t addr, uint16_t port) {
+    return net_connect(addr, port);
 }

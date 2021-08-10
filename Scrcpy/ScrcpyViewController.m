@@ -63,7 +63,7 @@ int scrcpy_main(int argc, char *argv[]);
     [self.indicatorView stopAnimating];
     
     // Custom Connect Button
-    [self.connectButton setBackgroundImage:UIColorAsImage(UIColor.systemGray4Color, self.connectButton.bounds.size) forState:(UIControlStateDisabled)];
+    [self.connectButton setBackgroundImage:UIColorAsImage([UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1], self.connectButton.bounds.size) forState:(UIControlStateDisabled)];
     [self.connectButton setBackgroundImage:UIColorAsImage(self.connectButton.backgroundColor, self.connectButton.bounds.size) forState:(UIControlStateNormal)];
     
     // Text Editing Delegate
@@ -155,13 +155,24 @@ int scrcpy_main(int argc, char *argv[]);
 
     // Because after SDL proxied didFinishLauch, PumpEvent will set to FASLE
     // So we need to set to TRUE in order to handle UI events
+//#define USE_FORWARD
     if (self.adbSerial.text == nil || self.adbSerial.text.length == 0) {
+#ifdef USE_FORWARD
+        char *scrcpy_argv[7] = { "scrcpy", "--force-adb-forward", "-V", "debug", "-f", "--max-fps", "60" };
+        scrcpy_main(7, scrcpy_argv);
+#else
         char *scrcpy_argv[6] = { "scrcpy", "-V", "debug", "-f", "--max-fps", "60" };
         scrcpy_main(6, scrcpy_argv);
+#endif
     } else {
         char *adb_serial = (char *)self.adbSerial.text.UTF8String;
+#ifdef USE_FORWARD
+        char *scrcpy_argv[9] = { "scrcpy", "--force-adb-forward", "-V", "debug", "-f", "--max-fps", "60", "-s", adb_serial };
+        scrcpy_main(9, scrcpy_argv);
+#else
         char *scrcpy_argv[8] = { "scrcpy", "-V", "debug", "-f", "--max-fps", "60", "-s", adb_serial };
         scrcpy_main(8, scrcpy_argv);
+#endif
     }
     
     [self toggleControlsEnabled:YES];

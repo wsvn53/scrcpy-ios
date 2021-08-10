@@ -31,7 +31,7 @@
 		AAA222782695B3F400307990 /* v4l2_sink.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA222422695B3F400307990 /* v4l2_sink.c */; };
 		AAA2227A2695B3F400307990 /* adb.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA222442695B3F400307990 /* adb.c */; };
 		AAA2227B2695B3F400307990 /* fps_counter.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA222472695B3F400307990 /* fps_counter.c */; };
-		AAA2227C2695B3F400307990 /* server.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA222492695B3F400307990 /* server.c */; };
+		AAA2227C2695B3F400307990 /* server.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA222492695B3F400307990 /* server.c */; settings = {COMPILER_FLAGS = "-Dnet_connect=net_connect_fix"; }; };
 		AAA2227D2695B3F400307990 /* tiny_xpm.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA2224A2695B3F400307990 /* tiny_xpm.c */; };
 		AAA2227E2695B3F400307990 /* process.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA222502695B3F400307990 /* process.c */; };
 		AAA2227F2695B3F400307990 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA222522695B3F400307990 /* main.c */; };
@@ -683,7 +683,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2021080402;
+				CURRENT_PROJECT_VERSION = 20210801001;
 				DEVELOPMENT_TEAM = K8Q74NT2BG;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/ssh";
@@ -750,7 +750,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2021080402;
+				CURRENT_PROJECT_VERSION = 20210801001;
 				DEVELOPMENT_TEAM = K8Q74NT2BG;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/ssh";

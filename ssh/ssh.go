@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"golang.org/x/crypto/ssh"
 	"io"
-	"log"
 	"net"
 	"os"
 	"path/filepath"
@@ -19,6 +18,7 @@ type Shell struct {
 	User 		string
 	Password 	string
 	sshClient 	*ssh.Client
+	forwardLocal net.Listener
 }
 
 type ShellStatus struct {
@@ -43,7 +43,7 @@ func (s *Shell) Connect(host, port, user, password string) (err error) {
 }
 
 func (s *Shell) Connected() bool {
-	return s.sshClient != nil
+	return s.sshClient != nil && s.sshClient.Conn != nil
 }
 
 func (s *Shell) Execute(command string) *ShellStatus {
@@ -74,21 +74,24 @@ func (s *Shell) Forward(localAddr, remoteAddr string) error {
 		return errors.New("ssh is not connected")
 	}
 
-	// listen local connection
-	local, err := net.Listen("tcp", localAddr)
-	if err != nil {
-		return err
+	// close started forward first
+	var err error
+	if s.forwardLocal != nil {
+		err := s.forwardLocal.Close()
+		if err != nil {
+			return err
+		}
 	}
 
-	// listen remote connection
-	remote, err := s.sshClient.Dial("tcp", remoteAddr)
+	// listen local connection
+	s.forwardLocal, err = net.Listen("tcp", localAddr)
 	if err != nil {
 		return err
 	}
 
 	// forward local port to remote port
 	go func() {
-		err = s.forward(local, remote)
+		err = s.forward(s.forwardLocal, remoteAddr)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -97,7 +100,7 @@ func (s *Shell) Forward(localAddr, remoteAddr string) error {
 	return err
 }
 
-func (s Shell) forward(local net.Listener, remote net.Conn) error {
+func (s Shell) forward(local net.Listener, remoteAddr string) error {
 	if s.sshClient == nil {
 		return errors.New("ssh is not connected")
 	}
@@ -108,6 +111,15 @@ func (s Shell) forward(local net.Listener, remote net.Conn) error {
 			fmt.Println("Listen:", err)
 			return err
 		}
+		fmt.Println("Accept:", client, client.RemoteAddr())
+
+		remote, err := s.sshClient.Dial("tcp", remoteAddr)
+		fmt.Println("Dail:", remote, remoteAddr)
+		if err != nil {
+			fmt.Println("Dial:", err)
+			return err
+		}
+
 		go s.handleConnection(client, remote)
 	}
 }
@@ -119,7 +131,7 @@ func (s *Shell) handleConnection(client, remote net.Conn) {
 	go func() {
 		_, err := io.Copy(client, remote)
 		if err != nil {
-			log.Println("Handle:", err)
+			fmt.Println("Handle:", "[up]", err)
 		}
 		chDone <- true
 	}()
@@ -127,7 +139,7 @@ func (s *Shell) handleConnection(client, remote net.Conn) {
 	go func() {
 		_, err := io.Copy(remote, client)
 		if err != nil {
-			log.Println("Handle:", err)
+			fmt.Println("Handle:", "[down]", err)
 		}
 		chDone <- true
 	}()

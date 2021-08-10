@@ -190,17 +190,29 @@ enum process_result ssh_exec(const char *const argv[])
     }
     
     // save port number for ssh reverse use
-    static uint16_t local_port = 0;
+    static uint16_t reverse_port = 0;
     if ([command containsString:@"reverse localabstract:scrcpy"]) {
         NSString *port = [command componentsSeparatedByString:@":"].lastObject;
         NSLog(@"=> reverse port: %@", port);
-        local_port = (uint16_t)[port integerValue];
+        reverse_port = (uint16_t)[port integerValue];
+    }
+    
+    // save port number for ssh forward use
+    static uint16_t forward_port = 0;
+    if ([command containsString:@"forward tcp"]) {
+        NSString *port = [command componentsSeparatedByString:@"tcp:"].lastObject;
+        port = [port componentsSeparatedByString:@" "].firstObject;
+        NSLog(@"=> forward port: %@", port);
+        forward_port = (uint16_t)[port integerValue];
+        
+        // setup ssh forward ports before start scrcpy-server
+        ssh_forward(forward_port);
     }
     
     // reverse port via ssh before run scrcpy-server
     if ([command containsString:@"app_process"]) {
         // need to setup ssh reverse ports before start scrcpy-server
-        ssh_reverse(local_port);
+        ssh_reverse(reverse_port);
         
         [NSThread detachNewThreadWithBlock:^{
             ssh_exec_command(command);
@@ -213,12 +225,13 @@ enum process_result ssh_exec(const char *const argv[])
     return ssh_exec_command(command);
 }
 
-bool ssh_reverse(uint16_t port)
-{
-    NSError *error = nil;
+bool ssh_forward(uint16_t port) {
+    // ne forward port, maybe reverse mode
+    if (port == 0) return false;
     
     // force exit other clients first
-    GosshShellStatus *status = [sshShell() execute:@"pgrep -f \"scrcpy[-]server\" && kill `pgrep -f \"scrcpy[-]server\"`"];
+    NSString *killCmds = @"pgrep -f \"scrcpy[-]server\" && kill `pgrep -f \"scrcpy[-]server\"`";
+    GosshShellStatus *status = [sshShell() execute:killCmds];
     NSString *killedPids = status.output;
     
     // if command returns error, there's no other clients
@@ -230,11 +243,54 @@ bool ssh_reverse(uint16_t port)
     NSString *remoteAddr = [NSString stringWithFormat:@"localhost:%d", port];
     NSString *localAddr = [NSString stringWithFormat:@"localhost:%d", port];
     
+    NSError *error = nil;
+    NSInteger retryCount = 5;
+    while (--retryCount) {
+        BOOL success = [sshShell() forward:localAddr remoteAddr:remoteAddr error:&error];
+        if (success == NO && error != nil) {
+            NSLog(@"[ssh forward]: %@, count: %ld", error, retryCount);
+            CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.5f, NO);
+            continue;
+        }
+        error = nil;
+        break;
+    }
+    
+    if (error != nil) {
+        NSLog(@"Error: %@", error);
+        [error showAlert];
+        scrcpy_shutdown();
+        return false;
+    }
+    
+    return true;
+}
+
+bool ssh_reverse(uint16_t port)
+{
+    // no reverse port, mabye forward mode
+    if (port == 0) return false;
+    
+    // force exit other clients first
+    NSString *killCmds = @"pgrep -f \"scrcpy[-]server\" && kill `pgrep -f \"scrcpy[-]server\"`";
+    GosshShellStatus *status = [sshShell() execute:killCmds];
+    NSString *killedPids = status.output;
+    
+    // if command returns error, there's no other clients
+    // otherwise, we need wait a moment
+    if (killedPids.length > 0) {
+        CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.5f, NO);
+    }
+    
+    NSString *remoteAddr = [NSString stringWithFormat:@"localhost:%d", port];
+    NSString *localAddr = [NSString stringWithFormat:@"localhost:%d", port];
+    
+    NSError *error = nil;
     NSInteger retryCount = 5;
     while (--retryCount) {
         BOOL success = [sshShell() reverse:remoteAddr localAddr:localAddr error:&error];
         if (success == NO && error != nil) {
-            NSLog(@"[adb reverse]: %@, count: %ld", error, retryCount);
+            NSLog(@"[ssh reverse]: %@, count: %ld", error, retryCount);
             CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.5f, NO);
             continue;
         }

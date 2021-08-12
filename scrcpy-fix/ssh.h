@@ -21,6 +21,7 @@ bool ssh_reverse(uint16_t port);
 
 @property (nonatomic, copy)     NSString    *adbSerial;
 @property (nonatomic, copy)     NSString    *scrcpyServer;
+@property (nonatomic, copy)     NSString    *maxSize;
 
 @property (nonatomic, copy)     NSString    *coreVersion;
 @property (nonatomic, copy)     NSString    *appVersion;
@@ -30,5 +31,6 @@ bool ssh_reverse(uint16_t port);
                       port:(NSString *)port
                       user:(NSString *)user
                   password:(NSString *)password
-                  serial:(NSString *)serial;
+                  serial:(NSString *)serial
+                  maxSize:(NSString *)maxSize;
 @end

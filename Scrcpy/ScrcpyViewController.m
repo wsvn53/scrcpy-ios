@@ -33,6 +33,7 @@ int scrcpy_main(int argc, char *argv[]);
 @property (weak, nonatomic) IBOutlet UILabel *scrcpyServer;
 @property (weak, nonatomic) IBOutlet UILabel *coreVersion;
 @property (weak, nonatomic) IBOutlet UILabel *appVersion;
+@property (weak, nonatomic) IBOutlet UITextField *maxSize;
 
 @end
 
@@ -72,6 +73,7 @@ int scrcpy_main(int argc, char *argv[]);
     self.sshUser.delegate = (id<UITextFieldDelegate>)self;
     self.sshPassword.delegate = (id<UITextFieldDelegate>)self;
     self.adbSerial.delegate = (id<UITextFieldDelegate>)self;
+    self.maxSize.delegate = (id<UITextFieldDelegate>)self;
 }
 
 - (void)loadForm {
@@ -84,6 +86,7 @@ int scrcpy_main(int argc, char *argv[]);
     self.scrcpyServer.text = ScrcpyParams.sharedParams.scrcpyServer;
     self.coreVersion.text = ScrcpyParams.sharedParams.coreVersion;
     self.appVersion.text = ScrcpyParams.sharedParams.appVersion;
+    self.maxSize.text = ScrcpyParams.sharedParams.maxSize;
 }
 
 #pragma mark - Actions
@@ -101,13 +104,14 @@ int scrcpy_main(int argc, char *argv[]);
     NSString *user   = self.sshUser.text;
     NSString *password = self.sshPassword.text;
     NSString *serial = self.adbSerial.text;
+    NSString *maxSize = self.maxSize.text;
     
     // Check & Save SSH connnection parameters
     CheckParam(server,  @"ssh server");
     CheckParam(port,    @"ssh port");
     CheckParam(user,    @"ssh user");
     CheckParam(password,    @"password");
-    [ScrcpyParams setParamsWithServer:server port:port user:user password:password serial:serial];
+    [ScrcpyParams setParamsWithServer:server port:port user:user password:password serial:serial maxSize:maxSize];
     
     // reset error status & process_wait
     [[ExecStatus sharedStatus] resetStatus];
@@ -155,25 +159,25 @@ int scrcpy_main(int argc, char *argv[]);
 
     // Because after SDL proxied didFinishLauch, PumpEvent will set to FASLE
     // So we need to set to TRUE in order to handle UI events
-//#define USE_FORWARD
-    if (self.adbSerial.text == nil || self.adbSerial.text.length == 0) {
-#ifdef USE_FORWARD
-        char *scrcpy_argv[7] = { "scrcpy", "--force-adb-forward", "-V", "debug", "-f", "--max-fps", "60" };
-        scrcpy_main(7, scrcpy_argv);
-#else
-        char *scrcpy_argv[6] = { "scrcpy", "-V", "debug", "-f", "--max-fps", "60" };
-        scrcpy_main(6, scrcpy_argv);
-#endif
-    } else {
-        char *adb_serial = (char *)self.adbSerial.text.UTF8String;
-#ifdef USE_FORWARD
-        char *scrcpy_argv[9] = { "scrcpy", "--force-adb-forward", "-V", "debug", "-f", "--max-fps", "60", "-s", adb_serial };
-        scrcpy_main(9, scrcpy_argv);
-#else
-        char *scrcpy_argv[8] = { "scrcpy", "-V", "debug", "-f", "--max-fps", "60", "-s", adb_serial };
-        scrcpy_main(8, scrcpy_argv);
-#endif
+    NSMutableArray *scrcpyOptions = [NSMutableArray arrayWithArray:@[
+        @"scrcpy", @"-V", @"debug", @"-f", @"--max-fps", @"60", @"--bit-rate", @"4M"
+    ]];
+    
+    // Assemble serial options
+    if (self.adbSerial.text.length > 0) {
+        [scrcpyOptions addObjectsFromArray:@[ @"-s", self.adbSerial.text ]];
     }
+    
+    // Assemble maxSize options
+    if (self.maxSize.text.length > 0) {
+        [scrcpyOptions addObjectsFromArray:@[ @"--max-size", self.maxSize.text ]];
+    }
+    
+    char *scrcpy_opts[scrcpyOptions.count];
+    for (NSInteger i = 0; i < scrcpyOptions.count; i ++) {
+        scrcpy_opts[i] = strdup([scrcpyOptions[i] UTF8String]);
+    }
+    scrcpy_main((int)scrcpyOptions.count, scrcpy_opts);
     
     [self toggleControlsEnabled:YES];
     [self.indicatorView stopAnimating];

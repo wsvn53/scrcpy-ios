@@ -30,12 +30,14 @@ process_t adb_reverse_remove(const char *serial, const char *device_socket_name)
                       user:(NSString *)user
                   password:(NSString *)password
                   serial:(NSString *)serial
+                  maxSize:(NSString *)maxSize
 {
     [self sharedParams].sshServer = server;
     [self sharedParams].sshPort   = port;
     [self sharedParams].sshUser   = user;
     [self sharedParams].sshPassword = password;
     [self sharedParams].adbSerial = serial;
+    [self sharedParams].maxSize   = maxSize;
     
     [[self sharedParams] saveDefaults];
 }
@@ -46,6 +48,7 @@ process_t adb_reverse_remove(const char *serial, const char *device_socket_name)
     [[NSUserDefaults standardUserDefaults] setValue:self.sshUser forKey:@"ssh_user"];
     [[NSUserDefaults standardUserDefaults] setValue:self.sshPassword forKey:@"ssh_password"];
     [[NSUserDefaults standardUserDefaults] setValue:self.adbSerial forKey:@"adb_serial"];
+    [[NSUserDefaults standardUserDefaults] setValue:self.maxSize forKey:@"max_size"];
 }
 
 - (void)loadDefaults {
@@ -55,6 +58,7 @@ process_t adb_reverse_remove(const char *serial, const char *device_socket_name)
     self.sshUser = [[NSUserDefaults standardUserDefaults] valueForKey:@"ssh_user"];
     self.sshPassword = [[NSUserDefaults standardUserDefaults] valueForKey:@"ssh_password"];
     self.adbSerial = [[NSUserDefaults standardUserDefaults] valueForKey:@"adb_serial"];
+    self.maxSize = [[NSUserDefaults standardUserDefaults] valueForKey:@"max_size"];
 }
 
 - (NSString *)scrcpyServer {

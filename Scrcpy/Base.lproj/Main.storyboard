@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19150" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19158" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19134"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19141"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,19 +20,19 @@
                             <tableViewSection headerTitle="SSH Connect" id="WVF-hW-mZd">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="diY-v4-wy0">
-                                        <rect key="frame" x="20" y="49.5" width="374" height="43"/>
+                                        <rect key="frame" x="20" y="49.5" width="374" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="diY-v4-wy0" id="pnD-tl-p2e">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="SSH Server Address" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Yd6-Ke-zfT">
-                                                    <rect key="frame" x="114" y="5" width="240" height="33"/>
+                                                    <rect key="frame" x="114" y="5" width="240" height="33.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL" returnKeyType="continue"/>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Server:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9SS-WA-QTY">
-                                                    <rect key="frame" x="20" y="11" width="55" height="21"/>
+                                                    <rect key="frame" x="20" y="11" width="55" height="21.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -50,19 +50,19 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="ujG-fM-7ip">
-                                        <rect key="frame" x="20" y="92.5" width="374" height="43"/>
+                                        <rect key="frame" x="20" y="93" width="374" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ujG-fM-7ip" id="1rc-9G-7Kg">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="22" placeholder="SSH Server Port" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sA7-eX-USo">
-                                                    <rect key="frame" x="96" y="5" width="258" height="33"/>
+                                                    <rect key="frame" x="96" y="5" width="258" height="33.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" returnKeyType="continue"/>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Port:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gP3-gZ-YAc">
-                                                    <rect key="frame" x="20" y="11" width="37" height="21"/>
+                                                    <rect key="frame" x="20" y="11" width="37" height="21.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -80,19 +80,19 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="qic-ot-bpL">
-                                        <rect key="frame" x="20" y="135.5" width="374" height="43"/>
+                                        <rect key="frame" x="20" y="136.5" width="374" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qic-ot-bpL" id="tEh-pu-EHw">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="SSH User" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l41-O2-aAr">
-                                                    <rect key="frame" x="100" y="5" width="254" height="33"/>
+                                                    <rect key="frame" x="100" y="5" width="254" height="33.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet" returnKeyType="continue"/>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yQd-SR-JUJ">
-                                                    <rect key="frame" x="20" y="11" width="41" height="21"/>
+                                                    <rect key="frame" x="20" y="11" width="41" height="21.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -110,19 +110,19 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="eGe-9W-vm6">
-                                        <rect key="frame" x="20" y="178.5" width="374" height="43"/>
+                                        <rect key="frame" x="20" y="180" width="374" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eGe-9W-vm6" id="x53-tA-Yes">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="SSH Password" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8lV-eW-UQ7">
-                                                    <rect key="frame" x="137" y="5" width="217" height="33"/>
+                                                    <rect key="frame" x="137" y="5" width="217" height="33.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="continue" secureTextEntry="YES"/>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BT4-L9-az2">
-                                                    <rect key="frame" x="20" y="11" width="78" height="21"/>
+                                                    <rect key="frame" x="20" y="11" width="78" height="21.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -144,7 +144,7 @@
                             <tableViewSection headerTitle="Scrcpy" id="20R-jC-VsU">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="5Jh-JP-2kX" detailTextLabel="mcb-EV-V3U" style="IBUITableViewCellStyleValue1" id="V5H-vg-eyW">
-                                        <rect key="frame" x="20" y="271.5" width="374" height="43.5"/>
+                                        <rect key="frame" x="20" y="273.5" width="374" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="V5H-vg-eyW" id="VUi-wr-YT0">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
@@ -157,7 +157,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="/usr/local/scrcpy/scrcpy-server" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mcb-EV-V3U">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="/usr/local/scrcpy/scrcpy-server" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="mcb-EV-V3U">
                                                     <rect key="frame" x="131" y="13" width="223" height="19.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -168,7 +168,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="iHs-Hm-lyD" detailTextLabel="gDP-oa-bsT" style="IBUITableViewCellStyleValue1" id="EDK-7v-ymM">
-                                        <rect key="frame" x="20" y="315" width="374" height="43.5"/>
+                                        <rect key="frame" x="20" y="317" width="374" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="EDK-7v-ymM" id="eAd-L7-YP9">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
@@ -192,7 +192,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="K1T-4C-DbV" detailTextLabel="yng-Va-ytH" style="IBUITableViewCellStyleValue1" id="yuT-RO-non">
-                                        <rect key="frame" x="20" y="358.5" width="374" height="43.5"/>
+                                        <rect key="frame" x="20" y="360.5" width="374" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yuT-RO-non" id="rcy-nm-f3k">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
@@ -216,7 +216,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="bCm-wq-T3k" detailTextLabel="1Sm-Vt-LNd" style="IBUITableViewCellStyleValue1" id="VY0-s7-aDU">
-                                        <rect key="frame" x="20" y="402" width="374" height="43.5"/>
+                                        <rect key="frame" x="20" y="404" width="374" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VY0-s7-aDU" id="y3E-F1-W1Q">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
@@ -240,19 +240,19 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="wxD-bn-Q0M">
-                                        <rect key="frame" x="20" y="445.5" width="374" height="43"/>
+                                        <rect key="frame" x="20" y="447.5" width="374" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wxD-bn-Q0M" id="4R7-jb-Vgu">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Optional" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mBv-x2-juS">
-                                                    <rect key="frame" x="162.5" y="5" width="191.5" height="33"/>
+                                                    <rect key="frame" x="162.5" y="5" width="191.5" height="33.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Device Serial:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lZe-wP-s8I">
-                                                    <rect key="frame" x="20" y="11" width="103.5" height="21"/>
+                                                    <rect key="frame" x="20" y="11" width="103.5" height="21.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -269,12 +269,42 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="KPu-Ia-Ew9">
+                                        <rect key="frame" x="20" y="491" width="374" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KPu-Ia-Ew9" id="6CD-14-RYT">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Optional" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mWg-eF-PlP">
+                                                    <rect key="frame" x="132" y="5" width="222" height="33.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                                </textField>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Max Size:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uCA-5O-6FJ">
+                                                    <rect key="frame" x="20" y="11" width="73" height="21.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="uCA-5O-6FJ" firstAttribute="centerY" secondItem="6CD-14-RYT" secondAttribute="centerY" id="IoO-la-b4h"/>
+                                                <constraint firstItem="mWg-eF-PlP" firstAttribute="top" secondItem="6CD-14-RYT" secondAttribute="topMargin" constant="-6" id="O6l-Tu-ByT"/>
+                                                <constraint firstItem="uCA-5O-6FJ" firstAttribute="leading" secondItem="6CD-14-RYT" secondAttribute="leadingMargin" id="RLo-4O-WIq"/>
+                                                <constraint firstItem="uCA-5O-6FJ" firstAttribute="top" secondItem="6CD-14-RYT" secondAttribute="topMargin" id="as7-xH-PIj"/>
+                                                <constraint firstItem="mWg-eF-PlP" firstAttribute="trailing" secondItem="6CD-14-RYT" secondAttribute="trailingMargin" id="hrM-yU-w7Z"/>
+                                                <constraint firstItem="mWg-eF-PlP" firstAttribute="centerY" secondItem="uCA-5O-6FJ" secondAttribute="centerY" id="hyJ-13-2RH"/>
+                                                <constraint firstItem="mWg-eF-PlP" firstAttribute="leading" secondItem="uCA-5O-6FJ" secondAttribute="trailing" constant="39" id="slo-wI-QPA"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="OE8-fH-d0e">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="48" id="yMv-lE-TNN">
-                                        <rect key="frame" x="20" y="524.5" width="374" height="48"/>
+                                        <rect key="frame" x="20" y="570.5" width="374" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yMv-lE-TNN" id="axl-rK-2tV">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="48"/>
@@ -341,6 +371,7 @@
                         <outlet property="connectButton" destination="eNa-Ic-vU9" id="a7p-eQ-WE7"/>
                         <outlet property="coreVersion" destination="gDP-oa-bsT" id="I0X-oS-bEs"/>
                         <outlet property="indicatorView" destination="RAC-3x-635" id="FkP-ib-fXZ"/>
+                        <outlet property="maxSize" destination="mWg-eF-PlP" id="HhX-jE-2lr"/>
                         <outlet property="scrcpyServer" destination="mcb-EV-V3U" id="SE3-LG-Dij"/>
                         <outlet property="sshPassword" destination="8lV-eW-UQ7" id="JZg-ts-Mky"/>
                         <outlet property="sshPort" destination="sA7-eX-USo" id="vkb-rl-cUs"/>

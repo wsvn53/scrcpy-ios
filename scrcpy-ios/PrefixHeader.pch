@@ -21,6 +21,8 @@
 #define avcodec_alloc_context3  avcodec_alloc_context3_fix
 #define avcodec_send_packet  avcodec_send_packet_fix
 #define avcodec_receive_frame  avcodec_receive_frame_fix
+#define SDL_UpdateYUVTexture  SDL_UpdateYUVTexture_fix
+#define SDL_RenderCopy  SDL_RenderCopy_fix
 
 // Define NDEBUG will define assert -> (void)0, see assert.h
 // This will prevent to_fixed_point_16 crashed

@@ -31,6 +31,7 @@ process_t adb_reverse_remove(const char *serial, const char *device_socket_name)
                   password:(NSString *)password
                   serial:(NSString *)serial
                   maxSize:(NSString *)maxSize
+                  bitRate:(NSString *)bitRate
 {
     [self sharedParams].sshServer = server;
     [self sharedParams].sshPort   = port;
@@ -38,6 +39,7 @@ process_t adb_reverse_remove(const char *serial, const char *device_socket_name)
     [self sharedParams].sshPassword = password;
     [self sharedParams].adbSerial = serial;
     [self sharedParams].maxSize   = maxSize;
+    [self sharedParams].bitRate   = bitRate;
     
     [[self sharedParams] saveDefaults];
 }
@@ -49,6 +51,7 @@ process_t adb_reverse_remove(const char *serial, const char *device_socket_name)
     [[NSUserDefaults standardUserDefaults] setValue:self.sshPassword forKey:@"ssh_password"];
     [[NSUserDefaults standardUserDefaults] setValue:self.adbSerial forKey:@"adb_serial"];
     [[NSUserDefaults standardUserDefaults] setValue:self.maxSize forKey:@"max_size"];
+    [[NSUserDefaults standardUserDefaults] setValue:self.bitRate forKey:@"bit_rate"];
 }
 
 - (void)loadDefaults {
@@ -59,6 +62,7 @@ process_t adb_reverse_remove(const char *serial, const char *device_socket_name)
     self.sshPassword = [[NSUserDefaults standardUserDefaults] valueForKey:@"ssh_password"];
     self.adbSerial = [[NSUserDefaults standardUserDefaults] valueForKey:@"adb_serial"];
     self.maxSize = [[NSUserDefaults standardUserDefaults] valueForKey:@"max_size"];
+    self.bitRate = [[NSUserDefaults standardUserDefaults] valueForKey:@"bit_rate"];
 }
 
 - (NSString *)scrcpyServer {

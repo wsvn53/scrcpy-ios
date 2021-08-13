@@ -34,6 +34,7 @@ int scrcpy_main(int argc, char *argv[]);
 @property (weak, nonatomic) IBOutlet UILabel *coreVersion;
 @property (weak, nonatomic) IBOutlet UILabel *appVersion;
 @property (weak, nonatomic) IBOutlet UITextField *maxSize;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *bitRate;
 
 @end
 
@@ -87,6 +88,14 @@ int scrcpy_main(int argc, char *argv[]);
     self.coreVersion.text = ScrcpyParams.sharedParams.coreVersion;
     self.appVersion.text = ScrcpyParams.sharedParams.appVersion;
     self.maxSize.text = ScrcpyParams.sharedParams.maxSize;
+    self.bitRate.selectedSegmentIndex = ^NSInteger(void){
+        for (NSInteger i = 0; i < self.bitRate.numberOfSegments; i++) {
+            if ([[self.bitRate titleForSegmentAtIndex:i] isEqualToString:ScrcpyParams.sharedParams.bitRate]) {
+                return i;
+            }
+        }
+        return 2;
+    }();
 }
 
 #pragma mark - Actions
@@ -105,13 +114,20 @@ int scrcpy_main(int argc, char *argv[]);
     NSString *password = self.sshPassword.text;
     NSString *serial = self.adbSerial.text;
     NSString *maxSize = self.maxSize.text;
+    NSString *bitRate = [self.bitRate titleForSegmentAtIndex:self.bitRate.selectedSegmentIndex];
     
     // Check & Save SSH connnection parameters
     CheckParam(server,  @"ssh server");
     CheckParam(port,    @"ssh port");
     CheckParam(user,    @"ssh user");
     CheckParam(password,    @"password");
-    [ScrcpyParams setParamsWithServer:server port:port user:user password:password serial:serial maxSize:maxSize];
+    [ScrcpyParams setParamsWithServer:server
+                                 port:port
+                                 user:user
+                             password:password
+                               serial:serial
+                              maxSize:maxSize
+                              bitRate:bitRate];
     
     // reset error status & process_wait
     [[ExecStatus sharedStatus] resetStatus];
@@ -142,6 +158,8 @@ int scrcpy_main(int argc, char *argv[]);
     self.sshUser.enabled = enabled;
     self.sshPassword.enabled = enabled;
     self.adbSerial.enabled = enabled;
+    self.maxSize.enabled = enabled;
+    self.bitRate.enabled = enabled;
     self.connectButton.enabled = enabled;
 }
 
@@ -159,8 +177,9 @@ int scrcpy_main(int argc, char *argv[]);
 
     // Because after SDL proxied didFinishLauch, PumpEvent will set to FASLE
     // So we need to set to TRUE in order to handle UI events
+    NSString *bitRate = [self.bitRate titleForSegmentAtIndex:self.bitRate.selectedSegmentIndex];
     NSMutableArray *scrcpyOptions = [NSMutableArray arrayWithArray:@[
-        @"scrcpy", @"-V", @"debug", @"-f", @"--max-fps", @"60", @"--bit-rate", @"4M"
+        @"scrcpy", @"-V", @"debug", @"-f", @"--max-fps", @"60", @"--bit-rate", bitRate
     ]];
     
     // Assemble serial options

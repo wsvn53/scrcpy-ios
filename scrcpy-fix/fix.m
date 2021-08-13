@@ -332,9 +332,25 @@ void av_frame_move_ref_fix(AVFrame *dst, AVFrame *src) {
     }
     
     // call ffmpeg av_frame_move_ref
-//    AVFrame *dst_fake = av_frame_alloc();
-//    av_frame_move_ref(dst_fake, src);
     av_frame_move_ref(dst, src);
+}
+
+// handle SDL_UpdateYUVTexture/SDL_RenderCopy to disable Metal render
+extern int SDL_UpdateYUVTexture_fix(SDL_Texture * texture,
+                                                 const SDL_Rect * rect,
+                                                 const Uint8 *Yplane, int Ypitch,
+                                                 const Uint8 *Uplane, int Upitch,
+                                const Uint8 *Vplane, int Vpitch)
+{
+    return 0;
+}
+
+extern DECLSPEC int SDLCALL SDL_RenderCopy_fix(SDL_Renderer * renderer,
+                                           SDL_Texture * texture,
+                                           const SDL_Rect * srcrect,
+                                           const SDL_Rect * dstrect)
+{
+    return 0;
 }
 
 // temporary save the pointer of AVPacket for check if this is a I frame
@@ -363,9 +379,4 @@ int avcodec_receive_frame_fix(AVCodecContext *avctx, AVFrame *frame) {
         NSLog(@"[FIX] Saved I frame packet: %p", latest_avpkt);
     }
     return ret;
-}
-
-// fix foward connection
-socket_t net_connect_fix(uint32_t addr, uint16_t port) {
-    return net_connect(addr, port);
 }

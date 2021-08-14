@@ -48,6 +48,7 @@
 		AAA222A7269609BE00307990 /* libscrcpy-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA2221C2695B3A600307990 /* libscrcpy-ios.a */; };
 		AAA222AA2696995400307990 /* ssh.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA222A92696995400307990 /* ssh.m */; };
 		AAA222AD26969C8800307990 /* utils.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA222AC26969C8800307990 /* utils.m */; };
+		AAAB5A3826C75AC8000A1EEB /* ScrcpyParams.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAB5A3726C75AC8000A1EEB /* ScrcpyParams.m */; };
 		AAB5E5C326AE9201000396BE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAB5E5C226AE9201000396BE /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -162,6 +163,8 @@
 		AAA222A92696995400307990 /* ssh.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ssh.m; sourceTree = "<group>"; };
 		AAA222AB26969C8800307990 /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
 		AAA222AC26969C8800307990 /* utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = utils.m; sourceTree = "<group>"; };
+		AAAB5A3626C75AC8000A1EEB /* ScrcpyParams.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrcpyParams.h; sourceTree = "<group>"; };
+		AAAB5A3726C75AC8000A1EEB /* ScrcpyParams.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrcpyParams.m; sourceTree = "<group>"; };
 		AAB5E5C226AE9201000396BE /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -381,6 +384,8 @@
 				AAA222AC26969C8800307990 /* utils.m */,
 				AA2D558E269DAAE1009901C9 /* ExecStatus.h */,
 				AA2D558F269DAAE1009901C9 /* ExecStatus.m */,
+				AAAB5A3626C75AC8000A1EEB /* ScrcpyParams.h */,
+				AAAB5A3726C75AC8000A1EEB /* ScrcpyParams.m */,
 			);
 			path = "scrcpy-fix";
 			sourceTree = "<group>";
@@ -548,6 +553,7 @@
 				AAA222AD26969C8800307990 /* utils.m in Sources */,
 				AAA222AA2696995400307990 /* ssh.m in Sources */,
 				AAA222A4269606FD00307990 /* fix.m in Sources */,
+				AAAB5A3826C75AC8000A1EEB /* ScrcpyParams.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

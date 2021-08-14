@@ -8,31 +8,8 @@
 #import <Foundation/Foundation.h>
 #import <util/process.h>
 #import "ExecStatus.h"
+#import "ScrcpyParams.h"
 
 enum process_result ssh_exec(const char *const argv[]);
 bool ssh_forward(uint16_t port);
 bool ssh_reverse(uint16_t port);
-
-@interface ScrcpyParams : NSObject
-@property (nonatomic, copy)     NSString    *sshServer;
-@property (nonatomic, copy)     NSString    *sshPort;
-@property (nonatomic, copy)     NSString    *sshUser;
-@property (nonatomic, copy)     NSString    *sshPassword;
-
-@property (nonatomic, copy)     NSString    *adbSerial;
-@property (nonatomic, copy)     NSString    *scrcpyServer;
-@property (nonatomic, copy)     NSString    *maxSize;
-@property (nonatomic, copy)     NSString    *bitRate;
-
-@property (nonatomic, copy)     NSString    *coreVersion;
-@property (nonatomic, copy)     NSString    *appVersion;
-
-+(ScrcpyParams *)sharedParams;
-+(void)setParamsWithServer:(NSString *)server
-                      port:(NSString *)port
-                      user:(NSString *)user
-                  password:(NSString *)password
-                  serial:(NSString *)serial
-                  maxSize:(NSString *)maxSize
-                  bitRate:(NSString *)bitRate;
-@end

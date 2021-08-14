@@ -35,6 +35,7 @@ int scrcpy_main(int argc, char *argv[]);
 @property (weak, nonatomic) IBOutlet UILabel *appVersion;
 @property (weak, nonatomic) IBOutlet UITextField *maxSize;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *bitRate;
+@property (nonatomic, copy) NSString *bitRateText;
 
 @end
 
@@ -43,6 +44,8 @@ int scrcpy_main(int argc, char *argv[]);
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupViews];
+    
+    [self bindForm];
     [self loadForm];
     
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(resetViews)
@@ -77,17 +80,38 @@ int scrcpy_main(int argc, char *argv[]);
     self.maxSize.delegate = (id<UITextFieldDelegate>)self;
 }
 
+- (void)bindForm {
+    ScrcpyParams_bind(self.sshServer.text, ScrcpyParams.sharedParams.sshServer, @"ssh_server", @"");
+    ScrcpyParams_bind(self.sshPort.text, ScrcpyParams.sharedParams.sshPort, @"ssh_port", @"22");
+    ScrcpyParams_bind(self.sshUser.text, ScrcpyParams.sharedParams.sshUser, @"ssh_user", @"");
+    ScrcpyParams_bind(self.sshPassword.text, ScrcpyParams.sharedParams.sshPassword, @"ssh_password", @"");
+    ScrcpyParams_bind(self.adbSerial.text, ScrcpyParams.sharedParams.adbSerial, @"adb_serial", @"");
+    ScrcpyParams_bind(self.maxSize.text, ScrcpyParams.sharedParams.maxSize, @"max_size", @"");
+    ScrcpyParams_bind(self.bitRateText, ScrcpyParams.sharedParams.bitRate, @"bit_rate", @"");
+    
+    ScrcpyParamsBind(^{
+        self.scrcpyServer.text = ScrcpyParams.sharedParams.scrcpyServer;
+    }, ^{});
+    ScrcpyParamsBind(^{
+        self.coreVersion.text = ScrcpyParams.sharedParams.coreVersion;
+    }, ^{});
+    ScrcpyParamsBind(^{
+        self.appVersion.text = ScrcpyParams.sharedParams.appVersion;
+    }, ^{});
+}
+
 - (void)loadForm {
     // Load form UserDefaults
-    self.sshServer.text = ScrcpyParams.sharedParams.sshServer;
-    self.sshPort.text = ScrcpyParams.sharedParams.sshPort;
-    self.sshUser.text = ScrcpyParams.sharedParams.sshUser;
-    self.sshPassword.text = ScrcpyParams.sharedParams.sshPassword;
-    self.adbSerial.text = ScrcpyParams.sharedParams.adbSerial;
-    self.scrcpyServer.text = ScrcpyParams.sharedParams.scrcpyServer;
-    self.coreVersion.text = ScrcpyParams.sharedParams.coreVersion;
-    self.appVersion.text = ScrcpyParams.sharedParams.appVersion;
-    self.maxSize.text = ScrcpyParams.sharedParams.maxSize;
+    [ScrcpyParams.sharedParams loadDefaults];
+}
+
+#pragma mark - Getters & Setters
+
+-(NSString *)bitRateText {
+    return [self.bitRate titleForSegmentAtIndex:self.bitRate.selectedSegmentIndex];
+}
+
+-(void)setBitRateText:(NSString *)bitRateText {
     self.bitRate.selectedSegmentIndex = ^NSInteger(void){
         for (NSInteger i = 0; i < self.bitRate.numberOfSegments; i++) {
             if ([[self.bitRate titleForSegmentAtIndex:i] isEqualToString:ScrcpyParams.sharedParams.bitRate]) {
@@ -108,26 +132,14 @@ int scrcpy_main(int argc, char *argv[]);
 }
 
 - (IBAction)startScrcpy:(id)sender {
-    NSString *server = self.sshServer.text;
-    NSString *port   = self.sshPort.text;
-    NSString *user   = self.sshUser.text;
-    NSString *password = self.sshPassword.text;
-    NSString *serial = self.adbSerial.text;
-    NSString *maxSize = self.maxSize.text;
-    NSString *bitRate = [self.bitRate titleForSegmentAtIndex:self.bitRate.selectedSegmentIndex];
-    
     // Check & Save SSH connnection parameters
-    CheckParam(server,  @"ssh server");
-    CheckParam(port,    @"ssh port");
-    CheckParam(user,    @"ssh user");
-    CheckParam(password,    @"password");
-    [ScrcpyParams setParamsWithServer:server
-                                 port:port
-                                 user:user
-                             password:password
-                               serial:serial
-                              maxSize:maxSize
-                              bitRate:bitRate];
+    CheckParam(self.sshServer.text,  @"ssh server");
+    CheckParam(self.sshPort.text,    @"ssh port");
+    CheckParam(self.sshUser.text,    @"ssh user");
+    CheckParam(self.sshPassword.text,    @"password");
+    
+    // Save parameters to defaults
+    [ScrcpyParams.sharedParams saveDefaults];
     
     // reset error status & process_wait
     [[ExecStatus sharedStatus] resetStatus];
@@ -138,6 +150,9 @@ int scrcpy_main(int argc, char *argv[]);
 
     // Show indicator animation
     [self.indicatorView startAnimating];
+    
+    NSString *server = self.sshServer.text;
+    NSString *port   = self.sshPort.text;
     
     // Start scrcpy by detach from current stack
     if ([self checkLocalNetworkPrompted:server]) {

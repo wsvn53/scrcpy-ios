@@ -380,3 +380,61 @@ int avcodec_receive_frame_fix(AVCodecContext *avctx, AVFrame *frame) {
     }
     return ret;
 }
+
+bool controller_push_msg_fix(struct controller *controller, const struct control_msg *msg);
+    
+// handle clipboard changes
+__attribute__((constructor))
+void clipboard_handle (void) {
+    [NSNotificationCenter.defaultCenter addObserverForName:UIApplicationDidBecomeActiveNotification
+                                                    object:nil
+                                                     queue:NSOperationQueue.mainQueue
+                                                usingBlock:^(NSNotification *note) {
+        NSLog(@"> UIApplicationDidBecomeActiveNotification");
+        char *text = SDL_GetClipboardText();
+        if (!text) {
+            NSLog(@"Could not get clipboard text: %s", SDL_GetError());
+            return;
+        }
+        if (!*text) {
+            // empty text
+            SDL_free(text);
+            return;
+        }
+
+        char *text_dup = strdup(text);
+        SDL_free(text);
+        if (!text_dup) {
+            NSLog(@"Could not strdup input text");
+            return;
+        }
+
+        struct control_msg msg;
+        msg.type = CONTROL_MSG_TYPE_SET_CLIPBOARD;
+        msg.set_clipboard.text = text_dup;
+        msg.set_clipboard.paste = false;
+
+        if (!controller_push_msg_fix(NULL, &msg)) {
+            free(text_dup);
+            NSLog(@"Could not request 'set device clipboard'");
+        }
+    }];
+}
+
+bool
+controller_push_msg_fix(struct controller *controller,
+                      const struct control_msg *msg) {
+    static struct controller *controller_ref = NULL;
+    
+    // save controller reference
+    controller_ref = controller == NULL ? controller_ref : controller;
+    // use saved controller reference
+    controller = controller == NULL ? controller_ref : controller;
+    
+    // ignore when controller not set
+    if (controller == NULL) {
+        return false;
+    }
+    
+    return controller_push_msg(controller, msg);
+}

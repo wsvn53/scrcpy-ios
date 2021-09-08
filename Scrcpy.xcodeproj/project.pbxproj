@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		AA2D5590269DAAE1009901C9 /* ExecStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2D558F269DAAE1009901C9 /* ExecStatus.m */; };
 		AA5D7F1A26B060990091288D /* screen.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA222432695B3F400307990 /* screen.c */; };
-		AA5D7F1B26B060FA0091288D /* input_manager.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA222682695B3F400307990 /* input_manager.c */; };
+		AA5D7F1B26B060FA0091288D /* input_manager.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA222682695B3F400307990 /* input_manager.c */; settings = {COMPILER_FLAGS = "-Dcontroller_push_msg=controller_push_msg_fix"; }; };
 		AA6FFDA526B985D7001ACD22 /* SDL_uikitviewcontroller+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6FFDA426B985D7001ACD22 /* SDL_uikitviewcontroller+Extend.m */; };
 		AA7766832698A5AB0025990D /* ScrcpyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7766822698A5AB0025990D /* ScrcpyViewController.m */; };
 		AA8C04C7269C8FE0001D9A4F /* NSError+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8C04C6269C8FE0001D9A4F /* NSError+Alert.m */; };
@@ -27,7 +27,7 @@
 		AAA222742695B3F400307990 /* process.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA222352695B3F400307990 /* process.c */; };
 		AAA222752695B3F400307990 /* net.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA2223B2695B3F400307990 /* net.c */; };
 		AAA222762695B3F400307990 /* str_util.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA2223D2695B3F400307990 /* str_util.c */; };
-		AAA222772695B3F400307990 /* scrcpy.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA2223F2695B3F400307990 /* scrcpy.c */; settings = {COMPILER_FLAGS = "-Dscreen_handle_event=screen_handle_event_fix -Dinput_manager_handle_event=input_manager_handle_event_fix"; }; };
+		AAA222772695B3F400307990 /* scrcpy.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA2223F2695B3F400307990 /* scrcpy.c */; settings = {COMPILER_FLAGS = "-Dscreen_handle_event=screen_handle_event_fix -Dinput_manager_handle_event=input_manager_handle_event_fix -Dcontroller_push_msg=controller_push_msg_fix"; }; };
 		AAA222782695B3F400307990 /* v4l2_sink.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA222422695B3F400307990 /* v4l2_sink.c */; };
 		AAA2227A2695B3F400307990 /* adb.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA222442695B3F400307990 /* adb.c */; };
 		AAA2227B2695B3F400307990 /* fps_counter.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA222472695B3F400307990 /* fps_counter.c */; };

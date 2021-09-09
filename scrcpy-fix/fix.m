@@ -36,6 +36,10 @@ static bool bScrcpyPeepEventStopControl = false;
 // control use Hardware decoder first
 static bool bScrcpyUseHardwareDecoder = true;
 
+// to handle clipboard
+void clipboard_send(void);
+bool controller_push_msg_fix(struct controller *controller, const struct control_msg *msg);
+
 // handle is_regular_file to ignore check local scrcpy-server exists
 bool
 is_regular_file(const char *path) {
@@ -380,8 +384,6 @@ int avcodec_receive_frame_fix(AVCodecContext *avctx, AVFrame *frame) {
     }
     return ret;
 }
-
-bool controller_push_msg_fix(struct controller *controller, const struct control_msg *msg);
     
 // handle clipboard changes
 __attribute__((constructor))
@@ -391,40 +393,50 @@ void clipboard_handle (void) {
                                                      queue:NSOperationQueue.mainQueue
                                                 usingBlock:^(NSNotification *note) {
         NSLog(@"> UIApplicationDidBecomeActiveNotification");
-        char *text = SDL_GetClipboardText();
-        if (!text) {
-            NSLog(@"Could not get clipboard text: %s", SDL_GetError());
-            return;
-        }
-        if (!*text) {
-            // empty text
-            SDL_free(text);
-            return;
-        }
-
-        char *text_dup = strdup(text);
-        SDL_free(text);
-        if (!text_dup) {
-            NSLog(@"Could not strdup input text");
-            return;
-        }
-
-        struct control_msg msg;
-        msg.type = CONTROL_MSG_TYPE_SET_CLIPBOARD;
-        msg.set_clipboard.text = text_dup;
-        msg.set_clipboard.paste = false;
-
-        if (!controller_push_msg_fix(NULL, &msg)) {
-            free(text_dup);
-            NSLog(@"Could not request 'set device clipboard'");
-        }
+        clipboard_send();
     }];
+}
+
+void clipboard_send (void) {
+    char *text = SDL_GetClipboardText();
+    if (!text) {
+        NSLog(@"Could not get clipboard text: %s", SDL_GetError());
+        return;
+    }
+    if (!*text) {
+        // empty text
+        SDL_free(text);
+        return;
+    }
+
+    char *text_dup = strdup(text);
+    SDL_free(text);
+    if (!text_dup) {
+        NSLog(@"Could not strdup input text");
+        return;
+    }
+
+    struct control_msg msg;
+    msg.type = CONTROL_MSG_TYPE_SET_CLIPBOARD;
+    msg.set_clipboard.text = text_dup;
+    msg.set_clipboard.paste = false;
+
+    if (!controller_push_msg_fix(NULL, &msg)) {
+        free(text_dup);
+        NSLog(@"Could not request 'set device clipboard'");
+    }
 }
 
 bool
 controller_push_msg_fix(struct controller *controller,
                       const struct control_msg *msg) {
     static struct controller *controller_ref = NULL;
+    
+    // send clipboard once after first controller_msg
+    if (controller_ref == NULL && controller != NULL) {
+        dispatch_time_t t = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC));
+        dispatch_after(t, dispatch_get_main_queue(), ^{ clipboard_send(); });
+    }
     
     // save controller reference
     controller_ref = controller == NULL ? controller_ref : controller;

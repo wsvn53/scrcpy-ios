@@ -39,6 +39,8 @@ ScrcpyParamsBind(^{                                                         \
 @property (nonatomic, copy)     NSString    *coreVersion;
 @property (nonatomic, copy)     NSString    *appVersion;
 
+@property (nonatomic, assign)   BOOL        autoConnectOnLoad;
+
 +(ScrcpyParams *)sharedParams;
 -(void)bindParam:(ScrcpyBindBlock)showBlock store:(ScrcpyBindBlock)storeBlock;
 - (void)saveDefaults;

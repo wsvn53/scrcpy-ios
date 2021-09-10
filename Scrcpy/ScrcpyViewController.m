@@ -11,6 +11,7 @@
 #import "NSError+Alert.h"
 #import "utils.h"
 #import "fix.h"
+#import "SDLUIKitDelegate+OpenURL.h"
 
 #define   kSDLDidCreateRendererNotification   @"kSDLDidCreateRendererNotification"
 int scrcpy_main(int argc, char *argv[]);
@@ -50,6 +51,8 @@ int scrcpy_main(int argc, char *argv[]);
     
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(resetViews)
                                                name:kSDLDidCreateRendererNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(autoConnect)
+                                               name:kConnectWithSchemeNotification object:nil];
 }
 
 - (void)setupViews {
@@ -103,6 +106,14 @@ int scrcpy_main(int argc, char *argv[]);
 - (void)loadForm {
     // Load form UserDefaults
     [ScrcpyParams.sharedParams loadDefaults];
+}
+
+- (void)autoConnect {
+    // Current is showing remote screen, ignore this scheme
+    if (self.view.window.isKeyWindow == NO) return;
+    
+    // Start scrcpy with 0.1s delay
+    [self performSelector:@selector(scrcpyMain) withObject:nil afterDelay:0.1];
 }
 
 #pragma mark - Getters & Setters
@@ -192,19 +203,19 @@ int scrcpy_main(int argc, char *argv[]);
 
     // Because after SDL proxied didFinishLauch, PumpEvent will set to FASLE
     // So we need to set to TRUE in order to handle UI events
-    NSString *bitRate = [self.bitRate titleForSegmentAtIndex:self.bitRate.selectedSegmentIndex];
+    NSString *bitRate = ScrcpyParams.sharedParams.bitRate;
     NSMutableArray *scrcpyOptions = [NSMutableArray arrayWithArray:@[
         @"scrcpy", @"-V", @"debug", @"-f", @"--max-fps", @"60", @"--bit-rate", bitRate
     ]];
     
     // Assemble serial options
-    if (self.adbSerial.text.length > 0) {
-        [scrcpyOptions addObjectsFromArray:@[ @"-s", self.adbSerial.text ]];
+    if (ScrcpyParams.sharedParams.adbSerial > 0) {
+        [scrcpyOptions addObjectsFromArray:@[ @"-s", ScrcpyParams.sharedParams.adbSerial ]];
     }
     
     // Assemble maxSize options
-    if (self.maxSize.text.length > 0) {
-        [scrcpyOptions addObjectsFromArray:@[ @"--max-size", self.maxSize.text ]];
+    if (ScrcpyParams.sharedParams.maxSize > 0) {
+        [scrcpyOptions addObjectsFromArray:@[ @"--max-size", ScrcpyParams.sharedParams.maxSize ]];
     }
     
     char *scrcpy_opts[scrcpyOptions.count];

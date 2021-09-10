@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA2B664F26EBB67A0089F2E7 /* SDLUIKitDelegate+OpenURL.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2B664E26EBB67A0089F2E7 /* SDLUIKitDelegate+OpenURL.m */; };
+		AA2B665226EBC0810089F2E7 /* SchemeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2B665126EBC0810089F2E7 /* SchemeHandler.m */; };
 		AA2D5590269DAAE1009901C9 /* ExecStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2D558F269DAAE1009901C9 /* ExecStatus.m */; };
 		AA5D7F1A26B060990091288D /* screen.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA222432695B3F400307990 /* screen.c */; };
 		AA5D7F1B26B060FA0091288D /* input_manager.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA222682695B3F400307990 /* input_manager.c */; settings = {COMPILER_FLAGS = "-Dcontroller_push_msg=controller_push_msg_fix"; }; };
@@ -74,6 +76,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AA2B664D26EBB67A0089F2E7 /* SDLUIKitDelegate+OpenURL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SDLUIKitDelegate+OpenURL.h"; sourceTree = "<group>"; };
+		AA2B664E26EBB67A0089F2E7 /* SDLUIKitDelegate+OpenURL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SDLUIKitDelegate+OpenURL.m"; sourceTree = "<group>"; };
+		AA2B665026EBC0810089F2E7 /* SchemeHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchemeHandler.h; sourceTree = "<group>"; };
+		AA2B665126EBC0810089F2E7 /* SchemeHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchemeHandler.m; sourceTree = "<group>"; };
 		AA2D558E269DAAE1009901C9 /* ExecStatus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExecStatus.h; sourceTree = "<group>"; };
 		AA2D558F269DAAE1009901C9 /* ExecStatus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExecStatus.m; sourceTree = "<group>"; };
 		AA5D7F1426B055DC0091288D /* opengl_fix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = opengl_fix.h; sourceTree = "<group>"; };
@@ -224,6 +230,10 @@
 				AA7766822698A5AB0025990D /* ScrcpyViewController.m */,
 				AA6FFDA326B985D6001ACD22 /* SDL_uikitviewcontroller+Extend.h */,
 				AA6FFDA426B985D7001ACD22 /* SDL_uikitviewcontroller+Extend.m */,
+				AA2B664D26EBB67A0089F2E7 /* SDLUIKitDelegate+OpenURL.h */,
+				AA2B664E26EBB67A0089F2E7 /* SDLUIKitDelegate+OpenURL.m */,
+				AA2B665026EBC0810089F2E7 /* SchemeHandler.h */,
+				AA2B665126EBC0810089F2E7 /* SchemeHandler.m */,
 				AA8C04C5269C8FE0001D9A4F /* NSError+Alert.h */,
 				AA8C04C6269C8FE0001D9A4F /* NSError+Alert.m */,
 				AAA2219F26959AA200307990 /* Assets.xcassets */,
@@ -504,9 +514,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				AAA221A626959AA200307990 /* main.m in Sources */,
+				AA2B665226EBC0810089F2E7 /* SchemeHandler.m in Sources */,
 				AA7766832698A5AB0025990D /* ScrcpyViewController.m in Sources */,
 				AA6FFDA526B985D7001ACD22 /* SDL_uikitviewcontroller+Extend.m in Sources */,
 				AA8C04C7269C8FE0001D9A4F /* NSError+Alert.m in Sources */,
+				AA2B664F26EBB67A0089F2E7 /* SDLUIKitDelegate+OpenURL.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -689,7 +701,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2021090901;
+				CURRENT_PROJECT_VERSION = 2021091101;
 				DEVELOPMENT_TEAM = K8Q74NT2BG;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/ssh";
@@ -715,7 +727,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/Libs/lib";
-				MARKETING_VERSION = 1.6;
+				MARKETING_VERSION = 1.7;
 				OTHER_LDFLAGS = (
 					"-lSDL2",
 					"-lavformat",
@@ -756,7 +768,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2021090901;
+				CURRENT_PROJECT_VERSION = 2021091101;
 				DEVELOPMENT_TEAM = K8Q74NT2BG;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/ssh";
@@ -782,7 +794,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/Libs/lib";
-				MARKETING_VERSION = 1.6;
+				MARKETING_VERSION = 1.7;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-lSDL2",

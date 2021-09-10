@@ -11,6 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ScrcpyViewController : UITableViewController
 
+- (void)loadForm;
+
 @end
 
 NS_ASSUME_NONNULL_END

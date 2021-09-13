@@ -6,7 +6,6 @@
 //
 
 #import "SDLUIKitDelegate+OpenURL.h"
-#import "SchemeHandler.h"
 #import "ScrcpyViewController.h"
 #import "ScrcpyParams.h"
 
@@ -16,13 +15,11 @@
 {
     NSLog(@"> Scrcpy: %@", url.absoluteURL);
     
-    [SchemeHandler URLToScrcpyParams:url];
-    
     // AutoConnect
-    ScrcpyParams.sharedParams.autoConnectOnLoad = YES;
+    ScrcpyParams.sharedParams.autoConnectURL = url;
     
     // Post connect
-    [[NSNotificationCenter defaultCenter] postNotificationName:kConnectWithSchemeNotification object:nil];
+    [NSNotificationCenter.defaultCenter postNotificationName:kConnectWithSchemeNotification object:nil];
     
     return YES;
 }

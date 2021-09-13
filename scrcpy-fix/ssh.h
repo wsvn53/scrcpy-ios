@@ -13,3 +13,4 @@
 enum process_result ssh_exec(const char *const argv[]);
 bool ssh_forward(uint16_t port);
 bool ssh_reverse(uint16_t port);
+void scrcpy_shutdown(void);

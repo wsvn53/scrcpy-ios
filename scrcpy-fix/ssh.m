@@ -86,7 +86,9 @@ enum process_result ssh_exec_command(NSString *command) {
     if (status.output.length > 0) {
         NSLog(@"Output:\n%@", status.output);
     }
-    if (status.err != nil) {
+    
+    // scrcpy is not in stopping phase and occour error, show alert
+    if (status.err != nil && scrcpy_stopping() == false) {
         NSLog(@"Error:\n%@", status.err);
         NSError *newErr = errorAppendDesc(status.err, status.command);
         newErr = errorAppendDesc(newErr, status.output);

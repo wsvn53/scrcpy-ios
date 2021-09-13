@@ -9,6 +9,7 @@
 #define fix_h
 
 #import <stdio.h>
+#import <stdbool.h>
 
 #define   kSDLDidCreateRendererNotification   @"kSDLDidCreateRendererNotification"
 
@@ -21,5 +22,7 @@ void stop_PeepEvents (void);
 
 // remvoe all render layers
 void fix_remove_opengl_layers(void);
+
+bool scrcpy_stopping(void);
 
 #endif /* fix_h */

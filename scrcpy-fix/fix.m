@@ -79,7 +79,7 @@ exit_code_t
 process_wait(pid_t pid, bool close) {
     // use sleep to fake wait status
     while (bScrcpyServerStopControl == false) {
-        sleep(2);
+        sleep(1);
     }
     bScrcpyServerStopControl = false;
     return 0;
@@ -89,6 +89,11 @@ process_wait(pid_t pid, bool close) {
 void
 sc_thread_join(sc_thread *thread, int *status) {
     bScrcpyServerStopControl = true;
+}
+
+// check scrcpy is stopping
+bool scrcpy_stopping(void) {
+    return bScrcpyServerStopControl;
 }
 
 // handle SDL_CreateRenderer to set scale

@@ -12,6 +12,7 @@
 #import "utils.h"
 #import "fix.h"
 #import "SDLUIKitDelegate+OpenURL.h"
+#import "SchemeHandler.h"
 
 #define   kSDLDidCreateRendererNotification   @"kSDLDidCreateRendererNotification"
 int scrcpy_main(int argc, char *argv[]);
@@ -53,6 +54,11 @@ int scrcpy_main(int argc, char *argv[]);
                                                name:kSDLDidCreateRendererNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(autoConnect)
                                                name:kConnectWithSchemeNotification object:nil];
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self autoConnect];
 }
 
 - (void)setupViews {
@@ -109,11 +115,29 @@ int scrcpy_main(int argc, char *argv[]);
 }
 
 - (void)autoConnect {
-    // Current is showing remote screen, ignore this scheme
-    if (self.view.window.isKeyWindow == NO) return;
+    // Only auto connect when URL not nil
+    if (ScrcpyParams.sharedParams.autoConnectURL == nil) return;
     
-    // Start scrcpy with 0.1s delay
-    [self performSelector:@selector(scrcpyMain) withObject:nil afterDelay:0.1];
+    // Current remote control is connected, disconnect first
+    if (self.view.window != nil && self.view.window.isKeyWindow == NO) {
+        NSLog(@"> self.view.window is not keyWindow");
+        scrcpy_shutdown();
+        [self performSelector:@selector(autoConnect) withObject:nil afterDelay:1.f];
+        return;
+    }
+        
+    // Parse URL params
+    [SchemeHandler URLToScrcpyParams:ScrcpyParams.sharedParams.autoConnectURL];
+    ScrcpyParams.sharedParams.autoConnectURL = nil;
+    
+    // Disable all textfields
+    [self toggleControlsEnabled:NO];
+
+    // Show indicator animation
+    [self.indicatorView startAnimating];
+    
+    // Start scrcpy main entry
+    [self scrcpyMain];
 }
 
 #pragma mark - Getters & Setters
@@ -151,10 +175,6 @@ int scrcpy_main(int argc, char *argv[]);
     
     // Save parameters to defaults
     [ScrcpyParams.sharedParams saveDefaults];
-    
-    // reset error status & process_wait
-    [[ExecStatus sharedStatus] resetStatus];
-    process_wait_reset();
     
     // Disable all textfields
     [self toggleControlsEnabled:NO];
@@ -200,6 +220,10 @@ int scrcpy_main(int argc, char *argv[]);
     // Here in case there is no opportunity to perform UI animations and other changes
     CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.1, NO);
     SDL_iPhoneSetEventPump(SDL_TRUE);
+    
+    // Reset error status & process_wait
+    [[ExecStatus sharedStatus] resetStatus];
+    process_wait_reset();
 
     // Because after SDL proxied didFinishLauch, PumpEvent will set to FASLE
     // So we need to set to TRUE in order to handle UI events
@@ -209,12 +233,12 @@ int scrcpy_main(int argc, char *argv[]);
     ]];
     
     // Assemble serial options
-    if (ScrcpyParams.sharedParams.adbSerial > 0) {
+    if (ScrcpyParams.sharedParams.adbSerial.length > 0) {
         [scrcpyOptions addObjectsFromArray:@[ @"-s", ScrcpyParams.sharedParams.adbSerial ]];
     }
     
     // Assemble maxSize options
-    if (ScrcpyParams.sharedParams.maxSize > 0) {
+    if (ScrcpyParams.sharedParams.maxSize.length > 0) {
         [scrcpyOptions addObjectsFromArray:@[ @"--max-size", ScrcpyParams.sharedParams.maxSize ]];
     }
     

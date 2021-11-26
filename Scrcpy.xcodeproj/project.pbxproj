@@ -50,6 +50,7 @@
 		AAA222A7269609BE00307990 /* libscrcpy-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA2221C2695B3A600307990 /* libscrcpy-ios.a */; };
 		AAA222AA2696995400307990 /* ssh.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA222A92696995400307990 /* ssh.m */; };
 		AAA222AD26969C8800307990 /* utils.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA222AC26969C8800307990 /* utils.m */; };
+		AAAA7AB52750C2DC00F7ED1C /* Gossh.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAAA7AB42750C2DC00F7ED1C /* Gossh.xcframework */; };
 		AAAB5A3826C75AC8000A1EEB /* ScrcpyParams.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAB5A3726C75AC8000A1EEB /* ScrcpyParams.m */; };
 		AAB5E5C326AE9201000396BE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAB5E5C226AE9201000396BE /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -169,6 +170,7 @@
 		AAA222A92696995400307990 /* ssh.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ssh.m; sourceTree = "<group>"; };
 		AAA222AB26969C8800307990 /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
 		AAA222AC26969C8800307990 /* utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = utils.m; sourceTree = "<group>"; };
+		AAAA7AB42750C2DC00F7ED1C /* Gossh.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Gossh.xcframework; path = ssh/Gossh.xcframework; sourceTree = "<group>"; };
 		AAAB5A3626C75AC8000A1EEB /* ScrcpyParams.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrcpyParams.h; sourceTree = "<group>"; };
 		AAAB5A3726C75AC8000A1EEB /* ScrcpyParams.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrcpyParams.m; sourceTree = "<group>"; };
 		AAB5E5C226AE9201000396BE /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAAA7AB52750C2DC00F7ED1C /* Gossh.xcframework in Frameworks */,
 				AAA222A6269609BE00307990 /* libscrcpy-fix.a in Frameworks */,
 				AAA222A7269609BE00307990 /* libscrcpy-ios.a in Frameworks */,
 			);
@@ -378,6 +381,7 @@
 		AAA222892695B4EF00307990 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AAAA7AB42750C2DC00F7ED1C /* Gossh.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -758,7 +762,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = me.wsen.scrcpy.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -826,7 +830,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = me.wsen.scrcpy.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

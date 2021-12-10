@@ -5,7 +5,7 @@ set -x;
 BUILD_DIR=$(mktemp -d -t SDL);
 cd $BUILD_DIR;
 
-curl -O https://www.libsdl.org/release/SDL2-2.0.14.tar.gz;
+curl -O https://www.libsdl.org/release/SDL2-2.0.16.tar.gz;
 tar xzvf SDL*.tar.gz;
 
 sed -i '' "s#0.000002#0.016#g" SDL*/src/video/uikit/SDL_uikitevents.m;

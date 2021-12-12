@@ -13,27 +13,27 @@ import (
 )
 
 type Shell struct {
-	Host 		string
-	Port 		string
-	User 		string
-	Password 	string
-	sshClient 	*ssh.Client
+	Host         string
+	Port         string
+	User         string
+	Password     string
+	sshClient    *ssh.Client
 	forwardLocal net.Listener
 }
 
 type ShellStatus struct {
-	Err 	error
+	Err     error
 	Output  string
 	Command string
 }
 
 func (s *Shell) Connect(host, port, user, password string) (err error) {
 	sshConfig := &ssh.ClientConfig{
-		Timeout: 		time.Second * 60,
-		User: 			user,
+		Timeout:         time.Second * 60,
+		User:            user,
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
-	sshConfig.Auth = []ssh.AuthMethod{ ssh.Password(password) }
+	sshConfig.Auth = []ssh.AuthMethod{ssh.Password(password)}
 	sshAddr := fmt.Sprintf("%s:%s", host, port)
 	s.sshClient, err = ssh.Dial("tcp", sshAddr, sshConfig)
 	if err != nil {
@@ -48,8 +48,8 @@ func (s *Shell) Connected() bool {
 
 func (s *Shell) Execute(command string) *ShellStatus {
 	if s.sshClient == nil {
-		return &ShellStatus {
-			Err: errors.New("ssh is not connected"),
+		return &ShellStatus{
+			Err:     errors.New("ssh is not connected"),
 			Command: command,
 		}
 	}
@@ -166,6 +166,7 @@ func (s *Shell) Reverse(remoteAddr, localAddr string) error {
 func (s *Shell) reverse(remote net.Listener, localAddr string) {
 	for {
 		conn, err := remote.Accept()
+		fmt.Println("Accept:", conn.RemoteAddr())
 		if err != nil {
 			fmt.Println("Accept:", err)
 			return
@@ -188,7 +189,9 @@ func (s *Shell) UploadFile(src string, dst string) error {
 		dstDir, dstDir, dst)
 
 	sess, err := s.sshClient.NewSession()
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 	sess.Stdin = bufio.NewReader(uploadFile)
 	err = sess.Run(uploadCmd)
 

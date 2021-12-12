@@ -1,7 +1,7 @@
 all: libsdl ffmpeg libssh scrcpy-server scrcpy-init
 
 scrcpy-server:
-	curl -o scrcpy-server/scrcpy-server -L https://github.com/Genymobile/scrcpy/releases/download/v1.18/scrcpy-server-v1.18 
+	curl -o scrcpy-server/scrcpy-server -L https://github.com/Genymobile/scrcpy/releases/download/v1.21/scrcpy-server-v1.21
 
 libsdl:
 	OUTPUT=$$(pwd)/Libs ./Scripts/build-libsdl.sh
@@ -25,8 +25,5 @@ scrcpy-init:
 	# fix build issues
 	# -> remove windows platform code
 	rm -v scrcpy-src/app/src/sys/win/process.c || echo "=> ALREADY REMOVED"
-	# -> change PREFIX to /tmp
-	grep "undef PREFIX" ./scrcpy-src/x/app/config.h || echo "#undef PREFIX" >> ./scrcpy-src/x/app/config.h
-	grep "/tmp" ./scrcpy-src/x/app/config.h || echo "#define PREFIX \"\$TMPDIR\"" >> ./scrcpy-src/x/app/config.h
 
 .PHONY: scrcpy-server

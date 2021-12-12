@@ -1,0 +1,18 @@
+//
+//  PrefixHeader.pch
+//  Scrcpy
+//
+//  Created by Ethan on 2021/7/7.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#include "opengl_fix.h"
+#include <assert.h>
+
+// Define NDEBUG will define assert -> (void)0, see assert.h
+// This will prevent to_fixed_point_16 crashed
+#define NDEBUG  1
+
+#endif /* PrefixHeader_pch */

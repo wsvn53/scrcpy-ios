@@ -6,23 +6,43 @@
 //
 
 #import "ScrcpyViewController.h"
-#import <SDL2/SDL.h>
-#import "ssh.h"
+#import "ScrcpyBridge.h"
 #import "NSError+Alert.h"
-#import "utils.h"
-#import "fix.h"
 #import "SDLUIKitDelegate+OpenURL.h"
 #import "SchemeHandler.h"
-
-#define   kSDLDidCreateRendererNotification   @"kSDLDidCreateRendererNotification"
-int scrcpy_main(int argc, char *argv[]);
+#import "ScrcpyParams.h"
+#import "screen-fix.h"
 
 #define   CheckParam(var, name)    if (var == nil || var.length == 0) { \
     [self showAlert:[name stringByAppendingString:@" is required!"]];    \
     return;     \
 }
 
+float screen_scale(void) {
+    if ([UIScreen.mainScreen respondsToSelector:@selector(nativeScale)]) {
+        return UIScreen.mainScreen.nativeScale;
+    }
+    return UIScreen.mainScreen.scale;
+}
+
+UIKIT_EXTERN UIImage * __nullable UIColorAsImage(UIColor * __nonnull color, CGSize size) {
+    
+    CGRect rect = CGRectMake(0, 0, size.width, size.height);
+    
+    UIGraphicsBeginImageContextWithOptions(rect.size, NO, [UIScreen mainScreen].scale);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context,color.CGColor);
+    CGContextFillRect(context, rect);
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+
 @interface ScrcpyViewController ()
+@property (nonatomic, strong)   ScrcpyBridge    *scrcpyBridge;
 
 @property (weak, nonatomic) IBOutlet UIButton *connectButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicatorView;
@@ -121,7 +141,7 @@ int scrcpy_main(int argc, char *argv[]);
     // Current remote control is connected, disconnect first
     if (self.view.window != nil && self.view.window.isKeyWindow == NO) {
         NSLog(@"> self.view.window is not keyWindow");
-        scrcpy_shutdown();
+//        scrcpy_shutdown();
         [self performSelector:@selector(autoConnect) withObject:nil afterDelay:1.f];
         return;
     }
@@ -219,14 +239,10 @@ int scrcpy_main(int argc, char *argv[]);
 - (void)scrcpyMain {
     // Here in case there is no opportunity to perform UI animations and other changes
     CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.1, NO);
-    SDL_iPhoneSetEventPump(SDL_TRUE);
     
-    // Reset error status & process_wait
-    [[ExecStatus sharedStatus] resetStatus];
-    process_wait_reset();
+    // Reset context
+    [self.scrcpyBridge resetContext];
 
-    // Because after SDL proxied didFinishLauch, PumpEvent will set to FASLE
-    // So we need to set to TRUE in order to handle UI events
     NSString *bitRate = ScrcpyParams.sharedParams.bitRate;
     NSMutableArray *scrcpyOptions = [NSMutableArray arrayWithArray:@[
         @"scrcpy", @"-V", @"debug", @"-f", @"--max-fps", @"60", @"--bit-rate", bitRate
@@ -242,16 +258,21 @@ int scrcpy_main(int argc, char *argv[]);
         [scrcpyOptions addObjectsFromArray:@[ @"--max-size", ScrcpyParams.sharedParams.maxSize ]];
     }
     
-    char *scrcpy_opts[scrcpyOptions.count];
-    for (NSInteger i = 0; i < scrcpyOptions.count; i ++) {
-        scrcpy_opts[i] = strdup([scrcpyOptions[i] UTF8String]);
-    }
-    scrcpy_main((int)scrcpyOptions.count, scrcpy_opts);
+    // Start scrcpy
+    [self.scrcpyBridge startWith:scrcpyOptions];
     
     [self toggleControlsEnabled:YES];
     [self.indicatorView stopAnimating];
     
     NSLog(@"Scrcpy STOPPED.");
+    [self.scrcpyBridge shutdown];
+}
+
+#pragma mark - Getter
+
+-(ScrcpyBridge *)scrcpyBridge {
+    _scrcpyBridge = _scrcpyBridge ? : ([[ScrcpyBridge alloc] init]);
+    return _scrcpyBridge;
 }
 
 #pragma mark - Utils

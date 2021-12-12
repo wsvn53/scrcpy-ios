@@ -9,6 +9,17 @@
 #import "ScrcpyBridge.h"
 #import "NSError+Alert.h"
 
+/**
+ * Fix using CFRunLoopRunInMode in SDL to avoid high cpu usage
+ */
+CFRunLoopRunResult CFRunLoopRunInMode_fix(CFRunLoopMode mode, CFTimeInterval seconds, Boolean returnAfterSourceHandled) {
+    return CFRunLoopRunInMode(mode, 0.001, NO);
+}
+
+/**
+ * Store Running Threads
+ */
+
 static NSMutableArray *sshRunningThreads = nil;
 static inline NSMutableArray *GetSSHRunningThreads() {
     if (sshRunningThreads == nil) {

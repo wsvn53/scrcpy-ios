@@ -8,13 +8,25 @@
 #import <SDL2/SDL.h>
 #import <SDL2/SDL_render.h>
 
+/**
+ * Handle SDL_UpdateYUVTexture to disable render texture, in order to prevent show green background
+ */
+int SDLCALL SDL_RenderCopy_fix(SDL_Renderer * renderer,
+                           SDL_Texture * texture,
+                           const SDL_Rect * srcrect,
+                           const SDL_Rect * dstrect) {
+    return 0;
+}
+
 #define screen_init(...)   screen_init_orig(__VA_ARGS__)
 #define screen_handle_event(...)   screen_handle_event_orig(__VA_ARGS__)
+#define SDL_RenderCopy(...)        SDL_RenderCopy_fix(__VA_ARGS__)
 
 #include "screen.c"
 
 #undef screen_init
 #undef screen_handle_event
+#undef SDL_RenderCopy
 
 #import "screen-fix.h"
 

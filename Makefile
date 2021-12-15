@@ -1,7 +1,4 @@
-all: libsdl ffmpeg libssh scrcpy-server scrcpy-init
-
-scrcpy-server:
-	curl -o scrcpy-server/scrcpy-server -L https://github.com/Genymobile/scrcpy/releases/download/v1.21/scrcpy-server-v1.21
+all: libsdl ffmpeg libssh scrcpy-init
 
 libsdl:
 	OUTPUT=$$(pwd)/Libs ./Scripts/build-libsdl.sh

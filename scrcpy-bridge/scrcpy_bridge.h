@@ -12,8 +12,10 @@
 #include <stdbool.h>
 
 void scrcpy_thread_wait(pid_t pid);
+void scrcpy_thread_exit(pid_t pid);
+
 uint16_t scrcpy_ssh_execute_bg(const char *const ssh_cmd[], size_t len);
-const char *scrcpy_ssh_execute(const char *const ssh_cmd[], size_t len);
+const char *scrcpy_ssh_execute(const char *const ssh_cmd[], size_t len, bool silent);
 bool scrcpy_ssh_upload(const char *local, const char *remote);
 bool scrcpy_ssh_reverse(uint16_t port);
 

@@ -23,6 +23,7 @@
 		AA6FFDA526B985D7001ACD22 /* SDL_uikitviewcontroller+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6FFDA426B985D7001ACD22 /* SDL_uikitviewcontroller+Extend.m */; };
 		AA7766832698A5AB0025990D /* ScrcpyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7766822698A5AB0025990D /* ScrcpyViewController.m */; };
 		AA8C04C7269C8FE0001D9A4F /* NSError+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8C04C6269C8FE0001D9A4F /* NSError+Alert.m */; };
+		AA9C22B92767A3650001DB7D /* controller-fix.c in Sources */ = {isa = PBXBuildFile; fileRef = AA9C22B82767A3640001DB7D /* controller-fix.c */; };
 		AAA221A026959AA200307990 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAA2219F26959AA200307990 /* Assets.xcassets */; };
 		AAA221A626959AA200307990 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA221A526959AA200307990 /* main.m */; };
 		AAA2228D2695B62300307990 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAA2228B2695B62300307990 /* Main.storyboard */; };
@@ -125,6 +126,7 @@
 		AA7766822698A5AB0025990D /* ScrcpyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrcpyViewController.m; sourceTree = "<group>"; };
 		AA8C04C5269C8FE0001D9A4F /* NSError+Alert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSError+Alert.h"; sourceTree = "<group>"; };
 		AA8C04C6269C8FE0001D9A4F /* NSError+Alert.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSError+Alert.m"; sourceTree = "<group>"; };
+		AA9C22B82767A3640001DB7D /* controller-fix.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "controller-fix.c"; sourceTree = "<group>"; };
 		AAA2219026959AA000307990 /* Scrcpy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scrcpy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAA2219F26959AA200307990 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AAA221A426959AA200307990 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -441,13 +443,14 @@
 				AACAD333275FB5970058EFDF /* scrcpy-fix.c */,
 				AA2733582760D35C00A593B4 /* adb-fix.c */,
 				AA3154D72762F5E7006C5226 /* server-fix.c */,
-				AA3154DA27636112006C5226 /* process-fix.c */,
+				AA9C22B82767A3640001DB7D /* controller-fix.c */,
 				AA3154DE276364C7006C5226 /* screen-fix.h */,
 				AA3154DC27636417006C5226 /* screen-fix.m */,
 				AA3154E32763B1DE006C5226 /* ffmpeg-hw.h */,
 				AA3154E42763B1DE006C5226 /* ffmpeg-hw.m */,
 				AA3154DF2763B14B006C5226 /* decoder-fix.c */,
 				AA3154F32765943A006C5226 /* stream-fix.c */,
+				AA3154DA27636112006C5226 /* process-fix.c */,
 			);
 			path = "src-fix";
 			sourceTree = "<group>";
@@ -686,6 +689,7 @@
 				AAD3E1592757C8DA00B4854A /* stream.c in Sources */,
 				AAD3E14B2757C8DA00B4854A /* server.c in Sources */,
 				AAD3E14A2757C8DA00B4854A /* v4l2_sink.c in Sources */,
+				AA9C22B92767A3650001DB7D /* controller-fix.c in Sources */,
 				AAD3E1622757C8DA00B4854A /* mouse_inject.c in Sources */,
 				AAD3E1522757C8DA00B4854A /* cli.c in Sources */,
 				AAD3E1582757C8DA00B4854A /* scrcpy.c in Sources */,
@@ -1003,6 +1007,7 @@
 					sys/unix/process.c,
 					decoder.c,
 					stream.c,
+					controller.c,
 				);
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/ssh";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1032,6 +1037,7 @@
 					sys/unix/process.c,
 					decoder.c,
 					stream.c,
+					controller.c,
 				);
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/ssh";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

@@ -57,7 +57,9 @@ UIKIT_EXTERN UIImage * __nullable UIColorAsImage(UIColor * __nonnull color, CGSi
 @property (weak, nonatomic) IBOutlet UILabel *appVersion;
 @property (weak, nonatomic) IBOutlet UITextField *maxSize;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *bitRate;
+@property (weak, nonatomic) IBOutlet UISwitch *screenOff;
 @property (nonatomic, copy) NSString *bitRateText;
+@property (nonatomic, copy) NSNumber *screenOffValue;
 
 @end
 
@@ -117,6 +119,7 @@ UIKIT_EXTERN UIImage * __nullable UIColorAsImage(UIColor * __nonnull color, CGSi
     ScrcpyParams_bind(self.adbSerial.text, ScrcpyParams.sharedParams.adbSerial, @"adb_serial", @"");
     ScrcpyParams_bind(self.maxSize.text, ScrcpyParams.sharedParams.maxSize, @"max_size", @"");
     ScrcpyParams_bind(self.bitRateText, ScrcpyParams.sharedParams.bitRate, @"bit_rate", @"");
+    ScrcpyParams_bind(self.screenOffValue, ScrcpyParams.sharedParams.screenOff, @"screen_off", @YES);
     
     ScrcpyParamsBind(^{
         self.scrcpyServer.text = ScrcpyParams.sharedParams.scrcpyServer;
@@ -141,7 +144,6 @@ UIKIT_EXTERN UIImage * __nullable UIColorAsImage(UIColor * __nonnull color, CGSi
     // Current remote control is connected, disconnect first
     if (self.view.window != nil && self.view.window.isKeyWindow == NO) {
         NSLog(@"> self.view.window is not keyWindow");
-//        scrcpy_shutdown();
         [self performSelector:@selector(autoConnect) withObject:nil afterDelay:1.f];
         return;
     }
@@ -161,6 +163,14 @@ UIKIT_EXTERN UIImage * __nullable UIColorAsImage(UIColor * __nonnull color, CGSi
 }
 
 #pragma mark - Getters & Setters
+
+-(NSNumber *)screenOffValue {
+    return @(self.screenOff.isOn);
+}
+
+-(void)setScreenOffValue:(NSNumber *)screenOffValue {
+    self.screenOff.on = [screenOffValue boolValue];
+}
 
 -(NSString *)bitRateText {
     return [self.bitRate titleForSegmentAtIndex:self.bitRate.selectedSegmentIndex];
@@ -248,14 +258,19 @@ UIKIT_EXTERN UIImage * __nullable UIColorAsImage(UIColor * __nonnull color, CGSi
         @"scrcpy", @"-V", @"debug", @"-f", @"--max-fps", @"60", @"--bit-rate", bitRate
     ]];
     
-    // Assemble serial options
+    // Add serial option
     if (ScrcpyParams.sharedParams.adbSerial.length > 0) {
         [scrcpyOptions addObjectsFromArray:@[ @"-s", ScrcpyParams.sharedParams.adbSerial ]];
     }
     
-    // Assemble maxSize options
+    // Add maxSize option
     if (ScrcpyParams.sharedParams.maxSize.length > 0) {
         [scrcpyOptions addObjectsFromArray:@[ @"--max-size", ScrcpyParams.sharedParams.maxSize ]];
+    }
+    
+    // Add screenOff option
+    if (ScrcpyParams.sharedParams.screenOff.boolValue) {
+        [scrcpyOptions addObjectsFromArray:@[ @"--turn-screen-off" ]];
     }
     
     // Start scrcpy

@@ -12,8 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 @class ScrcpyParams;
 typedef void (^ScrcpyBindBlock)(void);
 void ScrcpyParamsBind(ScrcpyBindBlock showBlock, ScrcpyBindBlock storeBlock);
-void ScrcpyParamsSave(NSString *key, NSString *value);
-NSString * ScrcpyParamsLoad(NSString *key, NSString *defaultValue);
+void ScrcpyParamsSave(NSString *key, id value);
+id ScrcpyParamsLoad(NSString *key, id defaultValue);
 
 #define ScrcpyParams_bind(targetValue, paramProp, paramKey, defaultValue)   \
 ScrcpyParamsBind(^{                                                         \
@@ -35,6 +35,7 @@ ScrcpyParamsBind(^{                                                         \
 @property (nonatomic, copy)     NSString    *scrcpyServer;
 @property (nonatomic, copy)     NSString    *maxSize;
 @property (nonatomic, copy)     NSString    *bitRate;
+@property (nonatomic, copy)     NSNumber    *screenOff;
 
 @property (nonatomic, copy)     NSString    *coreVersion;
 @property (nonatomic, copy)     NSString    *appVersion;

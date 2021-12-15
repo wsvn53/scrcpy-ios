@@ -9,13 +9,13 @@
 #import "config.h"
 #import <objc/runtime.h>
 
-void ScrcpyParamsSave(NSString *key, NSString *value) {
+void ScrcpyParamsSave(NSString *key, id value) {
     [[NSUserDefaults standardUserDefaults] setValue:value forKey:key];
 }
 
-NSString * ScrcpyParamsLoad(NSString *key, NSString *defaultValue) {
-    NSString *value = [[NSUserDefaults standardUserDefaults] stringForKey:key];
-    value = value.length > 0 ? value : defaultValue;
+id ScrcpyParamsLoad(NSString *key, id defaultValue) {
+    id value = [[NSUserDefaults standardUserDefaults] stringForKey:key];
+    value = value ? : defaultValue;
     return value;
 }
 

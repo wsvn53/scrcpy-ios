@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19158" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19141"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -312,11 +312,12 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="2" translatesAutoresizingMaskIntoConstraints="NO" id="65z-4V-LJP">
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="3" translatesAutoresizingMaskIntoConstraints="NO" id="65z-4V-LJP">
                                                     <rect key="frame" x="124" y="6" width="233" height="32.5"/>
                                                     <segments>
                                                         <segment title="1M"/>
                                                         <segment title="2M"/>
+                                                        <segment title="3M"/>
                                                         <segment title="4M"/>
                                                         <segment title="6M"/>
                                                         <segment title="8M"/>
@@ -334,12 +335,39 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="ckn-rQ-PL3">
+                                        <rect key="frame" x="20" y="575" width="374" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ckn-rQ-PL3" id="F8W-dO-L4g">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Screen Off:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e2e-zu-ySi">
+                                                    <rect key="frame" x="20" y="11" width="86.5" height="21.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tV1-ep-XfU">
+                                                    <rect key="frame" x="307" y="6" width="51" height="31.5"/>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="e2e-zu-ySi" firstAttribute="leading" secondItem="F8W-dO-L4g" secondAttribute="leadingMargin" id="IWb-YF-lFr"/>
+                                                <constraint firstItem="tV1-ep-XfU" firstAttribute="top" secondItem="F8W-dO-L4g" secondAttribute="topMargin" constant="-5" id="aHd-3e-fmJ"/>
+                                                <constraint firstItem="e2e-zu-ySi" firstAttribute="centerY" secondItem="F8W-dO-L4g" secondAttribute="centerY" id="cqC-Ht-tCU"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="tV1-ep-XfU" secondAttribute="trailing" constant="-2" id="f9r-zi-bWs"/>
+                                                <constraint firstItem="e2e-zu-ySi" firstAttribute="top" secondItem="F8W-dO-L4g" secondAttribute="topMargin" id="oyy-mW-WL5"/>
+                                                <constraint firstItem="tV1-ep-XfU" firstAttribute="centerY" secondItem="e2e-zu-ySi" secondAttribute="centerY" id="xvB-PT-gVS"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="OE8-fH-d0e">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="48" id="yMv-lE-TNN">
-                                        <rect key="frame" x="20" y="611" width="374" height="48"/>
+                                        <rect key="frame" x="20" y="654.5" width="374" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yMv-lE-TNN" id="axl-rK-2tV">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="48"/>
@@ -409,6 +437,7 @@
                         <outlet property="indicatorView" destination="RAC-3x-635" id="FkP-ib-fXZ"/>
                         <outlet property="maxSize" destination="mWg-eF-PlP" id="HhX-jE-2lr"/>
                         <outlet property="scrcpyServer" destination="mcb-EV-V3U" id="SE3-LG-Dij"/>
+                        <outlet property="screenOff" destination="tV1-ep-XfU" id="yvb-VJ-9by"/>
                         <outlet property="sshPassword" destination="8lV-eW-UQ7" id="JZg-ts-Mky"/>
                         <outlet property="sshPort" destination="sA7-eX-USo" id="vkb-rl-cUs"/>
                         <outlet property="sshServer" destination="Yd6-Ke-zfT" id="OPS-v6-J6A"/>

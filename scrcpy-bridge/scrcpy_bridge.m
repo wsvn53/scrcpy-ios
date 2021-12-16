@@ -13,7 +13,7 @@
  * Fix using CFRunLoopRunInMode in SDL to avoid high cpu usage
  */
 CFRunLoopRunResult CFRunLoopRunInMode_fix(CFRunLoopMode mode, CFTimeInterval seconds, Boolean returnAfterSourceHandled) {
-    return CFRunLoopRunInMode(mode, 0.005, NO);
+    return CFRunLoopRunInMode(mode, 0.001, NO);
 }
 
 /**

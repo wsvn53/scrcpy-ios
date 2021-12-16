@@ -8,6 +8,5 @@
 
 // Re-define main of scrcpy to scrcpy_main
 #define main(...)            scrcpy_main(__VA_ARGS__)
-#define scrcpy(...)          scrcpy_fix(__VA_ARGS__)
 
 #include "main.c"

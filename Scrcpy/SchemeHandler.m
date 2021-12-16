@@ -12,7 +12,7 @@
 
 +(void)URLToScrcpyParams:(NSURL *)url {
     ScrcpyParams.sharedParams.sshServer = url.host;
-    ScrcpyParams.sharedParams.sshPort = url.port.stringValue;
+    ScrcpyParams.sharedParams.sshPort = url.port ? url.port.stringValue:@"22";
     ScrcpyParams.sharedParams.sshUser = url.user;
     
     // Password required base64 decode

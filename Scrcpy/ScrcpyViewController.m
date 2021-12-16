@@ -74,13 +74,15 @@ UIKIT_EXTERN UIImage * __nullable UIColorAsImage(UIColor * __nonnull color, CGSi
     
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(resetViews)
                                                name:kSDLDidCreateRendererNotification object:nil];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(autoConnect)
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(launchWithURLScheme)
                                                name:kConnectWithSchemeNotification object:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self autoConnect];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self autoConnect];
+    });
 }
 
 - (void)setupViews {
@@ -137,20 +139,28 @@ UIKIT_EXTERN UIImage * __nullable UIColorAsImage(UIColor * __nonnull color, CGSi
     [ScrcpyParams.sharedParams loadDefaults];
 }
 
+- (void)launchWithURLScheme {
+    if (self.viewLoaded == NO) {
+        return;
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self autoConnect];
+    });
+}
+
 - (void)autoConnect {
-    // Only auto connect when URL not nil
     if (ScrcpyParams.sharedParams.autoConnectURL == nil) return;
+    
+    // Parse URL params
+    [SchemeHandler URLToScrcpyParams:ScrcpyParams.sharedParams.autoConnectURL];
+    ScrcpyParams.sharedParams.autoConnectURL = nil;
     
     // Current remote control is connected, disconnect first
     if (self.view.window != nil && self.view.window.isKeyWindow == NO) {
         NSLog(@"> self.view.window is not keyWindow");
-        [self performSelector:@selector(autoConnect) withObject:nil afterDelay:1.f];
         return;
     }
-        
-    // Parse URL params
-    [SchemeHandler URLToScrcpyParams:ScrcpyParams.sharedParams.autoConnectURL];
-    ScrcpyParams.sharedParams.autoConnectURL = nil;
     
     // Disable all textfields
     [self toggleControlsEnabled:NO];

@@ -15,6 +15,7 @@
 }
 
 - (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
     for (CALayer *layer in self.view.layer.sublayers) {
         if ([layer isKindOfClass:[AVSampleBufferDisplayLayer class]]) {
             layer.frame = self.view.bounds;

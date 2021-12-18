@@ -80,9 +80,7 @@ UIKIT_EXTERN UIImage * __nullable UIColorAsImage(UIColor * __nonnull color, CGSi
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self autoConnect];
-    });
+    [self performSelector:@selector(autoConnect) withObject:nil afterDelay:0.1];
 }
 
 - (void)setupViews {
@@ -143,10 +141,7 @@ UIKIT_EXTERN UIImage * __nullable UIColorAsImage(UIColor * __nonnull color, CGSi
     if (self.viewLoaded == NO) {
         return;
     }
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self autoConnect];
-    });
+    [self performSelector:@selector(autoConnect) withObject:nil afterDelay:0.1];
 }
 
 - (void)autoConnect {

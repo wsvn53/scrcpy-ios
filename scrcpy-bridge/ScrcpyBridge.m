@@ -98,7 +98,11 @@ int scrcpy_main(int argc, char *argv[]);
     NSLog(@"RET> [%@] (%@)", (*context).Command, @((*context).Success));
     
     if (ret.err != nil && (*context).ShowErrors) {
-        [ret.err showAlert];
+        NSString *descStr = [NSString stringWithFormat:@"CMD> %@\nOUTPUT> %@\nERR> %@", (*context).Command, ret.output, ret.err.userInfo[NSLocalizedDescriptionKey]];
+        NSError *showErr = [NSError errorWithDomain:ret.err.domain code:ret.err.code userInfo:@{
+            NSLocalizedDescriptionKey: descStr,
+        }];
+        [showErr showAlert];
     }
 }
 

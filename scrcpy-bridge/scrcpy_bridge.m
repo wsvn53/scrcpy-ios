@@ -131,8 +131,8 @@ const char *scrcpy_ssh_execute(const char *const ssh_cmd[], size_t len, bool sil
         return NULL;
     }
     
-    NSString *serialNo = [context.Stdout stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-    return [serialNo cStringUsingEncoding:NSUTF8StringEncoding];
+    NSString *output = [context.Stdout stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    return [output cStringUsingEncoding:NSUTF8StringEncoding];
 }
 
 bool scrcpy_ssh_upload(const char *local, const char *remote) {

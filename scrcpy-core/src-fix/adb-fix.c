@@ -22,6 +22,29 @@
 #undef adb_execute
 
 /**
+ * adb_complete: append adb [-s serial]
+ */
+void adb_complete(const char *out_cmd[], const char *serial, const char *const adb_cmd[], size_t *len) {
+    if (serial != NULL && strlen(serial) > 0) {
+        *len += 3;
+        out_cmd[0] = "adb";
+        out_cmd[1] = "-s";
+        out_cmd[2] = serial;
+        
+        for (int i = 3; i < *len; i++) {
+            out_cmd[i] = adb_cmd[i - 3];
+        }
+        return;
+    }
+    
+    *len += 1;
+    out_cmd[0] = "adb";
+    for (int i = 1; i < *len; i++) {
+        out_cmd[i] = adb_cmd[i-1];
+    }
+}
+
+/**
  * Handle adb_get_serialno to execute on ssh server
  */
 char *
@@ -44,8 +67,11 @@ adb_push(struct sc_intr *intr, const char *serial, const char *local,
     }
     
     // then execute adb push command on remote ssh server
-    const char *const adb_cmd[] = {"adb", "push", local, remote};
-    bool executed = scrcpy_ssh_execute(adb_cmd, ARRAY_LEN(adb_cmd), false);
+    const char *cmds[256];
+    size_t len = 3;
+    const char *adb_cmd[] = {"push", local, remote};
+    adb_complete(cmds, serial, adb_cmd, &len);
+    bool executed = scrcpy_ssh_execute(cmds, len, false);
     
     return executed;
 }
@@ -61,8 +87,12 @@ adb_reverse(struct sc_intr *intr, const char *serial,
     char remote[108 + 14 + 1]; // localabstract:NAME
     sprintf(local, "tcp:%" PRIu16, local_port);
     snprintf(remote, sizeof(remote), "localabstract:%s", device_socket_name);
-    const char *const adb_cmd[] = {"adb", "reverse", remote, local};
-    const char *result = scrcpy_ssh_execute(adb_cmd, ARRAY_LEN(adb_cmd), false);
+    
+    const char *const adb_cmd[] = {"reverse", remote, local};
+    const char *cmds[256];
+    size_t len = ARRAY_LEN(adb_cmd);
+    adb_complete(cmds, serial, adb_cmd, &len);
+    const char *result = scrcpy_ssh_execute(cmds, len, false);
     
     // ssh reverse local network with remote network
     if (result == NULL || strlen(result) == 0) {
@@ -77,9 +107,12 @@ adb_reverse_remove(struct sc_intr *intr, const char *serial,
                    const char *device_socket_name, unsigned flags) {
     char remote[108 + 14 + 1]; // localabstract:NAME
     snprintf(remote, sizeof(remote), "localabstract:%s", device_socket_name);
-    const char *const adb_cmd[] = {"adb", "reverse", "--remove", remote};
+    const char *const adb_cmd[] = {"reverse", "--remove", remote};
+    const char *cmds[256];
+    size_t len = ARRAY_LEN(adb_cmd);
+    adb_complete(cmds, serial, adb_cmd, &len);
 
-    const char *result = scrcpy_ssh_execute(adb_cmd, ARRAY_LEN(adb_cmd), false);
+    const char *result = scrcpy_ssh_execute(cmds, len, false);
     return result == NULL || strlen(result) == 0;
 }
 
@@ -89,10 +122,7 @@ adb_reverse_remove(struct sc_intr *intr, const char *serial,
 sc_pid
 adb_execute(const char *serial, const char *const adb_cmd[], size_t len,
             unsigned flags) {
-    const char * cmds[len+1];
-    cmds[0] = "adb";
-    for (int i = 0; i < len; i++) {
-        cmds[i+1] = adb_cmd[i];
-    }
-    return scrcpy_ssh_execute_bg(cmds, ARRAY_LEN(cmds));
+    const char *cmds[256];
+    adb_complete(cmds, serial, adb_cmd, &len);
+    return scrcpy_ssh_execute_bg(cmds, len);
 }

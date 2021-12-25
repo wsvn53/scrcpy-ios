@@ -8,6 +8,7 @@
 #import "SDLUIKitDelegate+OpenURL.h"
 #import "ScrcpyViewController.h"
 #import "ScrcpyParams.h"
+#import <SDL2/SDL.h>
 
 @implementation SDLUIKitDelegate (OpenURL)
 
@@ -22,6 +23,18 @@
     [NSNotificationCenter.defaultCenter postNotificationName:kConnectWithSchemeNotification object:nil];
     
     return YES;
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    SDL_OnApplicationDidEnterBackground();
+    
+    NSLog(@"Time Remaining: %@",  @(application.backgroundTimeRemaining));
+    __block UIBackgroundTaskIdentifier taskID = [application beginBackgroundTaskWithExpirationHandler:^{
+        [application endBackgroundTask:taskID];
+        NSLog(@"Force exit.");
+        exit(0);
+    }];
 }
 
 @end

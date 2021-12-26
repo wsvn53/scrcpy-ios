@@ -19,6 +19,8 @@ type Shell struct {
 	Password     string
 	sshClient    *ssh.Client
 	forwardLocal net.Listener
+
+	reversingList []net.Listener
 }
 
 type ShellStatus struct {
@@ -164,13 +166,14 @@ func (s *Shell) Reverse(remoteAddr, localAddr string) error {
 }
 
 func (s *Shell) reverse(remote net.Listener, localAddr string) {
+	s.reversingList = append(s.reversingList, remote)
 	for {
 		conn, err := remote.Accept()
-		fmt.Println("Accept:", conn.RemoteAddr())
 		if err != nil {
 			fmt.Println("Accept:", err)
 			return
 		}
+		fmt.Println("Accept:", conn.RemoteAddr())
 
 		local, err := net.Dial("tcp", localAddr)
 		if err != nil {
@@ -199,7 +202,12 @@ func (s *Shell) UploadFile(src string, dst string) error {
 }
 
 func (s *Shell) Close() error {
+	for _, l := range s.reversingList {
+		_ = l.Close()
+	}
+
 	err := s.sshClient.Close()
 	s.sshClient = nil
+
 	return err
 }

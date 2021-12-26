@@ -30,6 +30,7 @@
 		AAA222A7269609BE00307990 /* libscrcpy-core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA2221C2695B3A600307990 /* libscrcpy-core.a */; };
 		AAAA7AB52750C2DC00F7ED1C /* Gossh.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAAA7AB42750C2DC00F7ED1C /* Gossh.xcframework */; };
 		AAB5E5C326AE9201000396BE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAB5E5C226AE9201000396BE /* LaunchScreen.storyboard */; };
+		AABD713F277868460004B859 /* NSString+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = AABD713E277868460004B859 /* NSString+Utils.m */; };
 		AACAD32D27591C6C0058EFDF /* ScrcpyBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = AACAD31E275919270058EFDF /* ScrcpyBridge.m */; };
 		AACAD32E27591E130058EFDF /* ScrcpyParams.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAB5A3726C75AC8000A1EEB /* ScrcpyParams.m */; };
 		AACAD334275FB5970058EFDF /* scrcpy-fix.c in Sources */ = {isa = PBXBuildFile; fileRef = AACAD333275FB5970058EFDF /* scrcpy-fix.c */; };
@@ -138,6 +139,8 @@
 		AAAB5A3626C75AC8000A1EEB /* ScrcpyParams.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrcpyParams.h; sourceTree = "<group>"; };
 		AAAB5A3726C75AC8000A1EEB /* ScrcpyParams.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrcpyParams.m; sourceTree = "<group>"; };
 		AAB5E5C226AE9201000396BE /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		AABD713D277868460004B859 /* NSString+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Utils.h"; sourceTree = "<group>"; };
+		AABD713E277868460004B859 /* NSString+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utils.m"; sourceTree = "<group>"; };
 		AACAD31D275919270058EFDF /* ScrcpyBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrcpyBridge.h; sourceTree = "<group>"; };
 		AACAD31E275919270058EFDF /* ScrcpyBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrcpyBridge.m; sourceTree = "<group>"; };
 		AACAD32427591A070058EFDF /* libscrcpy-bridge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libscrcpy-bridge.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -311,6 +314,8 @@
 				AA2B665126EBC0810089F2E7 /* SchemeHandler.m */,
 				AA8C04C5269C8FE0001D9A4F /* NSError+Alert.h */,
 				AA8C04C6269C8FE0001D9A4F /* NSError+Alert.m */,
+				AABD713D277868460004B859 /* NSString+Utils.h */,
+				AABD713E277868460004B859 /* NSString+Utils.m */,
 				AAA2219F26959AA200307990 /* Assets.xcassets */,
 				AAA2228B2695B62300307990 /* Main.storyboard */,
 				AAB5E5C226AE9201000396BE /* LaunchScreen.storyboard */,
@@ -657,6 +662,7 @@
 				AA6FFDA526B985D7001ACD22 /* SDL_uikitviewcontroller+Extend.m in Sources */,
 				AA8C04C7269C8FE0001D9A4F /* NSError+Alert.m in Sources */,
 				AA2B664F26EBB67A0089F2E7 /* SDLUIKitDelegate+OpenURL.m in Sources */,
+				AABD713F277868460004B859 /* NSString+Utils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

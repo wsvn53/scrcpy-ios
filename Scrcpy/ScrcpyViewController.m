@@ -8,13 +8,14 @@
 #import "ScrcpyViewController.h"
 #import "ScrcpyBridge.h"
 #import "NSError+Alert.h"
+#import "NSString+Utils.h"
 #import "SDLUIKitDelegate+OpenURL.h"
 #import "SchemeHandler.h"
 #import "ScrcpyParams.h"
 #import "screen-fix.h"
 #import "scrcpy_bridge.h"
 
-#define   CheckParam(var, name)    if (var == nil || var.length == 0) { \
+#define   CheckParam(var, name)    if (var.isValid == NO) { \
     [self showAlert:[name stringByAppendingString:@" is required!"]];    \
     return;     \
 }
@@ -27,7 +28,6 @@ float screen_scale(void) {
 }
 
 UIKIT_EXTERN UIImage * __nullable UIColorAsImage(UIColor * __nonnull color, CGSize size) {
-    
     CGRect rect = CGRectMake(0, 0, size.width, size.height);
     
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, [UIScreen mainScreen].scale);
@@ -110,6 +110,76 @@ UIKIT_EXTERN UIImage * __nullable UIColorAsImage(UIColor * __nonnull color, CGSi
     self.sshPassword.delegate = (id<UITextFieldDelegate>)self;
     self.adbSerial.delegate = (id<UITextFieldDelegate>)self;
     self.maxSize.delegate = (id<UITextFieldDelegate>)self;
+    
+    // Navigation Bar
+    UIBarButtonItem *moreItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"more"] style:(UIBarButtonItemStyleDone) target:self action:@selector(showMoreMenu:)];
+    moreItem.tintColor = UIColor.whiteColor;
+    self.navigationItem.rightBarButtonItem = moreItem;
+}
+
+static inline void AppendURLParams(NSMutableArray *queryItems, NSString *name, NSString *value) {
+    if (value.isValid == NO) {
+        return;
+    }
+    NSURLQueryItem *item = [NSURLQueryItem queryItemWithName:name value:value];
+    [queryItems addObject:item];
+}
+
+-(void)copyURLScheme {
+    CheckParam(self.sshServer.text,  @"ssh server");
+    CheckParam(self.sshPort.text,    @"ssh port");
+    CheckParam(self.sshUser.text,    @"ssh user");
+    CheckParam(self.sshPassword.text,    @"password");
+    
+    NSString *base64Pass = [[self.sshPassword.text dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:(0)];
+    NSString *urlString = [NSString stringWithFormat:@"scrcpy://%@:%@@%@:%@",
+                           self.sshUser.text, base64Pass, self.sshServer.text, self.sshPort.text];
+    NSURLComponents *scrcpyComponents = [NSURLComponents componentsWithURL:[NSURL URLWithString:urlString] resolvingAgainstBaseURL:NO];
+    NSMutableArray *queryItems = [NSMutableArray new];
+    
+    // Append other parameters
+    AppendURLParams(queryItems, @"adbSerial", self.adbSerial.text);
+    AppendURLParams(queryItems, @"maxSize", self.maxSize.text);
+    AppendURLParams(queryItems, @"bitRate", self.bitRateText);
+    AppendURLParams(queryItems, @"screenOff", [self.screenOffValue stringValue]);
+    
+    [scrcpyComponents setQueryItems:queryItems];
+    NSURL *scrcpyURL = [scrcpyComponents URL];
+    NSLog(@"URL> %@", scrcpyURL);
+    
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.URL = scrcpyURL;
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Copy URL" message:[NSString stringWithFormat:@"URL Copied:\n%@", scrcpyURL.absoluteString] preferredStyle:(UIAlertControllerStyleAlert)];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:(UIAlertActionStyleCancel) handler:nil]];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+-(void)clearScrcpyForm {
+    self.sshServer.text = @"";
+    self.sshPort.text = @"22";
+    self.sshUser.text = @"";
+    self.sshPassword.text = @"";
+    self.adbSerial.text = @"";
+    self.maxSize.text = @"";
+    self.bitRate.selectedSegmentIndex = 3;
+    self.screenOff.on = NO;
+}
+
+-(void)showMoreMenu:(id)sender {
+    UIAlertController *moreController = [UIAlertController alertControllerWithTitle:@"More Actions" message:nil preferredStyle:(UIAlertControllerStyleActionSheet)];
+    [moreController addAction: [UIAlertAction actionWithTitle:@"Copy URL Scheme" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"ACTION> Copy Current URL Scheme");
+        [self copyURLScheme];
+    }]];
+    [moreController addAction:[UIAlertAction actionWithTitle:@"Clear Scrcpy Form" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"ACTION> Clear Scrcpy Form");
+        [self clearScrcpyForm];
+    }]];
+    [moreController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"ACTION> Dismiss");
+    }]];
+    [self presentViewController:moreController animated:YES completion:nil];
 }
 
 - (void)bindForm {
@@ -275,12 +345,12 @@ UIKIT_EXTERN UIImage * __nullable UIColorAsImage(UIColor * __nonnull color, CGSi
     ]];
     
     // Add serial option
-    if (ScrcpyParams.sharedParams.adbSerial.length > 0) {
+    if (ScrcpyParams.sharedParams.adbSerial.isValid) {
         [scrcpyOptions addObjectsFromArray:@[ @"-s", ScrcpyParams.sharedParams.adbSerial ]];
     }
     
     // Add maxSize option
-    if (ScrcpyParams.sharedParams.maxSize.length > 0) {
+    if (ScrcpyParams.sharedParams.maxSize.isValid) {
         [scrcpyOptions addObjectsFromArray:@[ @"--max-size", ScrcpyParams.sharedParams.maxSize ]];
     }
     

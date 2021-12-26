@@ -7,6 +7,7 @@
 
 #import "NSError+Alert.h"
 #import <UIKit/UIKit.h>
+#import "NSString+Utils.h"
 
 @implementation NSError (Alert)
 
@@ -20,7 +21,7 @@
 
 - (void)showAlertMain {
     NSString *errorMsg = self.userInfo[NSLocalizedDescriptionKey];
-    errorMsg = errorMsg.length == 0 ? self.description : errorMsg;
+    errorMsg = errorMsg.isValid ? self.description : errorMsg;
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Scrcpy" message:errorMsg preferredStyle:(UIAlertControllerStyleAlert)];
     [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:(UIAlertActionStyleDefault) handler:nil]];
     UIApplication *app = UIApplication.sharedApplication;

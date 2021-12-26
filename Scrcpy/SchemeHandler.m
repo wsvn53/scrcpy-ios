@@ -16,7 +16,8 @@
     ScrcpyParams.sharedParams.sshUser = url.user;
     
     // Password required base64 decode
-    NSData *passwordData = [[NSData alloc] initWithBase64EncodedString:url.password options:0];
+    NSString *base64Pass = [url.password stringByRemovingPercentEncoding];
+    NSData *passwordData = [[NSData alloc] initWithBase64EncodedString:base64Pass options:0];
     NSString *password = [[NSString alloc] initWithData:passwordData encoding:(NSUTF8StringEncoding)];
     ScrcpyParams.sharedParams.sshPassword = password;
     

@@ -8,6 +8,7 @@
 #import "ScrcpyParams.h"
 #import "config.h"
 #import <objc/runtime.h>
+#import "NSString+Utils.h"
 
 void ScrcpyParamsSave(NSString *key, id value) {
     [[NSUserDefaults standardUserDefaults] setValue:value forKey:key];
@@ -59,7 +60,7 @@ void ScrcpyParamsBind(ScrcpyBindBlock showBlock, ScrcpyBindBlock storeBlock) {
 }
 
 - (NSString *)scrcpyServer {
-    if (_scrcpyServer.length > 0) {
+    if (_scrcpyServer.isValid) {
         return _scrcpyServer;
     }
     NSString *prefixDir = [NSString stringWithUTF8String:PREFIX];
@@ -68,7 +69,7 @@ void ScrcpyParamsBind(ScrcpyBindBlock showBlock, ScrcpyBindBlock storeBlock) {
 }
 
 - (NSString *)coreVersion {
-    if (_coreVersion.length > 0) {
+    if (_coreVersion.isValid) {
         return _coreVersion;
     }
     _coreVersion = [NSString stringWithUTF8String:SCRCPY_VERSION];
@@ -76,7 +77,7 @@ void ScrcpyParamsBind(ScrcpyBindBlock showBlock, ScrcpyBindBlock storeBlock) {
 }
 
 - (NSString *)appVersion {
-    if (_appVersion.length > 0) {
+    if (_appVersion.isValid) {
         return _appVersion;
     }
     NSString *shortVersion = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];

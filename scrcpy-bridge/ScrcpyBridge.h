@@ -39,9 +39,10 @@ static inline struct ScrcpyExecuteContext * _Nullable GetContextFrom(NSDictionar
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ScrcpyBridge : NSObject
+@property (nonatomic, assign)   BOOL running;
+
 -(void)resetContext;
 -(void)startWith:(NSArray *)options;
--(void)shutdown;
 @end
 
 NS_ASSUME_NONNULL_END

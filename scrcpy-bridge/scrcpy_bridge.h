@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+void scrcpy_quit(void);
 void scrcpy_thread_wait(pid_t pid);
 void scrcpy_thread_exit(pid_t pid);
 

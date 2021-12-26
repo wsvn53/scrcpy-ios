@@ -12,6 +12,7 @@
 #import "SchemeHandler.h"
 #import "ScrcpyParams.h"
 #import "screen-fix.h"
+#import "scrcpy_bridge.h"
 
 #define   CheckParam(var, name)    if (var == nil || var.length == 0) { \
     [self showAlert:[name stringByAppendingString:@" is required!"]];    \
@@ -147,15 +148,25 @@ UIKIT_EXTERN UIImage * __nullable UIColorAsImage(UIColor * __nonnull color, CGSi
 - (void)autoConnect {
     if (ScrcpyParams.sharedParams.autoConnectURL == nil) return;
     
+    // Current remote control is connected, disconnect first
+    if (self.scrcpyBridge.running) {
+        NSLog(@"> WaitQuit: Current scrcpy is running, send QUIT event");
+        scrcpy_quit();
+        [self.scrcpyBridge resetContext];
+        [self performSelector:@selector(autoConnect) withObject:nil afterDelay:1.f];
+        return;
+    }
+    
+    // Wait for current view is actived
+    if (self.view.window != nil && self.view.window.isKeyWindow == NO) {
+        NSLog(@"> WaitQuit: self.view.window is not keyWindow");
+        [self performSelector:@selector(autoConnect) withObject:nil afterDelay:1.f];
+        return;
+    }
+    
     // Parse URL params
     [SchemeHandler URLToScrcpyParams:ScrcpyParams.sharedParams.autoConnectURL];
     ScrcpyParams.sharedParams.autoConnectURL = nil;
-    
-    // Current remote control is connected, disconnect first
-    if (self.view.window != nil && self.view.window.isKeyWindow == NO) {
-        NSLog(@"> self.view.window is not keyWindow");
-        return;
-    }
     
     // Disable all textfields
     [self toggleControlsEnabled:NO];
@@ -285,7 +296,6 @@ UIKIT_EXTERN UIImage * __nullable UIColorAsImage(UIColor * __nonnull color, CGSi
     [self.indicatorView stopAnimating];
     
     NSLog(@"Scrcpy STOPPED.");
-    [self.scrcpyBridge shutdown];
 }
 
 #pragma mark - Getter

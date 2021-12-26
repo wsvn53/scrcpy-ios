@@ -8,6 +8,18 @@
 #import "scrcpy_bridge.h"
 #import "ScrcpyBridge.h"
 #import "NSError+Alert.h"
+#import <SDL2/SDL.h>
+
+/**
+ * Quit current scrcpy connection
+ */
+void scrcpy_quit(void) {
+    // Send SQL_QUIT event to force quit
+    SDL_Event event;
+    event.type = SDL_QUIT;
+    int ret = SDL_PushEvent(&event);
+    NSLog(@"SDL_QUIT: %d", ret);
+}
 
 /**
  * Fix using CFRunLoopRunInMode in SDL to avoid high cpu usage

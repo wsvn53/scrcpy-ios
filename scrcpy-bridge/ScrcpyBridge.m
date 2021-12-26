@@ -42,21 +42,23 @@ int scrcpy_main(int argc, char *argv[]);
     // So we need to set to TRUE in order to handle UI events
     SDL_iPhoneSetEventPump(SDL_TRUE);
     
-    // Reset error status & process_wait
-//    [[ExecStatus sharedStatus] resetStatus];
-//    process_wait_reset();
+    // Close ssh session
+    if (self.sshShell.connected) {
+        [self.sshShell close:nil];
+        _sshShell = nil;
+    }
 }
 
 -(void)startWith:(NSArray *)options {
+    self.running = YES;
+    
     char *scrcpy_opts[options.count];
     for (NSInteger i = 0; i < options.count; i ++) {
         scrcpy_opts[i] = strdup([options[i] UTF8String]);
     }
     scrcpy_main((int)options.count, scrcpy_opts);
-}
-
--(void)shutdown {
     
+    self.running = NO;
 }
 
 #pragma mark - SSH
@@ -119,7 +121,7 @@ int scrcpy_main(int argc, char *argv[]);
     (*context).Success = [self.sshShell uploadFile:(*context).Local dst:(*context).Remote error:&error];
     (*context).Stderr = [error description];
     
-    NSLog(@"RET> Upload [%@] => [%@] (%@)", (*context).Local, (*context).Remote, @((*context).Success));
+    NSLog(@"RET> Upload [%@] => [%@] (%@)", (*context).Local, (*context).Remote, (*context).Success?@"YES":@"NO");
     
     if (error != nil && (*context).ShowErrors) {
         [error showAlert];

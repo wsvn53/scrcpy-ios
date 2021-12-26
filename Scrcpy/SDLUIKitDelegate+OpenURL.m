@@ -9,6 +9,7 @@
 #import "ScrcpyViewController.h"
 #import "ScrcpyParams.h"
 #import <SDL2/SDL.h>
+#import "scrcpy_bridge.h"
 
 @implementation SDLUIKitDelegate (OpenURL)
 
@@ -33,7 +34,7 @@
     __block UIBackgroundTaskIdentifier taskID = [application beginBackgroundTaskWithExpirationHandler:^{
         [application endBackgroundTask:taskID];
         NSLog(@"Force exit.");
-        exit(0);
+        scrcpy_quit();
     }];
 }
 

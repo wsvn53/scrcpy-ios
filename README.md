@@ -71,6 +71,18 @@ After your first swipe, iOS home indicator will become **BLACK**, if you swipe a
 
 If you want to continue trigger Android navigation gesture, you need to wait the indicator become **GRAY**.
 
+### URL Scheme
+
+Scrcpy.app supports to auto connect remote Android via URL Scheme, for example:
+
+```sh
+scrcpy://root:BASE64Password@192.168.0.101:8022?screenOff=1&bitRate=4M
+```
+
+**Note:** the password is using base64 encoding for security.
+
+You can also use `Copy URL Scheme` feature which on the top-right extends menu. 
+
 ### AppStore
 
 ~~AppStore version is under reviewing.~~ Before aproved you can follow the BUILD instructions to run on your iPhone devices.

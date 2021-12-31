@@ -9,7 +9,7 @@
 #import "ScrcpyBridge.h"
 #import "NSError+Alert.h"
 #import "NSString+Utils.h"
-#import "SDLUIKitDelegate+OpenURL.h"
+#import "SDLUIKitDelegate+Extend.h"
 #import "SchemeHandler.h"
 #import "ScrcpyParams.h"
 #import "screen-fix.h"

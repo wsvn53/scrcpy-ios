@@ -12,6 +12,7 @@ Scrcpy-iOS.app is a remote control tool for Android Phones based on [https://git
 * Hardware Decoding screen frames via VideoToolbox.framework;
 * Optimized swipe gestures when remote control with unstable network;
 * Support connect to sshd/adb which started in Termux app;
+* Support auto connect via URL Scheme;
 
 ### Usage
 

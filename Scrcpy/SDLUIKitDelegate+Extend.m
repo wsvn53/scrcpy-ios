@@ -5,13 +5,13 @@
 //  Created by Ethan on 2021/9/10.
 //
 
-#import "SDLUIKitDelegate+OpenURL.h"
+#import "SDLUIKitDelegate+Extend.h"
 #import "ScrcpyViewController.h"
 #import "ScrcpyParams.h"
 #import <SDL2/SDL.h>
 #import "scrcpy_bridge.h"
 
-@implementation SDLUIKitDelegate (OpenURL)
+@implementation SDLUIKitDelegate (Extend)
 
 -(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
 {

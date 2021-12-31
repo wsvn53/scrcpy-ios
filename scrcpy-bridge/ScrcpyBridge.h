@@ -12,6 +12,7 @@
 #define kScrcpyUploadFileSSHCommand @"kScrcpyUploadFileSSHCommand"
 #define kScrcpyExecuteSSHCommand    @"kScrcpyExecuteSshCommand"
 #define kScrcpyReverseSSHCommand    @"kScrcpyReverseSSHCommand"
+#define kOnScrcpyQuitRequested      @"kOnScrcpyQuitRequested"
 
 struct ScrcpyExecuteContext {
     BOOL    ShowErrors;             // Show errors or not

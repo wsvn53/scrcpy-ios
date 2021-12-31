@@ -6,3 +6,4 @@
 //
 
 #define   kSDLDidCreateRendererNotification   @"kSDLDidCreateRendererNotification"
+void display_layer_reset(void);

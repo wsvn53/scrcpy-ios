@@ -37,6 +37,11 @@ int SDLCALL SDL_RenderCopy_fix(SDL_Renderer * renderer,
 @import VideoToolbox;
 @import AVFoundation;
 
+static AVSampleBufferDisplayLayer *displayLayer = nil;
+void display_layer_reset(void) {
+    displayLayer = nil;
+}
+
 static inline UIWindow *getKeyWindow(void) {
     for (UIWindow *window in UIApplication.sharedApplication.windows) {
         if (window.isKeyWindow) {
@@ -66,7 +71,6 @@ static inline void OpenGL_RenderFrame(AVFrame *frame) {
     CFMutableDictionaryRef dict = (CFMutableDictionaryRef)CFArrayGetValueAtIndex(attachments, 0);
     CFDictionarySetValue(dict, kCMSampleAttachmentKey_DisplayImmediately, kCFBooleanTrue);
     
-    static AVSampleBufferDisplayLayer *displayLayer = nil;
     if (displayLayer == nil || displayLayer.superlayer == nil) {
         displayLayer = [AVSampleBufferDisplayLayer layer];
         displayLayer.videoGravity = AVLayerVideoGravityResizeAspect;

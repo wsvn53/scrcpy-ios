@@ -9,16 +9,20 @@
 #import "ScrcpyBridge.h"
 #import "NSError+Alert.h"
 #import <SDL2/SDL.h>
+#import "screen-fix.h"
 
 /**
  * Quit current scrcpy connection
  */
 void scrcpy_quit(void) {
-    // Send SQL_QUIT event to force quit
-    SDL_Event event;
-    event.type = SDL_QUIT;
-    int ret = SDL_PushEvent(&event);
-    NSLog(@"SDL_QUIT: %d", ret);
+    // Call SQL_Quit direct
+    SDL_Quit();
+    
+    // Reset hardware display layer
+    display_layer_reset();
+    
+    // Post notification to close ssh
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOnScrcpyQuitRequested object:nil];
 }
 
 /**
@@ -106,7 +110,7 @@ uint16_t scrcpy_ssh_execute_bg(const char *const ssh_cmd[], size_t len) {
         for (int i = 0; i < len; i++) {
             cmds[i] = [cmdStrs[i] UTF8String];
         }
-        scrcpy_ssh_execute(cmds, len, false);
+        scrcpy_ssh_execute(cmds, len, true);
     }];
     
     // save to running thread for later check

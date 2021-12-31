@@ -13,5 +13,5 @@
 @interface SDLUIKitDelegate : NSObject<UIApplicationDelegate>
 @end
 
-@interface SDLUIKitDelegate (OpenURL)
+@interface SDLUIKitDelegate (Extend)
 @end

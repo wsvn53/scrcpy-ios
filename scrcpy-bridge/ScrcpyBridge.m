@@ -29,6 +29,8 @@ int scrcpy_main(int argc, char *argv[]);
                                          name:kScrcpyUploadFileSSHCommand object:nil];
         [SharedNotificationCenter addObserver:self selector:@selector(postReverseSSHCommand:)
                                          name:kScrcpyReverseSSHCommand object:nil];
+        [SharedNotificationCenter addObserver:self selector:@selector(resetContext)
+                                         name:kOnScrcpyQuitRequested object:nil];
     }
     return self;
 }
@@ -41,6 +43,9 @@ int scrcpy_main(int argc, char *argv[]);
     // Because after SDL proxied didFinishLauch, PumpEvent will set to FASLE
     // So we need to set to TRUE in order to handle UI events
     SDL_iPhoneSetEventPump(SDL_TRUE);
+    
+    // Flush all events include the not proccessed SERVER_DISCONNECT events
+    SDL_FlushEvents(0, 0xFFFF);
     
     // Close ssh session
     if (self.sshShell.connected) {

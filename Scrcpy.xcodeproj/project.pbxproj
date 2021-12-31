@@ -11,7 +11,7 @@
 		AA273354275FC20B00A593B4 /* libscrcpy-bridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AACAD32427591A070058EFDF /* libscrcpy-bridge.a */; };
 		AA2733592760D35C00A593B4 /* adb-fix.c in Sources */ = {isa = PBXBuildFile; fileRef = AA2733582760D35C00A593B4 /* adb-fix.c */; };
 		AA27336427624F1000A593B4 /* scrcpy_bridge.m in Sources */ = {isa = PBXBuildFile; fileRef = AA27336327624F1000A593B4 /* scrcpy_bridge.m */; };
-		AA2B664F26EBB67A0089F2E7 /* SDLUIKitDelegate+OpenURL.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2B664E26EBB67A0089F2E7 /* SDLUIKitDelegate+OpenURL.m */; };
+		AA2B664F26EBB67A0089F2E7 /* SDLUIKitDelegate+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2B664E26EBB67A0089F2E7 /* SDLUIKitDelegate+Extend.m */; };
 		AA2B665226EBC0810089F2E7 /* SchemeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2B665126EBC0810089F2E7 /* SchemeHandler.m */; };
 		AA3154D82762F5E7006C5226 /* server-fix.c in Sources */ = {isa = PBXBuildFile; fileRef = AA3154D72762F5E7006C5226 /* server-fix.c */; };
 		AA3154D927632996006C5226 /* scrcpy-server in Resources */ = {isa = PBXBuildFile; fileRef = AACAD32F275FB0570058EFDF /* scrcpy-server */; };
@@ -108,8 +108,8 @@
 		AA2733582760D35C00A593B4 /* adb-fix.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "adb-fix.c"; sourceTree = "<group>"; };
 		AA27336027624EF600A593B4 /* scrcpy_bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = scrcpy_bridge.h; sourceTree = "<group>"; };
 		AA27336327624F1000A593B4 /* scrcpy_bridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = scrcpy_bridge.m; sourceTree = "<group>"; };
-		AA2B664D26EBB67A0089F2E7 /* SDLUIKitDelegate+OpenURL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SDLUIKitDelegate+OpenURL.h"; sourceTree = "<group>"; };
-		AA2B664E26EBB67A0089F2E7 /* SDLUIKitDelegate+OpenURL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SDLUIKitDelegate+OpenURL.m"; sourceTree = "<group>"; };
+		AA2B664D26EBB67A0089F2E7 /* SDLUIKitDelegate+Extend.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SDLUIKitDelegate+Extend.h"; sourceTree = "<group>"; };
+		AA2B664E26EBB67A0089F2E7 /* SDLUIKitDelegate+Extend.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SDLUIKitDelegate+Extend.m"; sourceTree = "<group>"; };
 		AA2B665026EBC0810089F2E7 /* SchemeHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchemeHandler.h; sourceTree = "<group>"; };
 		AA2B665126EBC0810089F2E7 /* SchemeHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchemeHandler.m; sourceTree = "<group>"; };
 		AA3154D627625977006C5226 /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
@@ -308,8 +308,8 @@
 				AA7766822698A5AB0025990D /* ScrcpyViewController.m */,
 				AA6FFDA326B985D6001ACD22 /* SDL_uikitviewcontroller+Extend.h */,
 				AA6FFDA426B985D7001ACD22 /* SDL_uikitviewcontroller+Extend.m */,
-				AA2B664D26EBB67A0089F2E7 /* SDLUIKitDelegate+OpenURL.h */,
-				AA2B664E26EBB67A0089F2E7 /* SDLUIKitDelegate+OpenURL.m */,
+				AA2B664D26EBB67A0089F2E7 /* SDLUIKitDelegate+Extend.h */,
+				AA2B664E26EBB67A0089F2E7 /* SDLUIKitDelegate+Extend.m */,
 				AA2B665026EBC0810089F2E7 /* SchemeHandler.h */,
 				AA2B665126EBC0810089F2E7 /* SchemeHandler.m */,
 				AA8C04C5269C8FE0001D9A4F /* NSError+Alert.h */,
@@ -661,7 +661,7 @@
 				AA7766832698A5AB0025990D /* ScrcpyViewController.m in Sources */,
 				AA6FFDA526B985D7001ACD22 /* SDL_uikitviewcontroller+Extend.m in Sources */,
 				AA8C04C7269C8FE0001D9A4F /* NSError+Alert.m in Sources */,
-				AA2B664F26EBB67A0089F2E7 /* SDLUIKitDelegate+OpenURL.m in Sources */,
+				AA2B664F26EBB67A0089F2E7 /* SDLUIKitDelegate+Extend.m in Sources */,
 				AABD713F277868460004B859 /* NSString+Utils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -871,7 +871,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2021122601;
+				CURRENT_PROJECT_VERSION = 2021123101;
 				DEVELOPMENT_TEAM = K8Q74NT2BG;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/ssh";
@@ -939,7 +939,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2021122601;
+				CURRENT_PROJECT_VERSION = 2021123101;
 				DEVELOPMENT_TEAM = K8Q74NT2BG;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/ssh";

@@ -63,7 +63,7 @@ func (s *Shell) Execute(command string) *ShellStatus {
 			Command: command,
 		}
 	}
-	out, err := sess.CombinedOutput("PATH=$PATH:/usr/local/bin:/usr/local/sbin:/opt/homebrew/bin " + command)
+	out, err := sess.CombinedOutput("PROFILE=~/.$(basename $SHELL)rc; [ -f $PROFILE ] && . $PROFILE; " + command)
 	return &ShellStatus{
 		Err:     err,
 		Output:  string(out),

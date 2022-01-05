@@ -14,6 +14,7 @@
 #import "ScrcpyParams.h"
 #import "screen-fix.h"
 #import "scrcpy_bridge.h"
+#import "LogViewController.h"
 
 #define   CheckParam(var, name)    if (var.isValid == NO) { \
     [self showAlert:[name stringByAppendingString:@" is required!"]];    \
@@ -166,6 +167,10 @@ static inline void AppendURLParams(NSMutableArray *queryItems, NSString *name, N
     self.screenOff.on = NO;
 }
 
+-(void)showScrcpyLogs {
+    [self presentViewController:[LogViewController new] animated:YES completion:nil];
+}
+
 -(void)showMoreMenu:(id)sender {
     UIAlertController *moreController = [UIAlertController alertControllerWithTitle:@"More Actions" message:nil preferredStyle:(UIAlertControllerStyleActionSheet)];
     [moreController addAction: [UIAlertAction actionWithTitle:@"Copy URL Scheme" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
@@ -175,6 +180,10 @@ static inline void AppendURLParams(NSMutableArray *queryItems, NSString *name, N
     [moreController addAction:[UIAlertAction actionWithTitle:@"Clear Scrcpy Form" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"ACTION> Clear Scrcpy Form");
         [self clearScrcpyForm];
+    }]];
+    [moreController addAction:[UIAlertAction actionWithTitle:@"Show Scrcpy Logs" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"ACTION> Show Scrcpy Logs");
+        [self showScrcpyLogs];
     }]];
     [moreController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"ACTION> Dismiss");

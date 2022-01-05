@@ -26,6 +26,13 @@
     return YES;
 }
 
+-(void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler
+{
+    NSLog(@"> SHORTCUT ACTION: DISCONNECT NOW");
+    scrcpy_quit();
+    completionHandler(YES);
+}
+
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     SDL_OnApplicationDidEnterBackground();

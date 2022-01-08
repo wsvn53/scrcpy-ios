@@ -25,5 +25,11 @@ bool
 input_manager_handle_event_fix(struct input_manager *im, SDL_Event *event) {
     static struct input_manager *global_im = NULL;
     global_im = im ? : global_im;
+    
+    // sometimes maybe control connect haven't ready
+    if (global_im == NULL) {
+        return false;
+    }
+    
     return input_manager_handle_event(global_im, event);
 }

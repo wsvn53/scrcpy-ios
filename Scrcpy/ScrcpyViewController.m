@@ -188,6 +188,8 @@ static inline void AppendURLParams(NSMutableArray *queryItems, NSString *name, N
     [moreController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"ACTION> Dismiss");
     }]];
+    
+    moreController.popoverPresentationController.sourceView = (UIView *)[self.navigationItem.rightBarButtonItem valueForKey:@"view"];
     [self presentViewController:moreController animated:YES completion:nil];
 }
 

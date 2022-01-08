@@ -101,7 +101,7 @@ void NSLog(NSString *format, ...) {
     
     stackView.translatesAutoresizingMaskIntoConstraints = NO;
     stackView.axis = UILayoutConstraintAxisVertical;
-    stackView.spacing = 15;
+    stackView.spacing = 10;
     
     [[stackView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor] setActive:YES];
     [[stackView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor] setActive:YES];

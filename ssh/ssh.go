@@ -48,6 +48,14 @@ func (s *Shell) Connected() bool {
 	return s.sshClient != nil && s.sshClient.Conn != nil
 }
 
+func (s *Shell) importProfile() string {
+	return `PROFILE=~/.$(basename $SHELL)rc; 
+			[ -f /etc/profile ] && . /etc/profile;
+			[ -f $PROFILE ] && . $PROFILE; 
+			[ -z $TMPDIR ] && export TMPDIR=$(dirname $(mktemp -d));
+	`
+}
+
 func (s *Shell) Execute(command string) *ShellStatus {
 	if s.sshClient == nil {
 		return &ShellStatus{
@@ -63,7 +71,7 @@ func (s *Shell) Execute(command string) *ShellStatus {
 			Command: command,
 		}
 	}
-	out, err := sess.CombinedOutput("PROFILE=~/.$(basename $SHELL)rc; [ -f $PROFILE ] && . $PROFILE; " + command)
+	out, err := sess.CombinedOutput(s.importProfile() + command)
 	return &ShellStatus{
 		Err:     err,
 		Output:  string(out),
@@ -188,8 +196,8 @@ func (s *Shell) reverse(remote net.Listener, localAddr string) {
 func (s *Shell) UploadFile(src string, dst string) error {
 	uploadFile, _ := os.Open(src)
 	dstDir := filepath.Dir(dst)
-	uploadCmd := fmt.Sprintf(`[ -d "%s" ] || mkdir -pv "%s"; cat > "%s"`,
-		dstDir, dstDir, dst)
+	uploadCmd := fmt.Sprintf(`%s [ -d "%s" ] || mkdir -pv "%s"; cat > "%s"`,
+		s.importProfile(), dstDir, dstDir, dst)
 
 	sess, err := s.sshClient.NewSession()
 	if err != nil {

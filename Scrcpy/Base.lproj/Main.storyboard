@@ -300,44 +300,51 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="7ce-uR-1e3">
-                                        <rect key="frame" x="20" y="534.5" width="374" height="43.5"/>
+                                        <rect key="frame" x="20" y="534.5" width="374" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7ce-uR-1e3" id="KSD-hq-gXf">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="44.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bit Rate:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GMC-M3-Ing">
-                                                    <rect key="frame" x="20" y="11" width="64" height="21.5"/>
+                                                    <rect key="frame" x="20" y="11" width="64" height="22.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="3" translatesAutoresizingMaskIntoConstraints="NO" id="65z-4V-LJP">
-                                                    <rect key="frame" x="126" y="6" width="231" height="32.5"/>
-                                                    <segments>
-                                                        <segment title="1M"/>
-                                                        <segment title="2M"/>
-                                                        <segment title="3M"/>
-                                                        <segment title="4M"/>
-                                                        <segment title="6M"/>
-                                                        <segment title="8M"/>
-                                                    </segments>
-                                                </segmentedControl>
+                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="4" minimumValue="1" maximumValue="30" translatesAutoresizingMaskIntoConstraints="NO" id="WF0-B4-bKj">
+                                                    <rect key="frame" x="260" y="6" width="94" height="32.5"/>
+                                                </stepper>
+                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="4" minimumValue="1" maximumValue="30" translatesAutoresizingMaskIntoConstraints="NO" id="bVk-UF-uCu">
+                                                    <rect key="frame" x="214" y="6" width="94" height="32.5"/>
+                                                </stepper>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4M" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nFz-2V-K9z">
+                                                    <rect key="frame" x="260" y="6" width="48" height="32.5"/>
+                                                    <color key="backgroundColor" red="0.93189781900000002" green="0.93188494440000003" blue="0.93531626459999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="65z-4V-LJP" firstAttribute="top" secondItem="KSD-hq-gXf" secondAttribute="topMargin" constant="-5" id="FKE-HY-8kE"/>
-                                                <constraint firstItem="GMC-M3-Ing" firstAttribute="firstBaseline" secondItem="65z-4V-LJP" secondAttribute="baseline" id="GbZ-IK-h3E"/>
-                                                <constraint firstItem="GMC-M3-Ing" firstAttribute="firstBaseline" secondItem="65z-4V-LJP" secondAttribute="firstBaseline" id="RKb-L3-nGa"/>
+                                                <constraint firstItem="WF0-B4-bKj" firstAttribute="bottom" secondItem="nFz-2V-K9z" secondAttribute="bottom" id="0KN-rK-sgn"/>
+                                                <constraint firstItem="bVk-UF-uCu" firstAttribute="trailing" secondItem="nFz-2V-K9z" secondAttribute="trailing" id="8PN-iC-9C4"/>
+                                                <constraint firstItem="bVk-UF-uCu" firstAttribute="bottom" secondItem="WF0-B4-bKj" secondAttribute="bottom" id="ErO-bD-3at"/>
+                                                <constraint firstItem="WF0-B4-bKj" firstAttribute="trailing" secondItem="KSD-hq-gXf" secondAttribute="trailingMargin" id="FwV-eG-NAX"/>
+                                                <constraint firstItem="WF0-B4-bKj" firstAttribute="centerY" secondItem="GMC-M3-Ing" secondAttribute="centerY" id="Miw-R6-nin"/>
                                                 <constraint firstItem="GMC-M3-Ing" firstAttribute="top" secondItem="KSD-hq-gXf" secondAttribute="topMargin" id="UmD-Yl-qST"/>
                                                 <constraint firstItem="GMC-M3-Ing" firstAttribute="leading" secondItem="KSD-hq-gXf" secondAttribute="leadingMargin" id="WMq-TR-rpn"/>
+                                                <constraint firstItem="bVk-UF-uCu" firstAttribute="top" secondItem="nFz-2V-K9z" secondAttribute="top" id="gHO-rU-Bnn"/>
                                                 <constraint firstItem="GMC-M3-Ing" firstAttribute="bottom" secondItem="KSD-hq-gXf" secondAttribute="bottomMargin" id="jeS-dv-B2x"/>
-                                                <constraint firstItem="GMC-M3-Ing" firstAttribute="centerY" secondItem="65z-4V-LJP" secondAttribute="centerY" id="sfj-Nb-bap"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="65z-4V-LJP" secondAttribute="trailing" constant="-3" id="teU-N2-nm3"/>
+                                                <constraint firstItem="WF0-B4-bKj" firstAttribute="leading" secondItem="nFz-2V-K9z" secondAttribute="leading" id="ntz-3P-gfE"/>
+                                                <constraint firstItem="WF0-B4-bKj" firstAttribute="top" secondItem="nFz-2V-K9z" secondAttribute="top" id="uc6-Pl-19t"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="nFz-2V-K9z" secondAttribute="trailing" constant="46" id="usx-u8-dju"/>
+                                                <constraint firstItem="WF0-B4-bKj" firstAttribute="top" secondItem="KSD-hq-gXf" secondAttribute="topMargin" constant="-5" id="zRD-Je-cY3"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="ckn-rQ-PL3">
-                                        <rect key="frame" x="20" y="578" width="374" height="43.5"/>
+                                        <rect key="frame" x="20" y="579" width="374" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ckn-rQ-PL3" id="F8W-dO-L4g">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
@@ -368,7 +375,7 @@
                             <tableViewSection id="OE8-fH-d0e">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="48" id="yMv-lE-TNN">
-                                        <rect key="frame" x="20" y="657.5" width="374" height="48"/>
+                                        <rect key="frame" x="20" y="658.5" width="374" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yMv-lE-TNN" id="axl-rK-2tV">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="48"/>
@@ -432,7 +439,9 @@
                     <connections>
                         <outlet property="adbSerial" destination="mBv-x2-juS" id="5El-AZ-Rjl"/>
                         <outlet property="appVersion" destination="yng-Va-ytH" id="j59-x1-nME"/>
-                        <outlet property="bitRate" destination="65z-4V-LJP" id="S4s-r5-34v"/>
+                        <outlet property="bitRate" destination="nFz-2V-K9z" id="wdk-Es-2d4"/>
+                        <outlet property="bitRateLower" destination="bVk-UF-uCu" id="efF-9y-oaM"/>
+                        <outlet property="bitRateUpper" destination="WF0-B4-bKj" id="6sB-Sg-lPe"/>
                         <outlet property="connectButton" destination="eNa-Ic-vU9" id="a7p-eQ-WE7"/>
                         <outlet property="coreVersion" destination="gDP-oa-bsT" id="I0X-oS-bEs"/>
                         <outlet property="indicatorView" destination="RAC-3x-635" id="FkP-ib-fXZ"/>

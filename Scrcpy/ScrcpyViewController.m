@@ -58,7 +58,9 @@ UIKIT_EXTERN UIImage * __nullable UIColorAsImage(UIColor * __nonnull color, CGSi
 @property (weak, nonatomic) IBOutlet UILabel *coreVersion;
 @property (weak, nonatomic) IBOutlet UILabel *appVersion;
 @property (weak, nonatomic) IBOutlet UITextField *maxSize;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *bitRate;
+@property (weak, nonatomic) IBOutlet UILabel *bitRate;
+@property (weak, nonatomic) IBOutlet UIStepper *bitRateLower;
+@property (weak, nonatomic) IBOutlet UIStepper *bitRateUpper;
 @property (weak, nonatomic) IBOutlet UISwitch *screenOff;
 @property (nonatomic, copy) NSString *bitRateText;
 @property (nonatomic, copy) NSNumber *screenOffValue;
@@ -112,6 +114,10 @@ UIKIT_EXTERN UIImage * __nullable UIColorAsImage(UIColor * __nonnull color, CGSi
     self.adbSerial.delegate = (id<UITextFieldDelegate>)self;
     self.maxSize.delegate = (id<UITextFieldDelegate>)self;
     
+    // Stepper Events
+    [self.bitRateLower addTarget:self action:@selector(bitRateChanged:) forControlEvents:UIControlEventTouchUpInside];
+    [self.bitRateUpper addTarget:self action:@selector(bitRateChanged:) forControlEvents:UIControlEventTouchUpInside];
+    
     // Navigation Bar
     UIBarButtonItem *moreItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"more"] style:(UIBarButtonItemStyleDone) target:self action:@selector(showMoreMenu:)];
     moreItem.tintColor = UIColor.whiteColor;
@@ -163,8 +169,18 @@ static inline void AppendURLParams(NSMutableArray *queryItems, NSString *name, N
     self.sshPassword.text = @"";
     self.adbSerial.text = @"";
     self.maxSize.text = @"";
-    self.bitRate.selectedSegmentIndex = 3;
     self.screenOff.on = NO;
+    [self setBitRateValue:4];
+}
+
+-(void)setBitRateValue:(NSInteger)value {
+    self.bitRateLower.value = value;
+    self.bitRateUpper.value = value;
+    self.bitRate.text = [NSString stringWithFormat:@"%@M", @(value)];
+}
+
+-(void)bitRateChanged:(UIStepper *)stepper {
+    [self setBitRateValue:stepper.value];
 }
 
 -(void)showScrcpyLogs {
@@ -200,7 +216,7 @@ static inline void AppendURLParams(NSMutableArray *queryItems, NSString *name, N
     ScrcpyParams_bind(self.sshPassword.text, ScrcpyParams.sharedParams.sshPassword, @"ssh_password", @"");
     ScrcpyParams_bind(self.adbSerial.text, ScrcpyParams.sharedParams.adbSerial, @"adb_serial", @"");
     ScrcpyParams_bind(self.maxSize.text, ScrcpyParams.sharedParams.maxSize, @"max_size", @"");
-    ScrcpyParams_bind(self.bitRateText, ScrcpyParams.sharedParams.bitRate, @"bit_rate", @"");
+    ScrcpyParams_bind(self.bitRateText, ScrcpyParams.sharedParams.bitRate, @"bit_rate", @"4M");
     ScrcpyParams_bind(self.screenOffValue, ScrcpyParams.sharedParams.screenOff, @"screen_off", @YES);
     
     ScrcpyParamsBind(^{
@@ -270,18 +286,12 @@ static inline void AppendURLParams(NSMutableArray *queryItems, NSString *name, N
 }
 
 -(NSString *)bitRateText {
-    return [self.bitRate titleForSegmentAtIndex:self.bitRate.selectedSegmentIndex];
+    return self.bitRate.text;
 }
 
 -(void)setBitRateText:(NSString *)bitRateText {
-    self.bitRate.selectedSegmentIndex = ^NSInteger(void){
-        for (NSInteger i = 0; i < self.bitRate.numberOfSegments; i++) {
-            if ([[self.bitRate titleForSegmentAtIndex:i] isEqualToString:ScrcpyParams.sharedParams.bitRate]) {
-                return i;
-            }
-        }
-        return 2;
-    }();
+    NSInteger bitRateNum = [[bitRateText stringByReplacingOccurrencesOfString:@"M" withString:@""] integerValue];
+    [self setBitRateValue:bitRateNum];
 }
 
 #pragma mark - Actions
@@ -334,6 +344,8 @@ static inline void AppendURLParams(NSMutableArray *queryItems, NSString *name, N
     self.maxSize.enabled = enabled;
     self.bitRate.enabled = enabled;
     self.connectButton.enabled = enabled;
+    self.bitRateUpper.enabled = enabled;
+    self.bitRateLower.enabled = enabled;
 }
 
 - (void)resetViews {

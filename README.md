@@ -29,7 +29,7 @@ This ssh server will bridge all traffics from your iPhone to your Android device
 Or, you can also setup your Android phones with sshd/adb installed via Termux by following instructions:
 
 * Install `Termux` on your Android https://f-droid.org/en/packages/com.termux/ ;
-* Install `sshd` and `adb` in Termux: `pkg install sshd adb-tools`;
+* Install `sshd` and `adb` in Termux: `pkg install openssh android-tools`;
 * Create or change password of current Termux user: `passwd`;
 * Start `sshd` server with command: `sshd`;
 * Enable `Wireless Debug` by execute command on your computer: `adb tcpip 5555`;

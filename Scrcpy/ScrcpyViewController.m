@@ -61,9 +61,13 @@ UIKIT_EXTERN UIImage * __nullable UIColorAsImage(UIColor * __nonnull color, CGSi
 @property (weak, nonatomic) IBOutlet UILabel *bitRate;
 @property (weak, nonatomic) IBOutlet UIStepper *bitRateLower;
 @property (weak, nonatomic) IBOutlet UIStepper *bitRateUpper;
-@property (weak, nonatomic) IBOutlet UISwitch *screenOff;
 @property (nonatomic, copy) NSString *bitRateText;
+
+@property (weak, nonatomic) IBOutlet UISwitch *screenOff;
 @property (nonatomic, copy) NSNumber *screenOffValue;
+
+@property (weak, nonatomic) IBOutlet UISwitch *forceAdbForward;
+@property (nonatomic, copy) NSNumber *forceAdbForwardValue;
 
 @end
 
@@ -149,6 +153,7 @@ static inline void AppendURLParams(NSMutableArray *queryItems, NSString *name, N
     AppendURLParams(queryItems, @"maxSize", self.maxSize.text);
     AppendURLParams(queryItems, @"bitRate", self.bitRateText);
     AppendURLParams(queryItems, @"screenOff", [self.screenOffValue stringValue]);
+    AppendURLParams(queryItems, @"adbForward", [self.forceAdbForwardValue stringValue]);
     
     [scrcpyComponents setQueryItems:queryItems];
     NSURL *scrcpyURL = [scrcpyComponents URL];
@@ -218,6 +223,7 @@ static inline void AppendURLParams(NSMutableArray *queryItems, NSString *name, N
     ScrcpyParams_bind(self.maxSize.text, ScrcpyParams.sharedParams.maxSize, @"max_size", @"");
     ScrcpyParams_bind(self.bitRateText, ScrcpyParams.sharedParams.bitRate, @"bit_rate", @"4M");
     ScrcpyParams_bind(self.screenOffValue, ScrcpyParams.sharedParams.screenOff, @"screen_off", @YES);
+    ScrcpyParams_bind(self.forceAdbForwardValue, ScrcpyParams.sharedParams.forceAdbForward, @"force_adb_forward", @NO);
     
     ScrcpyParamsBind(^{
         self.scrcpyServer.text = ScrcpyParams.sharedParams.scrcpyServer;
@@ -277,12 +283,25 @@ static inline void AppendURLParams(NSMutableArray *queryItems, NSString *name, N
 
 #pragma mark - Getters & Setters
 
+-(ScrcpyBridge *)scrcpyBridge {
+    _scrcpyBridge = _scrcpyBridge ? : ([[ScrcpyBridge alloc] init]);
+    return _scrcpyBridge;
+}
+
 -(NSNumber *)screenOffValue {
     return @(self.screenOff.isOn);
 }
 
 -(void)setScreenOffValue:(NSNumber *)screenOffValue {
     self.screenOff.on = [screenOffValue boolValue];
+}
+
+-(NSNumber *)forceAdbForwardValue {
+    return @(self.forceAdbForward.isOn);
+}
+
+-(void)setForceAdbForwardValue:(NSNumber *)forceAdbForwardValue {
+    self.forceAdbForward.on = [forceAdbForwardValue boolValue];
 }
 
 -(NSString *)bitRateText {
@@ -382,6 +401,11 @@ static inline void AppendURLParams(NSMutableArray *queryItems, NSString *name, N
         [scrcpyOptions addObjectsFromArray:@[ @"--turn-screen-off" ]];
     }
     
+    // Add forceAdbForward option
+    if (ScrcpyParams.sharedParams.forceAdbForward.boolValue) {
+        [scrcpyOptions addObjectsFromArray:@[ @"--force-adb-forward" ]];
+    }
+    
     // Start scrcpy
     [self.scrcpyBridge startWith:scrcpyOptions];
     
@@ -389,13 +413,6 @@ static inline void AppendURLParams(NSMutableArray *queryItems, NSString *name, N
     [self.indicatorView stopAnimating];
     
     NSLog(@"Scrcpy STOPPED.");
-}
-
-#pragma mark - Getter
-
--(ScrcpyBridge *)scrcpyBridge {
-    _scrcpyBridge = _scrcpyBridge ? : ([[ScrcpyBridge alloc] init]);
-    return _scrcpyBridge;
 }
 
 #pragma mark - Utils

@@ -125,7 +125,7 @@ uint16_t scrcpy_ssh_execute_bg(const char *const ssh_cmd[], size_t len) {
     [execThread start];
     
     // Wait for ssh_cmd array was used
-    CFRunLoopRunInMode(kCFRunLoopCommonModes, 0.1, NO);
+//    CFRunLoopRunInMode(kCFRunLoopCommonModes, 0.1, NO);
     
     // fake pid
     return fake_pid;
@@ -167,11 +167,23 @@ bool scrcpy_ssh_reverse(uint16_t port) {
     if (port == 0) return false;
     
     struct ScrcpyExecuteContext context;
-    
     context.ShowErrors = YES;
-    context.ReversePort = port;
-    [SharedNotificationCenter postNotificationName:kScrcpyReverseSSHCommand object:nil
+    context.ReverseTunnel = YES;
+    context.TunnelPort = port;
+    [SharedNotificationCenter postNotificationName:kScrcpyTunnelSSHCommand object:nil
                                           userInfo:UserInfoWith(&context)];
+    return context.Success;
+}
 
+bool scrcpy_ssh_forward(uint16_t port) {
+    // no reverse port, mabye forward mode
+    if (port == 0) return false;
+    
+    struct ScrcpyExecuteContext context;
+    context.ShowErrors = YES;
+    context.ReverseTunnel = NO;
+    context.TunnelPort = port;
+    [SharedNotificationCenter postNotificationName:kScrcpyTunnelSSHCommand object:nil
+                                          userInfo:UserInfoWith(&context)];
     return context.Success;
 }

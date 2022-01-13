@@ -36,6 +36,7 @@ ScrcpyParamsBind(^{                                                         \
 @property (nonatomic, copy)     NSString    *maxSize;
 @property (nonatomic, copy)     NSString    *bitRate;
 @property (nonatomic, copy)     NSNumber    *screenOff;
+@property (nonatomic, copy)     NSNumber    *forceAdbForward;
 
 @property (nonatomic, copy)     NSString    *coreVersion;
 @property (nonatomic, copy)     NSString    *appVersion;

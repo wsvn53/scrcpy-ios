@@ -27,8 +27,8 @@ int scrcpy_main(int argc, char *argv[]);
                                          name:kScrcpyExecuteSSHCommand object:nil];
         [SharedNotificationCenter addObserver:self selector:@selector(postUploadFileSSHCommand:)
                                          name:kScrcpyUploadFileSSHCommand object:nil];
-        [SharedNotificationCenter addObserver:self selector:@selector(postReverseSSHCommand:)
-                                         name:kScrcpyReverseSSHCommand object:nil];
+        [SharedNotificationCenter addObserver:self selector:@selector(postTunnelSSHCommand:)
+                                         name:kScrcpyTunnelSSHCommand object:nil];
         [SharedNotificationCenter addObserver:self selector:@selector(resetContext)
                                          name:kOnScrcpyQuitRequested object:nil];
     }
@@ -102,7 +102,7 @@ int scrcpy_main(int argc, char *argv[]);
     (*context).Stdout = ret.output;
     (*context).Stderr = ret.err.description;
     (*context).Success = (ret.err == nil);
-    NSLog(@"RET> [%@] (%@)", (*context).Command, @((*context).Success));
+    NSLog(@"RET> [%@] (%@)", (*context).Command, (*context).Success?@"YES":@"NO");
     
     if (ret.err != nil && (*context).ShowErrors) {
         NSString *descStr = [NSString stringWithFormat:@"CMD> %@\nOUTPUT> %@\nERR> %@", (*context).Command, ret.output, ret.err.userInfo[NSLocalizedDescriptionKey]];
@@ -133,7 +133,7 @@ int scrcpy_main(int argc, char *argv[]);
     }
 }
 
--(void)postReverseSSHCommand:(NSNotification *)reverseNotification {
+-(void)postTunnelSSHCommand:(NSNotification *)reverseNotification {
     // check ssh login first
     if ([self sshCheckLogin] == NO) {
         return;
@@ -154,15 +154,24 @@ int scrcpy_main(int argc, char *argv[]);
         CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.5f, NO);
     }
     
-    NSString *remoteAddr = [NSString stringWithFormat:@"localhost:%d", (*context).ReversePort];
-    NSString *localAddr = [NSString stringWithFormat:@"localhost:%d", (*context).ReversePort];
+    uint16_t port = (*context).TunnelPort;
+    NSString *remoteAddr = [NSString stringWithFormat:@"localhost:%d", port];
+    NSString *localAddr = [NSString stringWithFormat:@"localhost:%d", port];
     
     NSError *error = nil;
     NSInteger retryCount = 5;
     while (--retryCount) {
-        BOOL success = [self.sshShell reverse:remoteAddr localAddr:localAddr error:&error];
+        BOOL success = NO;
+        if ((*context).ReverseTunnel) {
+            success = [self.sshShell reverse:remoteAddr localAddr:localAddr error:&error];
+            NSLog(@"SSH> Reverse: %@ -> %@ (%@)", localAddr, remoteAddr, success?@"YES":@"NO");
+        } else {
+            success = [self.sshShell forward:localAddr remoteAddr:remoteAddr error:&error];
+            NSLog(@"SSH> Forward: %@ -> %@ (%@)", localAddr, remoteAddr, success?@"YES":@"NO");
+        }
+        
         if (success == NO && error != nil) {
-            NSLog(@"[SSH Reverse]: %@, RetryRemains: %ld", error, retryCount);
+            NSLog(@"[SSH Tunnel]: %@, RetryRemains: %ld", error, retryCount);
             CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.5f, NO);
             continue;
         }

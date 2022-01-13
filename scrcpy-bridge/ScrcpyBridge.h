@@ -11,7 +11,8 @@
 
 #define kScrcpyUploadFileSSHCommand @"kScrcpyUploadFileSSHCommand"
 #define kScrcpyExecuteSSHCommand    @"kScrcpyExecuteSshCommand"
-#define kScrcpyReverseSSHCommand    @"kScrcpyReverseSSHCommand"
+#define kScrcpyTunnelSSHCommand    @"kScrcpyTunnelSSHCommand"
+#define kScrcpyForwardSSHCommand    @"kScrcpyForwardSSHCommand"
 #define kOnScrcpyQuitRequested      @"kOnScrcpyQuitRequested"
 
 struct ScrcpyExecuteContext {
@@ -22,7 +23,8 @@ struct ScrcpyExecuteContext {
     NSString * _Nullable Local;     // For upload command
     NSString * _Nullable Remote;    // For upload command
     
-    uint16_t ReversePort;           // For reverse command
+    BOOL     ReverseTunnel;           // For reverse tunnel command
+    uint16_t TunnelPort;           // For forward tunnel command
     
     BOOL    Success;
     NSString * _Nullable Stdout;

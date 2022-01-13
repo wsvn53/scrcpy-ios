@@ -19,5 +19,6 @@ uint16_t scrcpy_ssh_execute_bg(const char *const ssh_cmd[], size_t len);
 const char *scrcpy_ssh_execute(const char *const ssh_cmd[], size_t len, bool silent);
 bool scrcpy_ssh_upload(const char *local, const char *remote);
 bool scrcpy_ssh_reverse(uint16_t port);
+bool scrcpy_ssh_forward(uint16_t port);
 
 #endif /* scrcpy_bridge_h */

@@ -11,6 +11,8 @@
 #define adb_push(...)           adb_push_unused(__VA_ARGS__)
 #define adb_reverse(...)           adb_reverse_unused(__VA_ARGS__)
 #define adb_reverse_remove(...)           adb_reverse_remove_unused(__VA_ARGS__)
+#define adb_forward(...)           adb_forward_unused(__VA_ARGS__)
+#define adb_forward_remove(...)           adb_forward_remove_unused(__VA_ARGS__)
 #define adb_execute(...)           adb_execute_unused(__VA_ARGS__)
 
 #include "adb.c"
@@ -19,6 +21,8 @@
 #undef adb_push
 #undef adb_reverse
 #undef adb_reverse_remove
+#undef adb_forward
+#undef adb_forward_remove
 #undef adb_execute
 
 /**
@@ -112,6 +116,45 @@ adb_reverse_remove(struct sc_intr *intr, const char *serial,
     size_t len = ARRAY_LEN(adb_cmd);
     adb_complete(cmds, serial, adb_cmd, &len);
 
+    const char *result = scrcpy_ssh_execute(cmds, len, false);
+    return result == NULL || strlen(result) == 0;
+}
+
+/**
+ * Handle adb_forward to execute on ssh server
+ */
+bool
+adb_forward(struct sc_intr *intr, const char *serial, uint16_t local_port,
+            const char *device_socket_name, unsigned flags) {
+    char local[4 + 5 + 1]; // tcp:PORT
+    char remote[108 + 14 + 1]; // localabstract:NAME
+    sprintf(local, "tcp:%" PRIu16, local_port);
+    snprintf(remote, sizeof(remote), "localabstract:%s", device_socket_name);
+    const char *const adb_cmd[] = {"forward", local, remote};
+
+    const char *cmds[256];
+    size_t len = ARRAY_LEN(adb_cmd);
+    adb_complete(cmds, serial, adb_cmd, &len);
+    const char *result = scrcpy_ssh_execute(cmds, len, false);
+    
+    // ssh forward remote network with local network
+    if (result == NULL || strlen(result) == 0 || atoi(result) == local_port) {
+        return scrcpy_ssh_forward(local_port);
+    }
+    
+    return false;
+}
+
+bool
+adb_forward_remove(struct sc_intr *intr, const char *serial,
+                   uint16_t local_port, unsigned flags) {
+    char local[4 + 5 + 1]; // tcp:PORT
+    sprintf(local, "tcp:%" PRIu16, local_port);
+    const char *const adb_cmd[] = {"forward", "--remove", local};
+    const char *cmds[256];
+    size_t len = ARRAY_LEN(adb_cmd);
+    adb_complete(cmds, serial, adb_cmd, &len);
+    
     const char *result = scrcpy_ssh_execute(cmds, len, false);
     return result == NULL || strlen(result) == 0;
 }

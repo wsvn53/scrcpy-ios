@@ -31,6 +31,7 @@
     ScrcpyParams.sharedParams.adbSerial = queryDicts[@"adbSerial"];
     ScrcpyParams.sharedParams.maxSize = queryDicts[@"maxSize"];
     ScrcpyParams.sharedParams.bitRate = queryDicts[@"bitRate"];
+    ScrcpyParams.sharedParams.forceAdbForward = queryDicts[@"adbForward"];
 }
 
 @end

@@ -10,11 +10,13 @@
 #import <SDL2/SDL.h>
 #import "ScrcpyParams.h"
 #import "NSError+Alert.h"
+#import <UIKit/UIKit.h>
 
 int scrcpy_main(int argc, char *argv[]);
 
 @interface ScrcpyBridge ()
 @property (nonatomic, strong)   GosshShell  *sshShell;
+@property (nonatomic, copy)     NSMutableArray  *pendingErrors;
 @end
 
 @implementation ScrcpyBridge
@@ -64,6 +66,26 @@ int scrcpy_main(int argc, char *argv[]);
     scrcpy_main((int)options.count, scrcpy_opts);
     
     self.running = NO;
+    
+    // After scrcpy stopped show pending errors
+    [self showErrors];
+}
+
+#pragma mark - Errors
+
+-(void)appendError:(NSError *)error {
+    [self.pendingErrors addObject:error];
+    NSLog(@"> Pending Error: %@", error);
+}
+
+-(void)showErrors {
+    for (NSError *error in self.pendingErrors) {
+        [error showAlert];
+    }
+}
+
+-(void)clearErrors {
+    [self.pendingErrors removeAllObjects];
 }
 
 #pragma mark - SSH
@@ -82,7 +104,7 @@ int scrcpy_main(int argc, char *argv[]);
                      error:&error];
     
     if (error != nil) {
-        [error showAlert];
+        [self appendError:error];
     }
     
     return self.sshShell.connected;
@@ -106,10 +128,10 @@ int scrcpy_main(int argc, char *argv[]);
     
     if (ret.err != nil && (*context).ShowErrors) {
         NSString *descStr = [NSString stringWithFormat:@"CMD> %@\nOUTPUT> %@\nERR> %@", (*context).Command, ret.output, ret.err.userInfo[NSLocalizedDescriptionKey]];
-        NSError *showErr = [NSError errorWithDomain:ret.err.domain code:ret.err.code userInfo:@{
+        NSError *showError = [NSError errorWithDomain:ret.err.domain code:ret.err.code userInfo:@{
             NSLocalizedDescriptionKey: descStr,
         }];
-        [showErr showAlert];
+        [self appendError:showError];
     }
 }
 
@@ -129,7 +151,7 @@ int scrcpy_main(int argc, char *argv[]);
     NSLog(@"RET> Upload [%@] => [%@] (%@)", (*context).Local, (*context).Remote, (*context).Success?@"YES":@"NO");
     
     if (error != nil && (*context).ShowErrors) {
-        [error showAlert];
+        [self appendError:error];
     }
 }
 
@@ -182,7 +204,7 @@ int scrcpy_main(int argc, char *argv[]);
     
     if (error != nil && (*context).Success == NO) {
         NSLog(@"Error: %@", error);
-        [error showAlert];
+        [self appendError:error];
     }
 }
 
@@ -191,6 +213,11 @@ int scrcpy_main(int argc, char *argv[]);
 -(GosshShell *)sshShell {
     _sshShell = _sshShell ? : [[GosshShell alloc] init];
     return _sshShell;
+}
+
+-(NSMutableArray *)pendingErrors {
+    _pendingErrors = _pendingErrors ? : [NSMutableArray new];
+    return _pendingErrors;
 }
 
 @end

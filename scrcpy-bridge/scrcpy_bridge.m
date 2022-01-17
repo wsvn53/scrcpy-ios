@@ -7,7 +7,6 @@
 
 #import "scrcpy_bridge.h"
 #import "ScrcpyBridge.h"
-#import "NSError+Alert.h"
 #import <SDL2/SDL.h>
 #import "screen-fix.h"
 

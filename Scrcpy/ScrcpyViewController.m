@@ -84,6 +84,16 @@ UIKIT_EXTERN UIImage * __nullable UIColorAsImage(UIColor * __nonnull color, CGSi
                                                name:kSDLDidCreateRendererNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(launchWithURLScheme)
                                                name:kConnectWithSchemeNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(onKeyWindowChanged)
+                                               name:UIWindowDidBecomeKeyNotification object:nil];
+}
+
+-(void)onKeyWindowChanged {
+    NSLog(@"> KeyWindow Changed: %@", self.view.window.isKeyWindow ? @"YES" : @"NO");
+    // Treat as connect success so donot need to show errors now
+    if (self.view.window.isKeyWindow) {
+        [self.scrcpyBridge clearErrors];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated {

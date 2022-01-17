@@ -78,6 +78,7 @@ static inline void OpenGL_RenderFrame(AVFrame *frame) {
         displayLayer.frame = keyWindow.rootViewController.view.bounds;
         [keyWindow.rootViewController.view.layer addSublayer:displayLayer];
         keyWindow.rootViewController.view.backgroundColor = UIColor.blackColor;
+        
         // sometimes failed to set background color, so we append to next runloop
         displayLayer.backgroundColor = UIColor.blackColor.CGColor;
         NSLog(@"[INFO] Using Hardware Decoding.");

@@ -46,6 +46,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(void)resetContext;
 -(void)startWith:(NSArray *)options;
+
+-(void)appendError:(NSError *)error;
+-(void)showErrors;
+-(void)clearErrors;
+
 @end
 
 NS_ASSUME_NONNULL_END

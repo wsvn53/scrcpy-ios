@@ -16,7 +16,7 @@ void scrcpy_thread_wait(pid_t pid);
 void scrcpy_thread_exit(pid_t pid);
 
 uint16_t scrcpy_ssh_execute_bg(const char *const ssh_cmd[], size_t len);
-const char *scrcpy_ssh_execute(const char *const ssh_cmd[], size_t len, bool silent);
+const char *scrcpy_ssh_execute(const char *const ssh_cmd[], size_t len, bool silent, bool *success);
 bool scrcpy_ssh_upload(const char *local, const char *remote);
 bool scrcpy_ssh_reverse(uint16_t port);
 bool scrcpy_ssh_forward(uint16_t port);

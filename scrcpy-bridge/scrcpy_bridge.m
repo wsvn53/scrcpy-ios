@@ -29,7 +29,7 @@ void scrcpy_quit(void) {
  * Fix using CFRunLoopRunInMode in SDL to avoid high cpu usage
  */
 CFRunLoopRunResult CFRunLoopRunInMode_fix(CFRunLoopMode mode, CFTimeInterval seconds, Boolean returnAfterSourceHandled) {
-    return CFRunLoopRunInMode(mode, 0.006, NO);
+    return CFRunLoopRunInMode(mode, 0.005, NO);
 }
 
 /**
@@ -110,7 +110,7 @@ uint16_t scrcpy_ssh_execute_bg(const char *const ssh_cmd[], size_t len) {
         for (int i = 0; i < len; i++) {
             cmds[i] = [cmdStrs[i] UTF8String];
         }
-        scrcpy_ssh_execute(cmds, len, true);
+        scrcpy_ssh_execute(cmds, len, true, NULL);
     }];
     
     // save to running thread for later check
@@ -124,14 +124,11 @@ uint16_t scrcpy_ssh_execute_bg(const char *const ssh_cmd[], size_t len) {
     execThread.name = [NSString stringWithFormat:@"%d", fake_pid];
     [execThread start];
     
-    // Wait for ssh_cmd array was used
-//    CFRunLoopRunInMode(kCFRunLoopCommonModes, 0.1, NO);
-    
     // fake pid
     return fake_pid;
 }
 
-const char *scrcpy_ssh_execute(const char *const ssh_cmd[], size_t len, bool silent) {
+const char *scrcpy_ssh_execute(const char *const ssh_cmd[], size_t len, bool silent, bool *success) {
     struct ScrcpyExecuteContext context;
     NSMutableArray *sshCmdFields = [NSMutableArray new];
     for (int i = 0; i < len; i++) {
@@ -143,8 +140,8 @@ const char *scrcpy_ssh_execute(const char *const ssh_cmd[], size_t len, bool sil
     [SharedNotificationCenter postNotificationName:kScrcpyExecuteSSHCommand object:nil
                                           userInfo:UserInfoWith(&context)];
     
-    if (context.Success == NO) {
-        return NULL;
+    if (success != NULL) {
+        *success = context.Success;
     }
     
     NSString *output = [context.Stdout stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];

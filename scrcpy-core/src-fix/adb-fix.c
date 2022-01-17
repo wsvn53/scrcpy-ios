@@ -54,8 +54,9 @@ void adb_complete(const char *out_cmd[], const char *serial, const char *const a
 char *
 adb_get_serialno(struct sc_intr *intr, unsigned flags) {
     const char *const adb_cmd[] = {"adb", "get-serialno"};
-    const char *result = scrcpy_ssh_execute(adb_cmd, ARRAY_LEN(adb_cmd), false);
-    return result ? strdup(result) : NULL;
+    bool success;
+    const char *result = scrcpy_ssh_execute(adb_cmd, ARRAY_LEN(adb_cmd), false, &success);
+    return success && result != NULL ? strdup(result) : NULL;
 }
 
 /**
@@ -75,9 +76,10 @@ adb_push(struct sc_intr *intr, const char *serial, const char *local,
     size_t len = 3;
     const char *adb_cmd[] = {"push", local, remote};
     adb_complete(cmds, serial, adb_cmd, &len);
-    bool executed = scrcpy_ssh_execute(cmds, len, false);
+    bool success;
+    scrcpy_ssh_execute(cmds, len, false, &success);
     
-    return executed;
+    return success;
 }
 
 /**
@@ -96,10 +98,12 @@ adb_reverse(struct sc_intr *intr, const char *serial,
     const char *cmds[256];
     size_t len = ARRAY_LEN(adb_cmd);
     adb_complete(cmds, serial, adb_cmd, &len);
-    const char *result = scrcpy_ssh_execute(cmds, len, false);
+    
+    bool success;
+    scrcpy_ssh_execute(cmds, len, false, &success);
     
     // ssh reverse local network with remote network
-    if (result == NULL || strlen(result) == 0) {
+    if (success) {
         return scrcpy_ssh_reverse(local_port);
     }
     
@@ -116,8 +120,9 @@ adb_reverse_remove(struct sc_intr *intr, const char *serial,
     size_t len = ARRAY_LEN(adb_cmd);
     adb_complete(cmds, serial, adb_cmd, &len);
 
-    const char *result = scrcpy_ssh_execute(cmds, len, false);
-    return result == NULL || strlen(result) == 0;
+    bool success;
+    scrcpy_ssh_execute(cmds, len, false, &success);
+    return success;
 }
 
 /**
@@ -135,13 +140,14 @@ adb_forward(struct sc_intr *intr, const char *serial, uint16_t local_port,
     const char *cmds[256];
     size_t len = ARRAY_LEN(adb_cmd);
     adb_complete(cmds, serial, adb_cmd, &len);
-    const char *result = scrcpy_ssh_execute(cmds, len, false);
+    
+    bool success;
+    scrcpy_ssh_execute(cmds, len, false, &success);
     
     // ssh forward remote network with local network
-    if (result == NULL || strlen(result) == 0 || atoi(result) == local_port) {
+    if (success) {
         return scrcpy_ssh_forward(local_port);
     }
-    
     return false;
 }
 
@@ -155,8 +161,9 @@ adb_forward_remove(struct sc_intr *intr, const char *serial,
     size_t len = ARRAY_LEN(adb_cmd);
     adb_complete(cmds, serial, adb_cmd, &len);
     
-    const char *result = scrcpy_ssh_execute(cmds, len, false);
-    return result == NULL || strlen(result) == 0;
+    bool success;
+    scrcpy_ssh_execute(cmds, len, false, &success);
+    return success;
 }
 
 /**

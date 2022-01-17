@@ -161,16 +161,15 @@ int scrcpy_main(int argc, char *argv[]);
     NSError *error = nil;
     NSInteger retryCount = 5;
     while (--retryCount) {
-        BOOL success = NO;
         if ((*context).ReverseTunnel) {
-            success = [self.sshShell reverse:remoteAddr localAddr:localAddr error:&error];
-            NSLog(@"SSH> Reverse: %@ -> %@ (%@)", localAddr, remoteAddr, success?@"YES":@"NO");
+            (*context).Success = [self.sshShell reverse:remoteAddr localAddr:localAddr error:&error];
+            NSLog(@"SSH> Reverse: %@ -> %@ (%@)", localAddr, remoteAddr, (*context).Success?@"YES":@"NO");
         } else {
-            success = [self.sshShell forward:localAddr remoteAddr:remoteAddr error:&error];
-            NSLog(@"SSH> Forward: %@ -> %@ (%@)", localAddr, remoteAddr, success?@"YES":@"NO");
+            (*context).Success = [self.sshShell forward:localAddr remoteAddr:remoteAddr error:&error];
+            NSLog(@"SSH> Forward: %@ -> %@ (%@)", localAddr, remoteAddr, (*context).Success?@"YES":@"NO");
         }
         
-        if (success == NO && error != nil) {
+        if ((*context).Success == NO && error != nil) {
             NSLog(@"[SSH Tunnel]: %@, RetryRemains: %ld", error, retryCount);
             CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.5f, NO);
             continue;
@@ -181,7 +180,7 @@ int scrcpy_main(int argc, char *argv[]);
         break;
     }
     
-    if (error != nil && (*context).Success) {
+    if (error != nil && (*context).Success == NO) {
         NSLog(@"Error: %@", error);
         [error showAlert];
     }

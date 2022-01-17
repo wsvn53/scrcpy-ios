@@ -28,7 +28,7 @@
 
 -(void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler
 {
-    NSLog(@"> SHORTCUT ACTION: DISCONNECT NOW");
+    NSLog(@"> ACTION: Disconnect");
     scrcpy_quit();
     completionHandler(YES);
 }
@@ -37,11 +37,9 @@
 {
     SDL_OnApplicationDidEnterBackground();
     
-    NSLog(@"Time Remaining: %@",  @(application.backgroundTimeRemaining));
+    NSLog(@"Did Enter Background, Time Remaining: %@",  @(application.backgroundTimeRemaining));
     __block UIBackgroundTaskIdentifier taskID = [application beginBackgroundTaskWithExpirationHandler:^{
         [application endBackgroundTask:taskID];
-        NSLog(@"Force exit.");
-        scrcpy_quit();
     }];
 }
 

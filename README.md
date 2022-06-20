@@ -1,5 +1,9 @@
 # Scrcpy-iOS
 
+### Depracited
+
+This repository has be archived, new features will only be updated in the adb-supported [Scrcpy Mobile](https://github.com/wsvn53/scrcpy-mobile).
+
 ### About
 
 Scrcpy-iOS.app is a remote control tool for Android Phones based on [https://github.com/Genymobile/scrcpy].

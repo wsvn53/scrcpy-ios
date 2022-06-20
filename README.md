@@ -1,6 +1,6 @@
 # Scrcpy-iOS
 
-## deprecate
+## Deprecate
 
 **This repository has be archived, new features will only be updated in the adb-supported [Scrcpy Mobile](https://github.com/wsvn53/scrcpy-mobile).**
 

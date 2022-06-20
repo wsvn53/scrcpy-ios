@@ -1,8 +1,10 @@
 # Scrcpy-iOS
 
-### Depracited
+## deprecate
 
-This repository has be archived, new features will only be updated in the adb-supported [Scrcpy Mobile](https://github.com/wsvn53/scrcpy-mobile).
+**This repository has be archived, new features will only be updated in the adb-supported [Scrcpy Mobile](https://github.com/wsvn53/scrcpy-mobile).**
+
+[![Get it from iTunes](https://lisk.com/sites/default/files/pictures/2020-01/download_on_the_app_store_badge.svg)](https://apps.apple.com/us/app/scrcpy-remote/id1629352527)
 
 ### About
 
